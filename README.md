@@ -2,7 +2,7 @@
 
 # Project Name
 
-> Pithy project description
+> Friend Planning Made Easy
 
 ## Team
 
