@@ -2,7 +2,7 @@
 
 # Project Name
 
-> Friend Planning Made Easy
+> Friend Planning Made Easy!
 
 ## Team
 
