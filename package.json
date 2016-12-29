@@ -1,5 +1,5 @@
 {
-  "name": "temp",
+  "name": "letus",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,7 +12,9 @@
     "express": "~4.14.0",
     "hbs": "~4.0.1",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "serve-static": "^1.11.1",
+    "webpack": "^1.14.0"
   },
   "devDependencies": {
     "eslint": "^3.12.2",
