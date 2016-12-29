@@ -13,6 +13,12 @@ const config = {
       query: {
         minimize: true,
       },
+    }, {
+      test: /\.jsx$/,
+      loader: 'babel',
+      query: {
+        presets: ['es2015', 'react'],
+      },
     }],
   },
   output: {
