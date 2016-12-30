@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "airbnb-base",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "globals": {
+    "document": true
+  },
+  "rules": {
+    "no-plusplus": "off",
+    "no-multi-spaces": "off",
+    "no-unused-vars": "warn"
+  }
+}
