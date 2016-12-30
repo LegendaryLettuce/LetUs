@@ -1,5 +1,10 @@
 const webpack = require('webpack');
 const path    = require('path');
+const plugins = require('webpack-load-plugins')({
+  rename: {
+    'html-webpack-plugin': 'Html',
+  },
+});
 
 // const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
@@ -14,20 +19,17 @@ const BUILD_DIR = path.resolve(__dirname, 'client/dist');
 const APP_DIR   = path.resolve(__dirname, 'client/src');
 
 const config = {
-  entry: `${APP_DIR}/index.jsx`,
+  entry: [
+    `${APP_DIR}/index.jsx`,
+  ],
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
     }),
+    new plugins.Html({ title: 'LetUs' }),
   ],
   module: {
     loaders: [{
-      test: /\.html$/,
-      loader: 'html',
-      query: {
-        minimize: true,
-      },
-    }, {
       test: /\.jsx$/,
       loader: 'babel',
       query: {

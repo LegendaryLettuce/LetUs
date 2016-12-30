@@ -43,5 +43,4 @@ jspm_packages
 .vscode
 
 # Webpack
-bundle.js
-bundle.js.map
+dist
