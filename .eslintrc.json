@@ -1,6 +1,11 @@
 {
   "extends": "airbnb-base",
+  "plugins": ["jsx"],
   "rules": {
+    "jsx/uses-factory": [1, {"pragma": "JSX"}],
+    "jsx/factory-in-scope": [1, {"pragma": "JSX"}],
+    "jsx/mark-used-vars": 1,
+    "jsx/no-undef": 1,
     "no-plusplus": "off",
     "no-multi-spaces": "off",
     "no-unused-vars": "warn"
