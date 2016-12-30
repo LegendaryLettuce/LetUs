@@ -3,17 +3,9 @@ const path    = require('path');
 const plugins = require('webpack-load-plugins')({
   rename: {
     'html-webpack-plugin': 'Html',
+    // 'favicons-webpack-plugin': 'Favicons',
   },
 });
-
-// const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-
-// var plugins = [];
-// {
-//   plugins: [
-//     new FaviconsWebpackPlugin('my-logo.png'),
-//   ]
-// }
 
 const BUILD_DIR = path.resolve(__dirname, 'client/dist');
 const APP_DIR   = path.resolve(__dirname, 'client/src');
@@ -35,6 +27,7 @@ const config = {
       title: 'LetUs',
       template: `${APP_DIR}/index.html`,
     }),
+    // new plugins.Favicons('my-logo.png'),
   ],
   module: {
     loaders: [{
