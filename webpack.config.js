@@ -16,7 +16,7 @@ const devPlugins = [
     title: 'LetUs',
     template: `${APP_DIR}/index.html`,
   }),
-  // new plugins.Favicons(`${APP_DIR}/favicon.ico`),
+  // new plugins.Favicons(`${APP_DIR}/favicon.png`),
 ];
 
 
