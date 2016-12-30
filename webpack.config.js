@@ -11,12 +11,21 @@ const BUILD_DIR   = path.resolve(__dirname, 'client/dist');
 const APP_DIR     = path.resolve(__dirname, 'client/src');
 const MODULES_DIR = path.resolve(__dirname, 'node_modules');
 
+const devPlugins = [
+  new plugins.Html({
+    title: 'LetUs',
+    template: `${APP_DIR}/index.html`,
+  }),
+  // new plugins.Favicons(`${APP_DIR}/favicon.ico`),
+];
+
 
 const config = {
   entry: [
     `${APP_DIR}/index.jsx`,
   ],
   plugins: (process.env.NODE_ENV === 'production') ? [
+    ...devPlugins,
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
@@ -25,18 +34,7 @@ const config = {
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
     }),
-    new plugins.Html({
-      title: 'LetUs',
-      template: `${APP_DIR}/index.html`,
-    }),
-    // new plugins.Favicons('my-logo.png'),
-  ] : [
-    new plugins.Html({
-      title: 'LetUs',
-      template: `${APP_DIR}/index.html`,
-    }),
-    // new plugins.Favicons('my-logo.png'),
-  ],
+  ] : devPlugins,
   module: {
     loaders: [
       {

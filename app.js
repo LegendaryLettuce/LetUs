@@ -11,8 +11,8 @@ const bodyParser    = require('body-parser');
 
 const app = express();
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// uncomment after placing your favicon in /client/src
+// app.use(favicon(path.join(__dirname, 'client/dist', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
