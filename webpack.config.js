@@ -7,8 +7,9 @@ const plugins = require('webpack-load-plugins')({
   },
 });
 
-const BUILD_DIR = path.resolve(__dirname, 'client/dist');
-const APP_DIR   = path.resolve(__dirname, 'client/src');
+const BUILD_DIR   = path.resolve(__dirname, 'client/dist');
+const APP_DIR     = path.resolve(__dirname, 'client/src');
+const MODULES_DIR = path.resolve(__dirname, 'node_modules');
 
 
 const config = {
@@ -38,7 +39,12 @@ const config = {
   ],
   module: {
     loaders: [
-      { test: /\.jsx$/, loader: 'babel', query: { presets: ['es2015', 'react'] } },
+      {
+        test: /\.jsx$/,
+        loader: 'babel-loader',
+        query: { presets: ['es2015', 'react', 'stage-2'] },
+        exclude: [MODULES_DIR],
+      },
     ],
   },
   output: {

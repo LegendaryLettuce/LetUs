@@ -1,15 +1,9 @@
-import React      from 'react';
-import { render } from 'react-dom';
-
-const style = {
-  fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
-  fontWeight: '300',
-  fontSize: '24px',
-  padding: '50px',
-};
+import React          from 'react';
+import { render }     from 'react-dom';
+import { titleStyle } from './styles/styles.jsx';
 
 const App = () => (
-  <p style={style}>Hello World!</p>
+  <div style={titleStyle}>Hello World!</div>
 );
 
 render(<App/>, document.getElementById('app'));
