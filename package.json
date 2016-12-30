@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "dev-webpack": "webpack -d --watch"
+    "dev": "webpack -d --watch",
+    "build": "webpack -p"
   },
   "dependencies": {
     "babel-core": "^6.21.0",
