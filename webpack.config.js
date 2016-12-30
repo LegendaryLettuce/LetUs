@@ -23,10 +23,18 @@ const config = {
     `${APP_DIR}/index.jsx`,
   ],
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
     }),
-    new plugins.Html({ title: 'LetUs' }),
+    new plugins.Html({
+      title: 'LetUs',
+      template: `${APP_DIR}/index.html`,
+    }),
   ],
   module: {
     loaders: [{
