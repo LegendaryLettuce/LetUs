@@ -43,4 +43,4 @@ jspm_packages
 .vscode
 
 # Webpack
-dist
+client/dist
