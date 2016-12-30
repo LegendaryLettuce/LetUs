@@ -1,4 +1,4 @@
-import React, { render } from 'react';
+import { render } from 'react';
 
 const App = () => (
   <p>Hello World!</p>
