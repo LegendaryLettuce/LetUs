@@ -1,8 +1,6 @@
 # LetUs
 
-# Project Name
-
-> Friend Planning Made Easy!
+> Event Planning Made Easy!
 
 ## Team
 
