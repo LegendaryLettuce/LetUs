@@ -1,9 +1,9 @@
 import React          from 'react';
 import { render }     from 'react-dom';
-import { titleStyle } from './styles/styles.jsx';
+import styles         from './styles/styles.jsx';
 
 const App = () => (
-  <div style={titleStyle}>Hello World!</div>
+  <div style={styles.title}>Hello World!</div>
 );
 
 render(<App/>, document.getElementById('app'));

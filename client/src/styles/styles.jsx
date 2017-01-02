@@ -6,6 +6,11 @@ const body = {
   padding: '50px',
 };
 
+const styles = {};
+
 export const titleStyle = {
   ...body,
 };
+styles.title = titleStyle;
+
+export default styles;
