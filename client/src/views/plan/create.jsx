@@ -5,7 +5,7 @@ import { connect }      from 'react-redux';
 import ons              from 'onsenui';
 import { Page, Dialog } from 'react-onsenui';
 // Styles
-import { titleStyle }   from '../styles/styles';
+import { titleStyle }   from '../../styles/styles';
 
 class Hello extends Component {
 
