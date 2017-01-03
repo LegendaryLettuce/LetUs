@@ -9,6 +9,8 @@
     "react"
   ],
   "globals": {
+    "describe": true,
+    "it": true,
     "document": true
   },
   "rules": {
