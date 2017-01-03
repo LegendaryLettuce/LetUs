@@ -1,5 +1,15 @@
 # Contributing
 
+## TL;DR
+
+1. git checkout -b [(feat/fix/etc) branch name]
+MAKE CHANGES
+2. git add .
+3. git commit [(feat/fix/etc) commit message]
+4. git pull --rebase upstream master
+5. git push origin [branch name]
+6. github new pull request - need review
+
 ## General Workflow
 
 1. Fork the repo
