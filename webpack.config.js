@@ -22,7 +22,7 @@ const devPlugins = [
 
 const config = {
   entry: [
-    `${APP_DIR}/index.jsx`,
+    `${APP_DIR}/app.jsx`,
   ],
   plugins: (process.env.NODE_ENV === 'production') ? [
     ...devPlugins,
@@ -38,7 +38,7 @@ const config = {
   module: {
     loaders: [
       {
-        test: /\.jsx$/,
+        test: /\.jsx?$/,
         loader: 'babel-loader',
         query: { presets: ['es2015', 'react', 'stage-2'] },
         exclude: [MODULES_DIR],
