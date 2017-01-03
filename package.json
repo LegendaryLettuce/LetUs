@@ -6,7 +6,7 @@
     "start": "nodemon ./bin/www",
     "dev": "webpack -d --watch",
     "build": "NODE_ENV='production' webpack -p",
-    "test": "mocha"
+    "test": "mocha --reporter nyan"
   },
   "dependencies": {
     "babel-core": "^6.21.0",
