@@ -11,7 +11,7 @@ const BUILD_DIR   = path.resolve(__dirname, 'client/dist');
 const APP_DIR     = path.resolve(__dirname, 'client/src');
 const MODULES_DIR = path.resolve(__dirname, 'node_modules');
 
-const devPlugins = [
+const standardPlugins = [
   new plugins.Html({
     title: 'LetUs',
     template: `${APP_DIR}/index.html`,
@@ -21,11 +21,19 @@ const devPlugins = [
 
 
 const config = {
+  devtool: process.env.WEBPACK_DEVTOOL || 'eval-source-map',
   entry: [
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    'react-hot-loader/patch',
     `${APP_DIR}/app.jsx`,
   ],
+  output: {
+    path: BUILD_DIR,
+    filename: 'bundle.js',
+  },
   plugins: (process.env.NODE_ENV === 'production') ? [
-    ...devPlugins,
+    ...standardPlugins,
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
@@ -34,21 +42,30 @@ const config = {
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
     }),
-  ] : devPlugins,
+  ] : [
+    ...standardPlugins,
+    new webpack.HotModuleReplacementPlugin(),
+  ],
+  devServer: {
+    colors: true,
+    historyApiFallback: true,
+    inline: false,
+    port: 3000,
+    hot: true,
+  },
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
-        query: { presets: ['es2015', 'react', 'stage-2'] },
+        query: {
+          presets: ['es2015', 'react', 'stage-2'],
+          plugins: ['react-hot-loader/babel'],
+        },
         exclude: [MODULES_DIR],
       },
       { test: /\.css$/, loader: 'style-loader!css-loader?camelCase' },
     ],
-  },
-  output: {
-    path: BUILD_DIR,
-    filename: 'bundle.js',
   },
 };
 
