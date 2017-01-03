@@ -1,3 +1,4 @@
+import { AppContainer } from 'react-hot-loader';
 import React            from 'react';
 import { render }       from 'react-dom';
 import { Router, Route, browserHistory }  from 'react-router';
@@ -15,11 +16,40 @@ injectTapEventPlugin();
 
 const store = createStore(reducer);
 
+const routes = {
+  path: '/',
+  component: Hello,
+  // childRoutes: [
+  //   { path: '/about', component: About },
+  //   {
+  //       path: '/posts',
+  //       component: Posts,
+  //       childRoutes: [ { path: '/post/:nr', component: Post } ]
+  //   },
+    // { path: '*', component: NoMatch}
+  // ]
+};
+
 render(
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path='/' component={Hello}/>
-    </Router>
-  </Provider>,
+  <AppContainer>
+    <Provider store={store}>
+      <Router history={browserHistory} routes={routes} />
+    </Provider>
+  </AppContainer>,
   document.getElementById('app'),
 );
+
+if (module.hot) {
+  module.hot.accept(
+    () => {
+      render(
+        <AppContainer>
+          <Provider store={store}>
+            <Router history={browserHistory} routes={routes} />
+          </Provider>
+        </AppContainer>,
+        document.getElementById('app'),
+      );
+    },
+  );
+}

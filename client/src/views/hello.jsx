@@ -21,7 +21,7 @@ class Hello extends Component {
           isOpen={true}
         >
           <div style={{ ...titleStyle, textAlign: 'center', margin: '20px' }}>
-            <p style={{ opacity: 0.5 }}>{this.props.hello}</p>
+            <p style={{ opacity: 0.5 }}>{'HOT LOAD!!'}</p>
           </div>
         </Dialog>
       </Page>
