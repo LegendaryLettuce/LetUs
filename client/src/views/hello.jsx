@@ -1,13 +1,30 @@
-import React, { Component } from 'react';
+import React, { Component }       from 'react';
 // Redux
 import { connect }      from 'react-redux';
+// Onsen UI
+import ons              from 'onsenui';
+import { Page, Dialog, Button }  from 'react-onsenui';
 // Styles
 import { titleStyle }   from '../styles/styles';
 
 class Hello extends Component {
+
+  constructor(props) {
+    super(props);
+    // ons.notification.alert(this.props.hello);
+  }
+
   render() {
     return (
-      <div style={titleStyle}>{this.props.hello}</div>
+      <Page>
+        <Dialog
+          isOpen={true}
+        >
+          <div style={{ ...titleStyle, textAlign: 'center', margin: '20px' }}>
+            <p style={{ opacity: 0.5 }}>{this.props.hello}</p>
+          </div>
+        </Dialog>
+      </Page>
     );
   }
 }
