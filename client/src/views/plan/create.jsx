@@ -73,7 +73,7 @@ class Create extends Component {
     const name = names[Math.floor(names.length * Math.random())];
 
     return (
-      <ListItem key={index} modifier='tappable longdivider'>
+      <ListItem key={index} modifier='longdivider' tappable>
         <div className='left'>
           <img src={`http://placekitten.com/g/${x}/${y}`} className='list__item__thumbnail' />
         </div>
