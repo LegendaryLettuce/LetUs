@@ -3,9 +3,12 @@ const should = chai.should();
 
 // browser is global variable included in the wdio.config file
 
-describe('First Spec', () => {
-  it('should navigate to the WebdriverIO homepage', () => {
-    browser.url('http://webdriver.io/');
-    browser.getTitle().should.not. equal('djss');
+// Actions for Selenium
+// http://webdriver.io/api/mobile/performMultiAction.html#
+
+describe('Main Page', () => {
+  it('should have the title "LetUs"', () => {
+    browser.url('/');
+    browser.getTitle().should.equal('LetUs');
   });
 });
