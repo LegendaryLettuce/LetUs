@@ -7,7 +7,9 @@
     "hot": "webpack-dev-server --progress",
     "dev": "webpack -d --watch",
     "build": "NODE_ENV='production' webpack -p",
-    "test": "mocha --reporter nyan"
+    "test": "mocha --reporter nyan",
+    "startDB": "postgres -D /usr/local/var/postgres",
+    "makeDB": "psql -f db/createDB.sql"
   },
   "dependencies": {
     "babel-core": "^6.21.0",
@@ -41,7 +43,8 @@
     "url-loader": "^0.5.7",
     "webdriverio": "^4.5.2",
     "webpack": "^1.14.0",
-    "webpack-load-plugins": "^0.1.2"
+    "webpack-load-plugins": "^0.1.2",
+    "yelp": "^1.0.2"
   },
   "devDependencies": {
     "chai": "*",
