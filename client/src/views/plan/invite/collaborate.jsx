@@ -7,7 +7,6 @@ import { } from 'react-onsenui';
 // Styles
 import { }   from '../../../styles/styles';
 
-
 class Collaborate extends Component {
 
   constructor(props) {
