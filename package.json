@@ -9,7 +9,8 @@
     "build": "NODE_ENV='production' webpack -p",
     "test": "mocha --reporter nyan",
     "startDB": "postgres -D /usr/local/var/postgres",
-    "makeDB": "psql -f db/createDB.sql"
+    "makeDB": "psql -f db/createDB.sql",
+    "client-tests": "node_modules/.bin/wdio wdio.conf.js"
   },
   "dependencies": {
     "babel-core": "^6.21.0",
@@ -36,6 +37,7 @@
     "react-router": "^3.0.0",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
+    "selenium-standalone": "^5.9.0",
     "sequelize": "^3.28.0",
     "serve-favicon": "~2.3.0",
     "serve-static": "^1.11.1",
@@ -56,6 +58,8 @@
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
     "mocha": "*",
+    "wdio-mocha-framework": "^0.5.8",
+    "wdio-spec-reporter": "0.0.5",
     "webpack-dev-server": "^1.16.2"
   }
 }
