@@ -21,23 +21,23 @@ class Friends extends Component {
   render() {
     return (
       <div>
-      <List
-        dataSource={this.props.friends}
-        renderRow={(row, idx) => (
-          <ListItem modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
-            <div className="left">
-              <Icon icon="md-face" className="list__item__icon" />
-            </div>
-            <div className="center">
-              <span className="list__item__title">{row}</span>
-              <span className="list__item__subtitle">Subtitle</span>
-            </div>
-            <label className="right">
-              <Switch />
-            </label>
-          </ListItem>
-        )}
-      />
+        <List
+          dataSource={this.props.friends}
+          renderRow={(row, idx) => (
+            <ListItem modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
+              <div className="left">
+                <Icon icon="md-face" className="list__item__icon" />
+              </div>
+              <div className="center">
+                <span className="list__item__title">{row}</span>
+                <span className="list__item__subtitle">Subtitle</span>
+              </div>
+              <label className="right">
+                <Switch />
+              </label>
+            </ListItem>
+          )}
+        />
       </div>
     );
   }
