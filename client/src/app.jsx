@@ -8,6 +8,7 @@ import { createStore }  from 'redux';
 import { Provider }     from 'react-redux';
 import { reducer }      from './redux/reducer';
 // CSS
+import '../../node_modules/onsenui/css/onsenui.css';
 import '../../node_modules/onsenui/css/onsen-css-components-dark-theme.css';
 // Views
 import Create           from './views/plan/create.jsx';

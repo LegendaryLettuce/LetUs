@@ -65,6 +65,8 @@ const config = {
         exclude: [MODULES_DIR],
       },
       { test: /\.css$/, loader: 'style-loader!css-loader?camelCase' },
+      { test: /\.woff(2)?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff' },
+      { test: /\.(ttf|eot|svg)?$/, loader: 'file-loader' },
     ],
   },
 };
