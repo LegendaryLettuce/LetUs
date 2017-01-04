@@ -5,7 +5,7 @@ import { connect }      from 'react-redux';
 import ons              from 'onsenui';
 import { Page, Dialog } from 'react-onsenui';
 // Styles
-import { titleStyle }   from '../../styles/styles';
+import styles           from '../../styles/styles';
 
 class Hello extends Component {
 
@@ -20,7 +20,7 @@ class Hello extends Component {
         <Dialog
           isOpen={true}
         >
-          <div style={{ ...titleStyle, textAlign: 'center', margin: '20px' }}>
+          <div style={{ ...styles.body, color: 'white', textAlign: 'center', margin: '20px' }}>
             <p style={{ opacity: 0.5 }}>{this.props.hello}</p>
           </div>
         </Dialog>
