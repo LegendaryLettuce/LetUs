@@ -3,9 +3,11 @@ import React, { Component }       from 'react';
 import { connect }      from 'react-redux';
 // Onsen UI
 import ons              from 'onsenui';
+
 import { LazyList, ListItem, List, Switch, Icon } from 'react-onsenui';
+
 // Styles
-import { titleStyle }   from '../../../styles/styles';
+import { }   from '../../../styles/styles';
 
 class Friends extends Component {
 
@@ -15,7 +17,6 @@ class Friends extends Component {
 
     };
   }
-
 
   render() {
     return (
@@ -37,7 +38,6 @@ class Friends extends Component {
           </ListItem>
         )}
       />
-
       </div>
     );
   }
@@ -48,19 +48,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(Friends);
-
-  // renderRow(idx) {
-  //   return (
-  //     <ListItem key={idx}>
-  //       {this.props.friends[idx]}
-  //     </ListItem>
-  //   );
-  // }
-        // <h3>{this.props.friends}</h3>
-
-        // <LazyList
-        //   length={this.props.friends.length}
-        //   renderRow={this.renderRow.bind(this)}
-        //   calculateItemHeight={() => 50}
-
-        // />

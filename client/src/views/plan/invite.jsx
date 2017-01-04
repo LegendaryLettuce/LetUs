@@ -50,6 +50,7 @@ class Invite extends Component {
 
         </div>
 
+
         <h1>Collaborate</h1>
         <Collaborate />
 
@@ -63,8 +64,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(Invite);
-
-
-          //         {
-          //   this.state.friends.map((friend, index) => <Friends friend={friend} key={index} />)
-          // }
