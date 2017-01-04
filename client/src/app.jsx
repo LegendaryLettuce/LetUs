@@ -18,7 +18,7 @@ const store = createStore(reducer);
 
 const routes = {
   path: '/',
-  component: Invite,
+  component: Create,
   childRoutes: [
     { path: '/plan/create',       component: Create },
     { path: '/plan/collaborate',  component: Collaborate },
