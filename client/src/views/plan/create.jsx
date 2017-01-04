@@ -13,35 +13,27 @@ class Create extends Component {
     super(props);
   }
 
-  // Example Code from Docs for Row Generation
-  // renderRow(row, index) {
-  //   return (
-  //     <ListItem key={index}>
-  //       <div className='left'>
-  //         <img src={`http://placekitten.com/g/${x}/${y}`} className='list__item__thumbnail' />
-  //       </div>
-  //       <div className='center'>
-  //         {name}
-  //       </div>
-  //     </ListItem>
-  //   );
-  // }
+  renderToolbar() {
+    return (
+      <Toolbar>
+          <div className='center'>Create</div>
+      </Toolbar>
+    );
+  }
 
   renderRow(row, index) {
+    // Randomly Select a Cat picture
     const x = 40 + Math.round(5 * (Math.random() - 0.5)),
           y = 40 + Math.round(5 * (Math.random() - 0.5));
-
-    const names = ['Max', 'Chloe', 'Bella', 'Oliver', 'Tiger', 'Lucy', 'Shadow', 'Angel'];
-    const name = names[Math.floor(names.length * Math.random())];
 
     return (
       <ListItem key={index} modifier='longdivider' tappable>
         <div className='left'>
           <img src={`http://placekitten.com/g/${x}/${y}`} className='list__item__thumbnail' />
         </div>
-        <label className='center'>
-          {name}
-        </label>
+        <div className='center'>
+          {row}
+        </div>
       </ListItem>
     );
   }
@@ -51,13 +43,24 @@ class Create extends Component {
     console.log('Deciding Together');
   }
 
+  // On Click Event
+  decideTogether() {
+    console.log('Deciding Together');
+  }
+
   render() {
     return (
-      <Page>
+      <Page renderToolbar={this.renderToolbar}>
         <List
-          dataSource={[1, 2, 3, 4, 5, 6, 7, 8]}
+          dataSource={['Eatz', 'Drinkz', 'Playz']}
           renderRow={this.renderRow}
         />
+        <Button 
+          className='center'
+          style={{ padding: '0px 40px 0px 40px' }}
+          onClick={this.decideTogether}
+          modifier='large'
+        >Decide Together</Button>
       </Page>
 
     );
@@ -69,14 +72,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(Create);
-
-        // <Toolbar>
-        //   <div className='center'>List</div>
-        // </Toolbar>
-// <Button 
-//           style={{ padding: '0px 40px 0px 40px' }}
-//           onClick={this.decideTogether}
-//           modifier='large'
-//         >Decide Together</Button>
-
-          // renderRow={(row, i) => <ListItem tappable tapBackgroundColor={'#d9d9d9'} key={i}><div className='center'>{row}</div></ListItem>}
