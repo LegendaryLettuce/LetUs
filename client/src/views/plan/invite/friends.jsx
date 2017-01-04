@@ -8,6 +8,7 @@ import { ListItem, List, Switch, Icon } from 'react-onsenui';
 import { connect }      from 'react-redux';
 import { updateInviteFriends }
                         from '../../../redux/actions';
+
 // Styles
 import { }   from '../../../styles/styles';
 
@@ -64,4 +65,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(Friends);
-
