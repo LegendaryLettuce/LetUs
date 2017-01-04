@@ -65,6 +65,30 @@ class Create extends Component {
     this.props.router.push('/plan/invite');
   }
 
+  renderRow(row, index) {
+    const x = 40 + Math.round(5 * (Math.random() - 0.5)),
+          y = 40 + Math.round(5 * (Math.random() - 0.5));
+
+    const names = ['Max', 'Chloe', 'Bella', 'Oliver', 'Tiger', 'Lucy', 'Shadow', 'Angel'];
+    const name = names[Math.floor(names.length * Math.random())];
+
+    return (
+      <ListItem key={index} modifier='tappable longdivider'>
+        <div className='left'>
+          <img src={`http://placekitten.com/g/${x}/${y}`} className='list__item__thumbnail' />
+        </div>
+        <label className='center'>
+          {name}
+        </label>
+      </ListItem>
+    );
+  }
+
+  // On Click Event
+  decideTogether() {
+    console.log('Deciding Together');
+  }
+
   render() {
 
     const buttonStyle = {
