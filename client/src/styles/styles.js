@@ -7,6 +7,13 @@ export const bodyStyle = {
 };
 styles.body = bodyStyle;
 
+export const bottomNavStyle = {
+  display: 'flex',
+  'align-items': 'center',
+  'justify-content': 'space-around',
+};
+
+
 // export const titleStyle = {
 //   ...styles.body,
 // };
