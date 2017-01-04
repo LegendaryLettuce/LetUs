@@ -93,7 +93,9 @@ class Create extends Component {
           style={buttonStyle}
           onClick={this.decideTogether}
           modifier='large'
-        >Decide Together</Button>
+        >
+
+        </Button>
       </Page>
     );
   }
@@ -104,3 +106,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(Create);
+          // <Link to={'/user/${user.id}'}>{user.name}</Link>
