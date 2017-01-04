@@ -1,13 +1,13 @@
 import React, { Component }       from 'react';
-// Redux
-import { connect }      from 'react-redux';
-import { updateInviteFriends }
-                        from '../../../redux/actions';
 
 // Onsen UI
 import ons              from 'onsenui';
 import { ListItem, List, Switch, Icon } from 'react-onsenui';
 
+// Redux
+import { connect }      from 'react-redux';
+import { updateInviteFriends }
+                        from '../../../redux/actions';
 // Styles
 import { }   from '../../../styles/styles';
 
@@ -64,3 +64,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(Friends);
+
