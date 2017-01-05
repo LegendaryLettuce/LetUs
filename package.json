@@ -8,8 +8,8 @@
     "dev": "webpack -d --watch",
     "build": "NODE_ENV='production' webpack -p",
     "test": "mocha --reporter nyan",
-    "startDB": "postgres -D /usr/local/var/postgres",
-    "makeDB": "psql -f db/createDB.sql",
+    "startdb": "postgres -D /usr/local/var/postgres",
+    "makedb": "psql -f db/createDB.sql",
     "client-tests": "node_modules/.bin/wdio wdio.conf.js"
   },
   "dependencies": {
