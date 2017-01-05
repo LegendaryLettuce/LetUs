@@ -16,6 +16,8 @@ class Collaborate extends Component {
     };
   }
 
+// inherit state of invited friends
+
   render() {
     return (
       <div>

@@ -1,10 +1,12 @@
 import React, { Component }       from 'react';
 // Redux
 import { connect }      from 'react-redux';
+import { updateInviteFriends }
+                        from '../../../redux/actions';
+
 // Onsen UI
 import ons              from 'onsenui';
-
-import { LazyList, ListItem, List, Switch, Icon } from 'react-onsenui';
+import { ListItem, List, Switch, Icon } from 'react-onsenui';
 
 // Styles
 import { }   from '../../../styles/styles';
@@ -14,8 +16,20 @@ class Friends extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      inviteFriends: [],
     };
+    this.inviteFriends = this.inviteFriends.bind(this);
+  }
+
+  inviteFriends(friend) {
+    const friendIndex = this.state.inviteFriends.indexOf(friend);
+    if (friendIndex === -1) {
+      this.state.inviteFriends.push(friend);
+    } else if (friendIndex !== -1) {
+      this.state.inviteFriends.splice(friendIndex, 1);
+    }
+    console.log(this.state.inviteFriends);
+    this.props.dispatch(updateInviteFriends(this.state.inviteFriends));
   }
 
   render() {
@@ -33,7 +47,9 @@ class Friends extends Component {
                 <span className="list__item__subtitle">Subtitle</span>
               </div>
               <label className="right">
-                <Switch />
+          <Switch onClick={() =>
+          this.inviteFriends({ row }.row)
+          } />
               </label>
             </ListItem>
           )}

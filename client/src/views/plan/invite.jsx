@@ -5,7 +5,7 @@ import { connect }      from 'react-redux';
 import ons              from 'onsenui';
 import { Page } from 'react-onsenui';
 // Styles
-import { titleStyle }   from '../../styles/styles';
+import { }   from '../../styles/styles';
 
 import  Link            from './invite/link.jsx';
 import  Friends         from './invite/friends.jsx';
@@ -17,25 +17,21 @@ class Invite extends Component {
     super(props);
     this.state = {
       friends: [],
-      test: '',
     };
-    // ons.notification.alert(this.props.hello);
   }
 
   componentDidMount() {
+    // query database for friends of user
     this.setState({
-      friends: ['Wilson', 'Autumn', 'Joe', 'David'],
-      test: 'sup',
+      friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Louis', 'Omar'],
     });
   }
-  // componentDidMount() {
-  //   // query database for friends of user
-  //   this.setState({
-  //     friends: ['Wilson', 'Autumn', 'Joe', 'David'],
-  //   });
-  // }
 
   render() {
+    const listStyle = {
+      height: '50%',
+      overflowY: 'scroll',
+    };
     return (
       <Page>
 
@@ -44,7 +40,7 @@ class Invite extends Component {
 
         <h1>Invite Friends</h1>
 
-        <div>
+        <div style={listStyle}>
 
           <Friends friends={this.state.friends}/>
 
