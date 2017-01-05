@@ -11,7 +11,8 @@
   "globals": {
     "describe": true,
     "it": true,
-    "document": true
+    "document": true,
+    "window": true
   },
   "rules": {
     "react/prop-types": "off",
