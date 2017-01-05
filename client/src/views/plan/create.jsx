@@ -65,11 +65,6 @@ class Create extends Component {
     this.props.router.push('/plan/invite');
   }
 
-  // On Click Event
-  decideTogether() {
-    console.log('Deciding Together');
-  }
-
   render() {
 
     const buttonStyle = {
@@ -93,9 +88,7 @@ class Create extends Component {
           style={buttonStyle}
           onClick={this.decideTogether}
           modifier='large'
-        >
-
-        </Button>
+        >Decide Together</Button>
       </Page>
     );
   }
@@ -106,4 +99,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(Create);
-          // <Link to={'/user/${user.id}'}>{user.name}</Link>
