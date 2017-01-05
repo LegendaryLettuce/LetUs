@@ -17,7 +17,7 @@ class GenericList extends Component {
           y = 40 + Math.round(5 * (Math.random() - 0.5));
 
     return (
-      <ListItem key={index} modifier='longdivider' onTouchTap={() => { this.props.handleTouch(rowData); }} tappable>
+      <ListItem key={index} modifier='longdivider' onClick={() => { this.props.handleTouch(rowData); }} tappable>
       <div className='left'>
           <img src={`http://placekitten.com/g/${x}/${y}`} className='list__item__thumbnail' />
         </div>
