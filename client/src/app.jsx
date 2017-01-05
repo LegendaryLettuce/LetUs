@@ -1,7 +1,7 @@
 import { AppContainer } from 'react-hot-loader';
 import React            from 'react';
 import { render }       from 'react-dom';
-import { Router, browserHistory } from 'react-router';
+import { Router, browserHistory, Route } from 'react-router';
 import injectTapEventPlugin       from 'react-tap-event-plugin';
 // Redux
 import { createStore }  from 'redux';
@@ -37,11 +37,14 @@ const routes = {
 };
 
 render(
-  <AppContainer>
-    <Provider store={store}>
-      <Router history={browserHistory} routes={routes} />
-    </Provider>
-  </AppContainer>,
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path='/' component={Create} />
+      <Route path='/plan/invite' component={Invite} />
+      <Route path='/plan/create' component={Create} />
+      <Route path='/plan/collaborate' component={Collaborate} />
+    </Router>
+  </Provider>,
   document.getElementById('app'),
 );
 

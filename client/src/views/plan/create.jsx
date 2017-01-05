@@ -6,11 +6,14 @@ import ons              from 'onsenui';
 import { Page, Toolbar, List, ListItem, Button } from 'react-onsenui';
 // Styles
 import styles           from '../../styles/styles';
+// React Router
+import { browserHistory, Link } from 'react-router';
 
 class Create extends Component {
 
   constructor(props) {
     super(props);
+    this.decideTogether = this.decideTogether.bind(this);
   }
 
   renderToolbar() {
@@ -40,12 +43,8 @@ class Create extends Component {
 
   // On Click Event
   decideTogether() {
-    console.log('Deciding Together');
-  }
-
-  // On Click Event
-  decideTogether() {
-    console.log('Deciding Together');
+    console.log('Deciding Together this:');
+    this.props.router.push('/plan/invite');
   }
 
   render() {
@@ -55,14 +54,13 @@ class Create extends Component {
           dataSource={['Eatz', 'Drinkz', 'Playz']}
           renderRow={this.renderRow}
         />
-        <Button 
+        <Button
           className='center'
-          style={{ padding: '0px 40px 0px 40px' }}
+          style={{ padding: '0px 40px 0px 40px' , position: 'absolute', bottom: '0', marginBottom: '5%'}}
           onClick={this.decideTogether}
           modifier='large'
         >Decide Together</Button>
       </Page>
-
     );
   }
 }
