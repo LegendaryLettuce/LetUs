@@ -8,8 +8,8 @@
     "dev": "webpack -d --watch",
     "build": "NODE_ENV='production' webpack -p",
     "test": "mocha --reporter nyan",
-    "startDB": "postgres -D /usr/local/var/postgres",
-    "makeDB": "psql -f db/createDB.sql",
+    "startdb": "postgres -D /usr/local/var/postgres",
+    "makedb": "psql -f db/createDB.sql",
     "client-tests": "node_modules/.bin/wdio wdio.conf.js"
   },
   "dependencies": {
@@ -26,8 +26,11 @@
     "file-loader": "^0.9.0",
     "html-loader": "^0.4.4",
     "html-webpack-plugin": "^2.24.1",
+    "knex": "^0.12.6",
+    "mongoose": "^4.7.6",
     "morgan": "~1.7.0",
     "onsenui": "^2.0.5",
+    "pg": "^6.1.2",
     "pg-promise": "^5.5.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",

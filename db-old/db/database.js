@@ -28,7 +28,7 @@ exports.User = sequelize.define('User', {
 exports.UserFavorites = sequelize.define('UserFavorites', {
   userid: { type: Sequelize.STRING, allowNull: false },
   favoriteid: Sequelize.STRING,
-});
+});p
 
 exports.UserFriends = sequelize.define('UserFriends', {
   userid: { type: Sequelize.STRING, allowNull: false },
