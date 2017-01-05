@@ -6,27 +6,59 @@ import { Page, Carousel, CarouselItem } from 'react-onsenui';
 // Styles
 // import styles           from '../../styles/styles';
 
-class Hello extends Component {
+class Collaborate extends Component {
 
   constructor(props) {
     super(props);
     this.rgb = ['181', '198', '208'];
+    this.rgbMin = 30;
     this.fake = ['Italian', 'French', 'Vietnamese', 'Japanese', 'Chinese'];
     this.index = 0;
-    this.calculateHeight = (div = 1) => (
-      Math.floor(Math.floor(((window.innerWidth / 2) / window.innerHeight) * 100) / div)
-    );
+    // TODO: break out all non-rerendering state components
     this.state = {
       word: this.fake[0],
       pos: 1,
       anim: {},
       rgb: this.rgb,
+      intensity: 0,
     };
   }
-
-  onFlick() {
+  componentDidMount() {
     this.setState({
-      pos: 0,
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
+    }, () => window.addEventListener('resize', this.updateWindowSize.bind(this)));
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowSize.bind(this));
+  }
+
+  updateWindowSize() {
+    this.setState({
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
+    });
+  }
+
+  calculateHeight(div = 1) {
+    return (
+      Math.floor(
+        Math.floor(((this.state.windowWidth / 2) / this.state.windowHeight) * 100)
+      / div)
+    );
+  }
+
+  onFlick(e) {
+    if (e.activeIndex !== 1) {
+      console.log(`DATA:
+type      - ${this.fake[this.index]}
+direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
+intensity - ${Math.floor(((this.rgb[0] - this.state.rgb[0]) / (this.rgb[0] - this.rgbMin)) * 100)}%`,
+      );
+    }
+    // TODO: move up into if block
+    this.setState({
+      pos: e.activeIndex,
       anim: { duration: 0 },
     }, () => {
       if (this.index < this.fake.length - 1) {
@@ -43,8 +75,8 @@ class Hello extends Component {
 
   onHold() {
     this.setState({
-      rgb: (this.state.rgb[0] > 30) ?
-      [this.state.rgb[0] - 1, this.state.rgb[1], this.state.rgb[2]] :
+      rgb: (this.state.rgb[0] > this.rgbMin) ?
+      [this.state.rgb[0] - 2, this.state.rgb[1], this.state.rgb[2]] :
       this.state.rgb,
     }, () => {
       if (this.state.stationary && this.state.holding) {
@@ -56,7 +88,7 @@ class Hello extends Component {
   onHoldDone() {
     this.setState({
       rgb: (this.state.rgb[0] < this.rgb[0]) ?
-      [this.state.rgb[0] + 0.5, this.state.rgb[1], this.state.rgb[2]] :
+      [this.state.rgb[0] + 1, this.state.rgb[1], this.state.rgb[2]] :
       this.state.rgb,
     }, () => {
       if (!this.state.holding && this.state.rgb[0] < this.rgb[0]) {
@@ -90,6 +122,12 @@ class Hello extends Component {
   }
 
   // TODO: turn green when going right, turn red when going left based on colors
+  // TODO: add a loading bar to the bottom of the card showing how intense it is
+  // TODO: rewrite to use absolute pixel sizes rather than percents
+  // TODO: make contents of card remain in place when card is moved
+  // TODO: make card a reasonable size on all systems
+  // !TODO: allow leeway for intensifying card
+  // !TODO: configure autoscroll to scroll more easily at edges
   render() {
     return (
       <Page>
@@ -120,12 +158,17 @@ class Hello extends Component {
               fontSize: '1.5em',
               textAlign: 'center',
               background: `rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]})`,
-              color: '#333',
-              borderRadius: '1em',
+              color: '#242424',
+              borderRadius: '10%',
+              boxShadow: '0 0 1em 0 #000 inset',
+              border: '1px solid #ccc',
             }}>
               <div style={{
+                // fontWeight: '900',
+                // WebkitTextStroke: '1px #ccc',
+                // textShadow: '0 0 1em #000', // , 0 0 .33em rgba(0,0,0,.33)
                 padding: '10%',
-                paddingTop: '40%',
+                paddingTop: '70%',
               }}>
                 {this.state.word}
               </div>
@@ -142,4 +185,4 @@ const mapStateToProps = state => ({
   hello: state.hello,
 });
 
-export default connect(mapStateToProps)(Hello);
+export default connect(mapStateToProps)(Collaborate);

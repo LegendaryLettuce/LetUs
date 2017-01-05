@@ -2,7 +2,6 @@ import { AppContainer } from 'react-hot-loader';
 import React            from 'react';
 import { render }       from 'react-dom';
 import { Router, browserHistory, Route } from 'react-router';
-import injectTapEventPlugin       from 'react-tap-event-plugin';
 // Redux
 import { createStore }  from 'redux';
 import { Provider }     from 'react-redux';
@@ -14,8 +13,6 @@ import '../../node_modules/onsenui/css/onsen-css-components-dark-theme.css';
 import Create           from './views/plan/create.jsx';
 import Collaborate      from './views/plan/collaborate.jsx';
 import Invite           from './views/plan/invite.jsx';
-
-injectTapEventPlugin();
 
 const store = createStore(reducer);
 
