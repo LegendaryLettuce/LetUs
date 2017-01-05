@@ -1,5 +1,8 @@
 import React, { Component }       from 'react';
 
+// React Router
+import { browserHistory, Link } from 'react-router';
+
 // Onsen UI
 import ons              from 'onsenui';
 import { ListItem, List, Switch, Icon } from 'react-onsenui';

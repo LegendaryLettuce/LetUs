@@ -1,9 +1,10 @@
 import React, { Component }       from 'react';
 // Redux
 import { connect }      from 'react-redux';
+
 // Onsen UI
 import ons              from 'onsenui';
-import { } from 'react-onsenui';
+import { Button } from 'react-onsenui';
 // Styles
 import { }   from '../../../styles/styles';
 
@@ -14,21 +15,27 @@ class Collaborate extends Component {
     this.state = {
 
     };
+    this.collaborate = this.collaborate.bind(this);
   }
 
 // inherit state of invited friends
+  collaborate() {
+    // send redux friends to db
+    // this.props.router.push('/plan/collaborate');
+    console.log(this.props.friends);
+  }
 
   render() {
     return (
       <div>
-        <h3>Collaborate button</h3>
+        <Button modifier='large' onClick={this.collaborate}>Collaborate</Button>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  hello: state.hello,
+  friends: state.friends,
 });
 
 export default connect(mapStateToProps)(Collaborate);

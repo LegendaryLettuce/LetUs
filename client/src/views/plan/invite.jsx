@@ -46,8 +46,6 @@ class Invite extends Component {
 
         </div>
 
-
-        <h1>Collaborate</h1>
         <Collaborate />
 
       </Page>
