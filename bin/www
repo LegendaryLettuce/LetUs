@@ -7,6 +7,7 @@
 const app = require('../app');
 const debug = require('debug')('temp:server');
 const http = require('http');
+const mongoose = require('mongoose');
 
 /**
  * Get port from environment and store in Express.
@@ -89,6 +90,8 @@ function onListening() {
   debug(`Listening on ${bind}`);
 }
 
+// connect to local db
+mongoose.connect('mongodb://localhost:27017/letus');
+
+
 module.exports = server;
-
-
