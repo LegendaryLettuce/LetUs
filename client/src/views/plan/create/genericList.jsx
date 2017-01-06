@@ -37,9 +37,9 @@ class GenericList extends Component {
 
     const textStyle = rowData.textStyle || {};
 
-    const containerStyle = rowData.containerStyle || { backgroundColor: '#333333' };
+    const containerStyle = rowData.containerStyle || {};
 
-    console.log(containerStyle);
+    // console.log(containerStyle);
 
     const imageUrl = rowData.imageUrl || `http://placekitten.com/g/${x}/${y}`;
 

@@ -6,41 +6,45 @@ import ons              from 'onsenui';
 import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
 // Styles
 import styles           from '../../styles/styles';
-// React Router
-import { browserHistory, Link } from 'react-router';
 // Subcomponents
 import GenericList from './create/genericList.jsx';
 // Import sampleData
-import eatData from './create/sampleData/eatData.js';
-import drinkData from './create/sampleData/drinkData.js';
-import playData from './create/sampleData/playData.js';
+import eatData from './create/sampleData/eatData';
+import drinkData from './create/sampleData/drinkData';
+import playData from './create/sampleData/playData';
 
 const iconSize = '80px';
 
-const containerPadding = '10%';
+const containerPadding = '1%';
+
+const icons = color => ({
+  paddingTop: '.4em',
+  paddingBottom: '.4em',
+  // eslint-disable-next-line no-nested-ternary
+  background: (!color) ?        'radial-gradient(#1ee, #5ff, #8ff)' :
+              (color === 1) ?   'radial-gradient(#e1e, #f5f, #f8f)' :
+                                'radial-gradient(#ee1, #ff5, #ff8)',
+  WebkitBackgroundClip: 'text',
+  backgroundClip: 'text',
+  color: 'transparent',
+});
 
 const eatIcon = {
   icon: 'fa-cutlery',
   size: iconSize,
-  style: {
-    color: '#a1a2a3',
-  },
+  style: icons(0),
 };
 
 const drinkIcon = {
   icon: 'fa-glass',
   size: iconSize,
-  style: {
-    color: '#8e8e8e',
-  },
+  style: icons(1),
 };
 
 const playIcon = {
   icon: 'fa-smile-o',
   size: iconSize,
-  style: {
-    color: '#7a7a7a',
-  },
+  style: icons(2),
 };
 
 const textStyleCreate = {
@@ -49,25 +53,22 @@ const textStyleCreate = {
 };
 
 const eatContainer = {
-  backgroundColor: '#0f0f0f',
   paddingTop: containerPadding,
   paddingBottom: containerPadding,
 };
 
 const drinkContainer = {
-  backgroundColor: '#242424',
   paddingTop: containerPadding,
   paddingBottom: containerPadding,
 };
 
 const playContainer = {
-  backgroundColor: '#333333',
   paddingTop: containerPadding,
   paddingBottom: containerPadding,
 };
 
-const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyleCreate, containerStyle: playContainer },
-                    { displayTitle: 'Drink', useIcon: drinkIcon, textStyle: textStyleCreate, containerStyle: playContainer },
+const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyleCreate, containerStyle: eatContainer },
+                    { displayTitle: 'Drink', useIcon: drinkIcon, textStyle: textStyleCreate, containerStyle: drinkContainer },
                     { displayTitle: 'Play', useIcon: playIcon, textStyle: textStyleCreate, containerStyle: playContainer }];
 
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
@@ -134,14 +135,15 @@ class Create extends Component {
   parseUniqueCategories(dataSet) {
     return dataSet.businesses.reduce((accum, business) => {
       business.categories.forEach((item) => {
-        if (!(accum.indexOf(item[0]) + 1)) accum.push(item[0]);
+        if (!(accum.findIndex(ele => ele.displayTitle === item[0]) + 1)) {
+          const newObject = {};
+          newObject.displayTitle = item[0];
+          newObject.imageUrl = business.image_url;
+          accum.push(newObject);
+        }
       });
       return accum;
-    }, []).map((uniq) => {
-      const newObject = {};
-      newObject.displayTitle = uniq;
-      return newObject;
-    });
+    }, []);
   }
 
   parseBizByCategory(dataSet) {
