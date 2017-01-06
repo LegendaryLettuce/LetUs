@@ -64,7 +64,7 @@ class Collaborate extends Component {
 `DATA:
 type      - ${this.fake[this.index]}
 direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
-intensity - ${Math.floor(((this.rgb[0] - this.state.rgb[0]) / (this.rgb[0] - this.rgbMin)) * 100)}%`,
+intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
       );
       this.setState({
         pos: e.activeIndex,
