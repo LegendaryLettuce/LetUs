@@ -1,4 +1,6 @@
 import React, { Component }       from 'react';
+// React Router
+import { browserHistory, Link } from 'react-router';
 // Redux
 import { connect }      from 'react-redux';
 

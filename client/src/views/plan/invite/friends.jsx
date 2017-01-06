@@ -5,7 +5,7 @@ import { browserHistory, Link } from 'react-router';
 
 // Onsen UI
 import ons              from 'onsenui';
-import { ListItem, List, Switch, Icon } from 'react-onsenui';
+import { ListItem, List, Switch, Icon, Input } from 'react-onsenui';
 
 // Redux
 import { connect }      from 'react-redux';
@@ -51,7 +51,7 @@ class Friends extends Component {
                 <span className="list__item__subtitle">Subtitle</span>
               </div>
               <label className="right">
-          <Switch onClick={() =>
+          <Input inputId={`checkbow-${row}`} type='checkbox' onClick={() =>
           this.inviteFriends({ row }.row)
           } />
               </label>
