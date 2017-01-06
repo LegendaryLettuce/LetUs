@@ -16,7 +16,7 @@ class GenericList extends Component {
     return (
       <ons-icon
         icon={ iconData.icon || 'fa-exclamation-circle' }
-        size='30px'
+        size={ iconData.size || '25px'}
         fixed-width='false'
         className='list__item__thumbnail'
         style={ iconData.style}>
@@ -35,19 +35,32 @@ class GenericList extends Component {
     const x = 40 + Math.round(5 * (Math.random() - 0.5));
     const y = 40 + Math.round(5 * (Math.random() - 0.5));
 
+    const textStyle = rowData.textStyle || {};
+
+    const containerStyle = rowData.containerStyle || { backgroundColor: '#333333' };
+
+    console.log(containerStyle);
+
     const imageUrl = rowData.imageUrl || `http://placekitten.com/g/${x}/${y}`;
 
     const leftTumbnail = rowData.useIcon ?
       this.renderIcon(rowData.useIcon) : this.renderImage(imageUrl);
 
     return (
-      <ListItem key={index} modifier='longdivider' onClick={() => {
+      <ListItem key={index} onClick={() => {
         this.props.handleTouch(rowData);
-      }} tappable>
+      }}
+        style={containerStyle}
+        modifier='longdivider'
+        tappable
+      >
       <div className='left'>
           {leftTumbnail}
         </div>
-        <div className='center'>
+        <div
+          className='center'
+          style={textStyle}
+        >
           {rowData.displayTitle}
         </div>
       </ListItem>

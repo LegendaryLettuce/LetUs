@@ -15,30 +15,61 @@ import eatData from './create/sampleData/eatData.js';
 import drinkData from './create/sampleData/drinkData.js';
 import playData from './create/sampleData/playData.js';
 
+const iconSize = '80px';
+
+const containerPadding = '10%';
+
 const eatIcon = {
   icon: 'fa-cutlery',
+  size: iconSize,
   style: {
-    color: '#bcbcbc',
+    color: '#a1a2a3',
   },
 };
 
 const drinkIcon = {
   icon: 'fa-glass',
+  size: iconSize,
   style: {
-    color: '#bcbcbc',
+    color: '#8e8e8e',
   },
 };
 
 const playIcon = {
   icon: 'fa-smile-o',
+  size: iconSize,
   style: {
-    color: '#bcbcbc',
+    color: '#7a7a7a',
   },
 };
 
-const createData = [{ displayTitle: 'Eat', useIcon: eatIcon },
-                    { displayTitle: 'Drink', useIcon: drinkIcon },
-                    { displayTitle: 'Play', useIcon: playIcon }];
+const textStyleCreate = {
+  fontSize: '400%',
+  fontWeight: 'bolder',
+};
+
+const eatContainer = {
+  backgroundColor: '#0f0f0f',
+  paddingTop: containerPadding,
+  paddingBottom: containerPadding,
+};
+
+const drinkContainer = {
+  backgroundColor: '#242424',
+  paddingTop: containerPadding,
+  paddingBottom: containerPadding,
+};
+
+const playContainer = {
+  backgroundColor: '#333333',
+  paddingTop: containerPadding,
+  paddingBottom: containerPadding,
+};
+
+const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyleCreate, containerStyle: playContainer },
+                    { displayTitle: 'Drink', useIcon: drinkIcon, textStyle: textStyleCreate, containerStyle: playContainer },
+                    { displayTitle: 'Play', useIcon: playIcon, textStyle: textStyleCreate, containerStyle: playContainer }];
+
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
 
 class Create extends Component {
@@ -170,6 +201,7 @@ class Create extends Component {
       <div>
         <Page
           renderToolbar={() => this.renderToolbar(this.state.selectedView)}
+          style={{ background: 'rgba(51,51,51,1)' }}
         >
           <GenericList
             data={this.state.selectedData}
