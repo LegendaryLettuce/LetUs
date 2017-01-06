@@ -53,7 +53,7 @@ class Collaborate extends Component {
   calculateHeight(div = 1) {
     return (
       Math.floor(
-        Math.floor(((this.state.windowWidth / 2) / this.state.windowHeight) * 100)
+        Math.floor(((this.state.windowWidth / 1.5) / this.state.windowHeight) * 100)
       / div)
     );
   }
@@ -179,6 +179,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
   // TODO: desaturate images and then saturate as card is held, tint on swipe  
 
   // !TODO: configure autoscroll to scroll more easily at edges
+  // TODO: programmatically define width and increase width of card
   // TODO: add a loading bar to the bottom of the card showing how intense it is
   // TODO: rewrite to use absolute pixel sizes rather than percents
   // TODO: make contents of card remain in place when card is moved
@@ -201,37 +202,82 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
           onTouchEnd={this.onHoldEnd.bind(this)}
           onMouseDown={this.onHoldStart.bind(this)}
           onMouseUp={this.onHoldEnd.bind(this)}
+          style={{
+            zIndex: '3',
+            // background: '#242424',
+            // WebkitBackgroundClip: '',
+            // backgroundClip: '',
+          }}
         >
           <CarouselItem/>
           <CarouselItem>
             <div style={{
-              height: `${this.state.topSpace - this.calculateHeight(2)}%`,
+              height: `${50 - this.calculateHeight(2)}%`,
             }}/>
             <div style={{
               height: `${this.calculateHeight()}%`,
-              width: '50%',
-              marginLeft: '25%',
-              fontSize: '1.5em',
-              textAlign: 'center',
-              background: `rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]})`,
-              color: '#242424',
+              width: '66%',
+              marginLeft: '16%',
               borderRadius: '10%',
-              boxShadow: '0 0 1em 0 #000 inset',
+              boxShadow: '0 0 0 10000em #242424',
               border: '1px solid #ccc',
+              overflow: 'hidden',
+              // zIndex: '3',
+              // border: '1px solid #ccc',
             }}>
               <div style={{
-                // fontWeight: '900',
-                // WebkitTextStroke: '1px #ccc',
-                // textShadow: '0 0 1em #000', // , 0 0 .33em rgba(0,0,0,.33)
-                padding: '10%',
-                paddingTop: '70%',
+                height: '100%',
+                widht: '100%',
+                // height: `${this.calculateHeight()}%`,
+                // width: '66%',
+                // marginLeft: '16%',
+                fontSize: 'xx-large',
+                textAlign: 'center',
+                background: `rgba(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]},0.6)`,
+                color: '#242424', // TODO: get color from OnsenUI
+                borderRadius: '10%',
+                boxShadow: '0 0 1em 0 #333 inset',
+                // border: '1px solid #ccc',
               }}>
-                {this.state.word}
+                <div style={{
+                  // fontWeight: '900',
+                  // WebkitTextStroke: '1px #ccc',
+                  // textShadow: '0 0 1em #000', // , 0 0 .33em rgba(0,0,0,.33)
+                  padding: '10%',
+                  paddingTop: '70%',
+                }}>
+                  {'' /* this.state.word */}
+                </div>
               </div>
             </div>
           </CarouselItem>
           <CarouselItem/>
         </Carousel>
+        <div style={{
+          height: `${50 - this.calculateHeight(2)}%`,
+        }}/>
+        <div style={{
+          fontSize: 'xx-large',
+          textAlign: 'center',
+          // color: '#242424', // TODO: get color from OnsenUI
+          position: 'fixed',
+          height: `${this.calculateHeight()}%`,
+          width: '66%',
+          marginLeft: '16%',
+          zIndex: '2',
+        }}>
+          <div style={{
+            padding: '10%',
+            paddingTop: '70%',
+            // TODO: place x and o icons on left and right hidden until revealed by card
+            // TODO: make icon colors more saturated if more intense
+            // TODO: replace background change with loading bar
+            // OR
+            // TODO: attach circle to window and make x or check appear on swipe
+          }}>
+            {this.state.word}
+          </div>
+        </div>
       </Page>
     );
   }
