@@ -18,6 +18,7 @@ class Invite extends Component {
     this.state = {
       friends: [],
     };
+    this.routeToCollaborate = this.routeToCollaborate.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +26,11 @@ class Invite extends Component {
     this.setState({
       friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Louis', 'Omar'],
     });
+  }
+
+  routeToCollaborate() {
+    this.props.router.push('/plan/collaborate');
+    console.log(this.props.friends);
   }
 
   render() {
@@ -46,7 +52,7 @@ class Invite extends Component {
 
         </div>
 
-        <Collaborate />
+        <Collaborate route={this.routeToCollaborate}/>
 
       </Page>
     );

@@ -7,40 +7,30 @@ import { Icon } from 'react-onsenui';
 // Styles
 import { }   from '../../../styles/styles';
 
-class Link extends Component {
+const linkStyle = {
+  border: '2px solid white',
+  borderRadius: '10px',
+  width: '50%',
+  margin: 'auto',
+  padding: '10px',
+};
+const copyStyle = {
+  textAlign: 'right',
+};
+const link = {
+  display: 'inline',
+};
 
-  constructor(props) {
-    super(props);
-    this.state = {
+const Link = () => (
 
-    };
-  }
+  <div style={linkStyle}>
+    <p style={link}>Shortened link</p>
 
-  render() {
-    const linkStyle = {
-      border: '2px solid white',
-      borderRadius: '10px',
-      width: '50%',
-      margin: 'auto',
-      padding: '10px',
-    };
-    const copyStyle = {
-      textAlign: 'right',
-      display: 'inline',
-    };
-    const link = {
-      display: 'inline',
-    };
-    return (
-      <div style={linkStyle}>
-        <p style={link}>Shortened link</p>
+    <Icon style={copyStyle} icon='fa-clone' />
 
-        <Icon icon='fa-clone' />
+  </div>
 
-      </div>
-    );
-  }
-}
+);
 
 const mapStateToProps = state => ({
   hello: state.hello,
