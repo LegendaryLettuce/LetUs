@@ -15,7 +15,7 @@ import eatData from './create/sampleData/eatData.js';
 import drinkData from './create/sampleData/drinkData.js';
 import playData from './create/sampleData/playData.js';
 
-const createData = ['Eat', 'Drink', 'Play'];
+const createData = [{ displayTitle: 'Eat' }, { displayTitle: 'Drink' }, { displayTitle: 'Play' }];
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
 
 class Create extends Component {
@@ -46,7 +46,7 @@ class Create extends Component {
       });
     } else if (this.state.selectedView.split(' ')[1] === 'Categories') {
       this.setState({
-        selectedView: item,
+        selectedView: item.displayTitle,
       }, () => {
         this.setState({
           selectedData: this.parseBizByCategory(this.state.data[this.state.selectedIndex]),
@@ -83,7 +83,11 @@ class Create extends Component {
         if (!(accum.indexOf(item[0]) + 1)) accum.push(item[0]);
       });
       return accum;
-    }, []);
+    }, []).map((uniq) => {
+      const newObject = {};
+      newObject.displayTitle = uniq;
+      return newObject;
+    });
   }
 
   parseBizByCategory(dataSet) {
@@ -94,7 +98,14 @@ class Create extends Component {
         }
         return accum2;
       }, false);
-      return validBiz ? accum.concat(business.name) : accum;
+      if (validBiz) {
+        const newObject = {};
+        newObject.displayTitle = business.name;
+        newObject.imageUrl = business.image_url;
+        newObject.rating = business.rating;
+        accum.push(newObject);
+      }
+      return accum;
     }, []);
   }
 
@@ -109,7 +120,7 @@ class Create extends Component {
         <div className="left">
           <BackButton onClick={this.handleBack}></BackButton>
         </div>
-        <div className='center'>{toolbarTitle}</div>
+        <div className='center' style={{ fontWeight: 'bolder' }}>{toolbarTitle}</div>
       </Toolbar>
     );
   }
@@ -124,6 +135,8 @@ class Create extends Component {
       zIndex: '5',
       marginLeft: '25%',
       width: '50%',
+      textAlign: 'center',
+      fontWeight: 'bold',
     };
 
     const padStyle = {
@@ -138,6 +151,7 @@ class Create extends Component {
           <GenericList
             data={this.state.selectedData}
             handleTouch={this.handleTouch}
+            selectedView={this.state.selectedView}
           />
           <div style={padStyle}/>
         </Page>
