@@ -91,7 +91,7 @@ function onListening() {
 }
 
 // connect to local db
-mongoose.connect('mongodb://localhost:27017/letus');
+mongoose.connect('mongodb://localhost/letus');
 
 
 module.exports = server;
