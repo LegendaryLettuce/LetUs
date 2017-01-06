@@ -116,7 +116,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
 
   // !TODO: allow leeway for intensifying card
   // TODO: turn green when going right, turn red when going left based on colors
-  move() {
+  move(px = this.x, py = this.y) {
     // TODO: finish vertical movement
     const distFromMid = Math.floor(
       (((this.x - this.diffx) - (this.state.windowWidth / 2))
@@ -129,8 +129,8 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     this.setState({
       topSpace: Math.floor((this.y / this.state.windowHeight) * 100),
     });
-    if (this.holding === true && this.stationary === false) {
-      setTimeout(this.move.bind(this), 1000 / 60);
+    if (px === this.x && py === this.y && this.holding) {
+      setTimeout(this.move.bind(this, px, py), 1000 / 60);
     }
   }
 
@@ -173,10 +173,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     if (Math.abs(distFromMid) > 3) {
       this.stationary = false;
       this.move();
-    } else {
-      this.stationary = true;
     }
-    // TODO: make stationary when not moving after initial move, loop move() on stationary
   }
 
   moveMouse(e) {
