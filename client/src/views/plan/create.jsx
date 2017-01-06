@@ -15,7 +15,30 @@ import eatData from './create/sampleData/eatData.js';
 import drinkData from './create/sampleData/drinkData.js';
 import playData from './create/sampleData/playData.js';
 
-const createData = [{ displayTitle: 'Eat' }, { displayTitle: 'Drink' }, { displayTitle: 'Play' }];
+const eatIcon = {
+  icon: 'fa-cutlery',
+  style: {
+    color: '#bcbcbc',
+  },
+};
+
+const drinkIcon = {
+  icon: 'fa-glass',
+  style: {
+    color: '#bcbcbc',
+  },
+};
+
+const playIcon = {
+  icon: 'fa-smile-o',
+  style: {
+    color: '#bcbcbc',
+  },
+};
+
+const createData = [{ displayTitle: 'Eat', useIcon: eatIcon },
+                    { displayTitle: 'Drink', useIcon: drinkIcon },
+                    { displayTitle: 'Play', useIcon: playIcon }];
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
 
 class Create extends Component {
