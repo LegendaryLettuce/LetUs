@@ -12,7 +12,9 @@ const savetoDB = (model) => {
   });
 };
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 // models to insert
+
 const addUser = (data) => {
   const newUser = new User({
     userid: data.userid,
@@ -23,6 +25,26 @@ const addUser = (data) => {
   });
   savetoDB(newUser);
 };
+
+const findUser = (data) => {
+  User.findOne({ userid: data }, (err, user) => {
+    if (!err) {
+      return user;
+    }
+    return console.log(err);
+  });
+};
+
+const getAllUsers = () => {
+  User.find((err, users) => {
+    if (!err) {
+      return users;
+    }
+    return console.log(err);
+  });
+};
+
+console.log(getAllUsers());
 
 const addUserFavorites = (data) => {
   const newUserFav = new UserFavs({
@@ -65,4 +87,6 @@ module.exports = {
   addUserFavorites,
   addCheckIn,
   addEvent,
+  findUser,
+  getAllUsers,
 };
