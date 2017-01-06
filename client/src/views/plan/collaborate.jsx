@@ -83,33 +83,23 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     }
   }
 
+  makeRGB(color, thisColor, speed) {
+    // eslint-disable-next-line no-nested-ternary
+    return (color === thisColor) ?
+      ((this.state.rgb[thisColor] + (speed * 2) < this.rgbMax) ?
+        this.state.rgb[thisColor] + (speed * 2) :
+        this.rgb[thisColor]) :
+      ((this.state.rgb[thisColor] - speed > this.otherRGB) ?
+        this.state.rgb[thisColor] - speed :
+        this.otherRGB);
+  }
+
   updateRGB(color, speed = 1) {
     this.setState({
       rgb: [
-        // eslint-disable-next-line no-nested-ternary
-        (color === RED) ?
-          ((this.state.rgb[RED] + (speed * 2) < this.rgbMax) ?
-            this.state.rgb[RED] + (speed * 2) :
-            this.rgb[RED]) :
-          ((this.state.rgb[RED] - speed > this.otherRGB) ?
-            this.state.rgb[RED] - speed :
-            this.otherRGB),
-        // eslint-disable-next-line no-nested-ternary
-        (color === GREEN) ?
-          ((this.state.rgb[GREEN] + (speed * 2) < this.rgbMax) ?
-            this.state.rgb[GREEN] + (speed * 2) :
-            this.rgb[GREEN]) :
-          ((this.state.rgb[GREEN] - speed > this.otherRGB) ?
-            this.state.rgb[GREEN] - speed :
-            this.otherRGB),
-        // eslint-disable-next-line no-nested-ternary
-        (color === BLUE) ?
-          ((this.state.rgb[BLUE] + (speed * 2) < this.rgbMax) ?
-            this.state.rgb[BLUE] + (speed * 2) :
-            this.rgb[BLUE]) :
-          ((this.state.rgb[BLUE] - speed > this.otherRGB) ?
-            this.state.rgb[BLUE] - speed :
-            this.otherRGB),
+        this.makeRGB(color, RED, speed),
+        this.makeRGB(color, GREEN, speed),
+        this.makeRGB(color, BLUE, speed),
       ],
     });
   }
@@ -185,6 +175,8 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     [this.x, this.y] = [e.nativeEvent.touches[0].clientX, e.nativeEvent.touches[0].clientY];
     this.moveBoth();
   }
+
+  // TODO: desaturate images and then saturate as card is held, tint on swipe  
 
   // !TODO: configure autoscroll to scroll more easily at edges
   // TODO: add a loading bar to the bottom of the card showing how intense it is
