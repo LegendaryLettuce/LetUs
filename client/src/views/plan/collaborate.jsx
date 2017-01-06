@@ -160,7 +160,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
       (((this.x - this.diffx) - (this.state.windowWidth / 2))
       / (this.state.windowWidth / 2))
       * 100 * 2);
-    if (Math.abs(distFromMid) > 3) {
+    if (Math.abs(distFromMid) > 9) {
       this.stationary = false;
       this.move();
     }
