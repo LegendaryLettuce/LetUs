@@ -48,7 +48,7 @@ class Friends extends Component {
               </div>
               <div className="center">
                 <span className="list__item__title">{row}</span>
-                <span className="list__item__subtitle">Ready to party</span>
+                <span className="list__item__subtitle">Ready to party!</span>
               </div>
               <label className="right">
           <Input inputId={`checkbow-${row}`} type='checkbox' onClick={() =>
