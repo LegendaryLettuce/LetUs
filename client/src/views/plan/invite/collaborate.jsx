@@ -1,34 +1,21 @@
 import React, { Component }       from 'react';
 // Redux
 import { connect }      from 'react-redux';
+
 // Onsen UI
 import ons              from 'onsenui';
-import { } from 'react-onsenui';
+import { Button } from 'react-onsenui';
 // Styles
 import { }   from '../../../styles/styles';
 
-class Collaborate extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-  }
-
-// inherit state of invited friends
-
-  render() {
-    return (
-      <div>
-        <h3>Collaborate button</h3>
-      </div>
-    );
-  }
-}
+const Collaborate = props => (
+  <div>
+    <Button modifier='large' onClick={props.route}>Collaborate</Button>
+  </div>
+);
 
 const mapStateToProps = state => ({
-  hello: state.hello,
+  friends: state.friends,
 });
 
 export default connect(mapStateToProps)(Collaborate);
