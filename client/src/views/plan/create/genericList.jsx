@@ -9,20 +9,46 @@ class GenericList extends Component {
   constructor(props) {
     super(props);
     this.renderRow = this.renderRow.bind(this);
+    this.renderIcon = this.renderIcon.bind(this);
+  }
+
+  renderIcon(iconData) {
+    return (
+      <ons-icon
+        icon={ iconData.icon || 'fa-exclamation-circle' }
+        size='30px'
+        fixed-width='false'
+        className='list__item__thumbnail'
+        style={ iconData.style}>
+      </ons-icon>
+    );
+  }
+
+  renderImage(imageUrl) {
+    return (
+      <img src={imageUrl} className='list__item__thumbnail' />
+    );
   }
 
   renderRow(rowData, index) {
-    // Randomly Select a Cat picture
-    const x = 40 + Math.round(5 * (Math.random() - 0.5)),
-          y = 40 + Math.round(5 * (Math.random() - 0.5));
+    // Randomly Select a Cat picture for place holder
+    const x = 40 + Math.round(5 * (Math.random() - 0.5));
+    const y = 40 + Math.round(5 * (Math.random() - 0.5));
+
+    const imageUrl = rowData.imageUrl || `http://placekitten.com/g/${x}/${y}`;
+
+    const leftTumbnail = rowData.useIcon ?
+      this.renderIcon(rowData.useIcon) : this.renderImage(imageUrl);
 
     return (
-      <ListItem key={index} modifier='longdivider' onTouchTap={() => { this.props.handleTouch(rowData); }} tappable>
+      <ListItem key={index} modifier='longdivider' onClick={() => {
+        this.props.handleTouch(rowData);
+      }} tappable>
       <div className='left'>
-          <img src={`http://placekitten.com/g/${x}/${y}`} className='list__item__thumbnail' />
+          {leftTumbnail}
         </div>
         <div className='center'>
-          {rowData}
+          {rowData.displayTitle}
         </div>
       </ListItem>
     );
