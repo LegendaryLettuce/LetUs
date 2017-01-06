@@ -6,21 +6,31 @@ import { Page, Carousel, CarouselItem } from 'react-onsenui';
 // Styles
 // import styles           from '../../styles/styles';
 
+const [RED, GREEN, BLUE] = [0, 1, 2];
+
 class Collaborate extends Component {
 
   constructor(props) {
     super(props);
-    this.rgb = ['181', '198', '208'];
-    this.rgbMin = 30;
     this.fake = ['Italian', 'French', 'Vietnamese', 'Japanese', 'Chinese'];
     this.index = 0;
-    // TODO: break out all non-rerendering state components
+    this.rgb = [200, 200, 200]; // [181, 198, 208];
+    this.otherRGB = 200;
+    this.rgbMin = 100;
+    this.rgbMax = 200;
+    this.x = window.innerWidth / 2;
+    this.diffx = 0;
+    this.y = window.innerHeight / 2; // unused
+    this.holding = false;
+    this.stationary = false;
     this.state = {
       word: this.fake[0],
       pos: 1,
       anim: {},
       rgb: this.rgb,
-      intensity: 0,
+      windowWidth: 0,
+      windowHeight: 0,
+      topSpace: 50,
     };
   }
   componentDidMount() {
@@ -50,87 +60,146 @@ class Collaborate extends Component {
 
   onFlick(e) {
     if (e.activeIndex !== 1) {
-      console.log(`DATA:
+      console.log(
+`DATA:
 type      - ${this.fake[this.index]}
 direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
-intensity - ${Math.floor(((this.rgb[0] - this.state.rgb[0]) / (this.rgb[0] - this.rgbMin)) * 100)}%`,
+intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
       );
-    }
-    // TODO: move up into if block
-    this.setState({
-      pos: e.activeIndex,
-      anim: { duration: 0 },
-    }, () => {
-      if (this.index < this.fake.length - 1) {
-        this.index += 0.5;
-      }
       this.setState({
-        word: this.fake[this.index],
-        rgb: this.rgb,
-        pos: 1,
-        anim: {},
+        pos: e.activeIndex,
+        anim: { duration: 0 },
+      }, () => {
+        if (this.index < this.fake.length - 1) {
+          this.index++;
+        }
+        this.setState({
+          word: this.fake[this.index],
+          rgb: this.rgb,
+          pos: 1,
+          anim: {},
+        });
       });
+    }
+  }
+
+  updateRGB(color, speed = 1) {
+    this.setState({
+      rgb: [
+        // eslint-disable-next-line no-nested-ternary
+        (color === RED) ?
+          ((this.state.rgb[RED] + (speed * 2) < this.rgbMax) ?
+            this.state.rgb[RED] + (speed * 2) :
+            this.rgb[RED]) :
+          ((this.state.rgb[RED] - speed > this.otherRGB) ?
+            this.state.rgb[RED] - speed :
+            this.otherRGB),
+        // eslint-disable-next-line no-nested-ternary
+        (color === GREEN) ?
+          ((this.state.rgb[GREEN] + (speed * 2) < this.rgbMax) ?
+            this.state.rgb[GREEN] + (speed * 2) :
+            this.rgb[GREEN]) :
+          ((this.state.rgb[GREEN] - speed > this.otherRGB) ?
+            this.state.rgb[GREEN] - speed :
+            this.otherRGB),
+        // eslint-disable-next-line no-nested-ternary
+        (color === BLUE) ?
+          ((this.state.rgb[BLUE] + (speed * 2) < this.rgbMax) ?
+            this.state.rgb[BLUE] + (speed * 2) :
+            this.rgb[BLUE]) :
+          ((this.state.rgb[BLUE] - speed > this.otherRGB) ?
+            this.state.rgb[BLUE] - speed :
+            this.otherRGB),
+      ],
     });
+  }
+
+  // !TODO: allow leeway for intensifying card
+  // TODO: turn green when going right, turn red when going left based on colors
+  move() {
+    // TODO: finish vertical movement
+    const distFromMid = Math.floor(
+      (((this.x - this.diffx) - (this.state.windowWidth / 2))
+      / (this.state.windowWidth / 2))
+      * 100 * 2);
+    if (distFromMid >= 50) this.updateRGB(GREEN, 1);
+    else if (distFromMid <= -50) this.updateRGB(RED, 1);
+    else this.updateRGB(BLUE, 1);
+
+    this.setState({
+      topSpace: Math.floor((this.y / this.state.windowHeight) * 100),
+    });
+    if (this.holding === true && this.stationary === false) {
+      setTimeout(this.move.bind(this), 1000 / 60);
+    }
   }
 
   onHold() {
-    this.setState({
-      rgb: (this.state.rgb[0] > this.rgbMin) ?
-      [this.state.rgb[0] - 2, this.state.rgb[1], this.state.rgb[2]] :
-      this.state.rgb,
-    }, () => {
-      if (this.state.stationary && this.state.holding) {
-        setTimeout(this.onHold.bind(this), 1000 / 60);
-      }
-    });
+    this.diffx = this.x - (this.state.windowWidth / 2);
+    if (this.otherRGB > this.rgbMin) this.otherRGB--;
+    this.updateRGB(BLUE);
+    if (this.stationary && this.holding) {
+      setTimeout(this.onHold.bind(this), 1000 / 60);
+    }
   }
 
   onHoldDone() {
-    this.setState({
-      rgb: (this.state.rgb[0] < this.rgb[0]) ?
-      [this.state.rgb[0] + 1, this.state.rgb[1], this.state.rgb[2]] :
-      this.state.rgb,
-    }, () => {
-      if (!this.state.holding && this.state.rgb[0] < this.rgb[0]) {
-        setTimeout(this.onHoldDone.bind(this), 1000 / 60);
-      }
-    });
+    if (this.otherRGB < this.rgbMax) this.otherRGB++;
+    this.updateRGB(BLUE);
+    if (!this.holding && JSON.stringify(this.state.rgb) !== JSON.stringify(this.rgb)) {
+      setTimeout(this.onHoldDone.bind(this), 1000 / 60);
+    }
   }
 
   onHoldStart(e) {
     e.preventDefault();
-    this.setState({
-      holding: true,
-      stationary: true,
-    }, () => {
-      this.onHold();
-    });
+    // TODO: only allow movement (disable carousel etc.) if not within element
+    this.diffx = this.x - (this.state.windowWidth / 2);
+    this.holding = true;
+    this.stationary = true;
+    this.onHold();
   }
 
   onHoldEnd() {
-    this.setState({
-      holding: false,
-    }, () => {
-      this.onHoldDone();
-    });
+    this.holding = false;
+    this.onHoldDone();
   }
 
-  onHoldMove() {
-    this.setState({
-      stationary: false,
-    });
+  moveBoth() {
+    const distFromMid = Math.floor(
+      (((this.x - this.diffx) - (this.state.windowWidth / 2))
+      / (this.state.windowWidth / 2))
+      * 100 * 2);
+    if (Math.abs(distFromMid) > 3) {
+      this.stationary = false;
+      this.move();
+    } else {
+      this.stationary = true;
+    }
+    // TODO: make stationary when not moving after initial move, loop move() on stationary
   }
 
-  // TODO: turn green when going right, turn red when going left based on colors
+  moveMouse(e) {
+    [this.x, this.y] = [e.nativeEvent.clientX, e.nativeEvent.clientY];
+    this.moveBoth();
+  }
+
+  moveTouch(e) {
+    [this.x, this.y] = [e.nativeEvent.touches[0].clientX, e.nativeEvent.touches[0].clientY];
+    this.moveBoth();
+  }
+
+  // !TODO: configure autoscroll to scroll more easily at edges
   // TODO: add a loading bar to the bottom of the card showing how intense it is
   // TODO: rewrite to use absolute pixel sizes rather than percents
   // TODO: make contents of card remain in place when card is moved
   // TODO: make card a reasonable size on all systems
-  // !TODO: allow leeway for intensifying card
-  // !TODO: configure autoscroll to scroll more easily at edges
   render() {
     return (
-      <Page>
+      <Page
+        onMouseMove={this.moveMouse.bind(this)}
+        onTouchMove={this.moveTouch.bind(this)}
+      >
         <Carousel
           fullscreen
           swipeable
@@ -141,15 +210,13 @@ intensity - ${Math.floor(((this.rgb[0] - this.state.rgb[0]) / (this.rgb[0] - thi
           animationOptions={this.state.anim}
           onTouchStart={this.onHoldStart.bind(this)}
           onTouchEnd={this.onHoldEnd.bind(this)}
-          onTouchMove={this.onHoldMove.bind(this)}
           onMouseDown={this.onHoldStart.bind(this)}
           onMouseUp={this.onHoldEnd.bind(this)}
-          onMouseMove={this.onHoldMove.bind(this)}
         >
           <CarouselItem/>
           <CarouselItem>
             <div style={{
-              height: `${50 - this.calculateHeight(2)}%`,
+              height: `${this.state.topSpace - this.calculateHeight(2)}%`,
             }}/>
             <div style={{
               height: `${this.calculateHeight()}%`,
