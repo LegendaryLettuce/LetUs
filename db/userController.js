@@ -1,19 +1,68 @@
-const { User, UserInfo, Friends, CheckIns, Events, Favorites } = require('./userSchema.js');
+const { User, UserFavs, Friends, CheckIns, Events } = require('./userSchema.js');
 
-// inserting for now, middleware later
+// modular insert function
 
-const newUser = new User({
-  userid: 'john doe',
-  pic: 'https://www.occrp.org/images/stories/CCWatch/16147_2.jpg',
-  phonenumber: '555-555-5555',
-  friendrank: 1,
-  lettuceleaves: 0,
-});
+const savetoDB = (model) => {
+  model.save((err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Inserted into DB', data);
+    }
+  });
+};
 
-newUser.save((err, success) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('Inserted');
-  }
-});
+// models to insert
+const addUser = (data) => {
+  const newUser = new User({
+    userid: data.userid,
+    pic: data.pic,
+    phonenumber: data.number,
+    friendrank: data.rank,
+    lettuceleaves: data.leaves,
+  });
+  savetoDB(newUser);
+};
+
+const addUserFavorites = (data) => {
+  const newUserFav = new UserFavs({
+    userid: data.userid,
+    favoriteid: data.favid,
+  });
+  savetoDB(newUserFav);
+};
+
+const addFriend = (data) => {
+  const newFriend = new Friends({
+    userid: data.userid,
+    friendid: data.friendid,
+  });
+  savetoDB(newFriend);
+};
+
+const addCheckIn = (data) => {
+  const newCheckIn = new CheckIns({
+    attendee: data.attendee,
+    eventid: data.eventid,
+    checkedin: data.checkedin,
+  });
+  savetoDB(newCheckIn);
+};
+
+const addEvent = (data) => {
+  const newEvent = new Events({
+    eventlord: data.eventlord,
+    attendee: data.attendee,
+    eventid: data.eventid,
+    checkedin: data.checkedin,
+  });
+  savetoDB(newEvent);
+};
+
+module.exports = {
+  addUser,
+  addFriend,
+  addUserFavorites,
+  addCheckIn,
+  addEvent,
+};

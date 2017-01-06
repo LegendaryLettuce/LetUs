@@ -37,24 +37,19 @@ const eventsSchema = new Schema({
   attendees: String,
 });
 
-const favoritesSchema = new Schema({
-  yelpid: String,
-});
-
 // add models to db
 const User = mongoose.model('User', userSchema);
-const UserInfo = mongoose.model('UserInfo', userFavoritesSchema);
+const UserFavs = mongoose.model('UserInfo', userFavoritesSchema);
 const Friends = mongoose.model('Friends', userFriendsSchema);
 const CheckIns = mongoose.model('CheckIns', checkInsSchema);
 const Events = mongoose.model('Events', eventsSchema);
-const Favorites = mongoose.model('Favorites', favoritesSchema);
+
 
 // modularize code for controller
 module.exports = {
   User,
-  UserInfo,
+  UserFavs,
   Friends,
   CheckIns,
   Events,
-  Favorites,
 };
