@@ -13,7 +13,7 @@ export const reducer = (state = {
       return {
         ...state,
         yelpData: action.yelpData,
-      }
+      };
     default:
       return state;
   }
