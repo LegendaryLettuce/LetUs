@@ -44,15 +44,15 @@ const config = {
     }),
   ] : [
     ...standardPlugins,
-    // new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
   ],
-  // devServer: {
-  //   colors: true,
-  //   historyApiFallback: true,
-  //   inline: false,
-  //   port: 3000,
-  //   hot: true,
-  // },
+  devServer: {
+    colors: true,
+    historyApiFallback: true,
+    inline: false,
+    port: 3000,
+    hot: true,
+  },
   module: {
     loaders: [
       {
