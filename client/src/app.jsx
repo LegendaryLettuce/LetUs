@@ -14,6 +14,7 @@ import Create           from './views/plan/create.jsx';
 import Collaborate      from './views/plan/collaborate.jsx';
 import Invite           from './views/plan/invite.jsx';
 import Login            from './views/login/login.jsx';
+import LiveList         from './views/plan/collaborate/liveList.jsx';
 
 const store = createStore(reducer);
 
@@ -41,9 +42,10 @@ render(
         <IndexRoute component={Login} />
       </Route>
       <Route>
-      <Route path='invite' component={Invite} />
-      <Route path='create' component={Create} />
-      <Route path='collaborate' component={Collaborate} />
+        <Route path='invite' component={Invite} />
+        <Route path='create' component={Create} />
+        <Route path='collaborate' component={Collaborate} />
+        <Route path='live' component={LiveList} />
       </Route>
     </Router>
   </Provider>,
