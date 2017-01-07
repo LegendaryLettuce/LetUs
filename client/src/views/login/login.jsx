@@ -31,7 +31,7 @@ const button = {
   'font-size': 'x-large',
 };
 
-const phrases = [' eat.', ' drink.', ' play.']; // Required
+const phrases = [' eat.', ' drink.', ' play.', ' send nudes.']; // Required
 const interval = 2000; // The time to wait before rendering the next string
 const typistProps = {} // Props that are passed to the react-typist component
 
