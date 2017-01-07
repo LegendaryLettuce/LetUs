@@ -12,7 +12,13 @@ class Collaborate extends Component {
 
   constructor(props) {
     super(props);
-    this.fake = ['Italian', 'French', 'Vietnamese', 'Japanese', 'Chinese'];
+    // this.fake = ['Italian', 'French', 'Vietnamese', 'Japanese', 'Chinese'];
+    // yelpData
+    // {
+    //   displayTitle: String,
+    //   imageUrl: String,
+    //   rating: Number,
+    // }
     this.index = 0;
     this.rgb = [200, 200, 200]; // [181, 198, 208];
     this.otherRGB = 200;
@@ -23,8 +29,9 @@ class Collaborate extends Component {
     this.y = window.innerHeight / 2; // unused
     this.holding = false;
     this.stationary = false;
+    this.getUrl = url => (`${url.slice(0, url.length - 6)}l${url.slice(url.length - 5, url.length)}`);
     this.state = {
-      word: this.fake[0],
+      word: this.props.yelpData[0].displayTitle,
       pos: 1,
       anim: {},
       rgb: this.rgb,
@@ -62,7 +69,7 @@ class Collaborate extends Component {
     if (e.activeIndex !== 1) {
       console.log(
 `DATA:
-type      - ${this.fake[this.index]}
+type      - ${this.props.yelpData[this.index].displayTitle}
 direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
 intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
       );
@@ -70,11 +77,11 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
         pos: e.activeIndex,
         anim: { duration: 0 },
       }, () => {
-        if (this.index < this.fake.length - 1) {
+        if (this.index < this.props.yelpData.length - 1) {
           this.index++;
         }
         this.setState({
-          word: this.fake[this.index],
+          word: this.props.yelpData[this.index].displayTitle,
           rgb: this.rgb,
           pos: 1,
           anim: {},
@@ -176,8 +183,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     this.moveBoth();
   }
 
-  // TODO: desaturate images and then saturate as card is held, tint on swipe  
-
+  // TODO: desaturate images and then saturate as card is held, tint on swipe
   // !TODO: configure autoscroll to scroll more easily at edges
   // TODO: programmatically define width and increase width of card
   // TODO: add a loading bar to the bottom of the card showing how intense it is
@@ -275,6 +281,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
             // OR
             // TODO: attach circle to window and make x or check appear on swipe
           }}>
+            <image src={this.getUrl()}/>
             {this.state.word}
           </div>
         </div>
@@ -284,7 +291,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
 }
 
 const mapStateToProps = state => ({
-  hello: state.hello,
+  yelpData: state.yelpData,
 });
 
 export default connect(mapStateToProps)(Collaborate);
