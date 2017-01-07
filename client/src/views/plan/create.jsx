@@ -1,9 +1,10 @@
 import React, { Component }       from 'react';
-// Redux
-import { connect }      from 'react-redux';
 // Onsen UI
 import ons              from 'onsenui';
 import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
+// Redux
+import { connect }      from 'react-redux';
+import { updateYelpData } from '../../redux/actions';
 // Styles
 import styles           from '../../styles/styles';
 // Subcomponents
@@ -75,12 +76,14 @@ const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
 
 class Create extends Component {
 
+
   constructor(props) {
     super(props);
+    this.props.updateYelpData(createData);
+    // this.props.yelpData; use this to pull from redux
     this.state = {
       selectedView: 'Create',
       selectedIndex: 0,
-      selectedData: createData,
       data: [createData, eatData, drinkData, playData],
     };
     this.decideTogether = this.decideTogether.bind(this);
@@ -97,15 +100,14 @@ class Create extends Component {
       this.setState({
         selectedView: `${categoryLabels[indexSelected]} Categories`,
         selectedIndex: indexSelected,
-        selectedData: this.parseUniqueCategories(this.state.data[indexSelected]),
+      }, () => {
+        this.props.updateYelpData(this.parseUniqueCategories(this.state.data[indexSelected]));
       });
     } else if (this.state.selectedView.split(' ')[1] === 'Categories') {
       this.setState({
         selectedView: item.displayTitle,
       }, () => {
-        this.setState({
-          selectedData: this.parseBizByCategory(this.state.data[this.state.selectedIndex]),
-        });
+        this.props.updateYelpData(this.parseBizByCategory(this.state.data[this.state.selectedIndex]));
       });
     }
   }
@@ -118,14 +120,13 @@ class Create extends Component {
           selectedView: 'Create',
           selectedIndex: 0,
         }, () => {
-          this.setState({
-            selectedData: this.state.data[this.state.selectedIndex],
-          });
+          this.props.updateYelpData(this.state.data[this.state.selectedIndex]);
         });
       } else {
         this.setState({
           selectedView: `${categoryLabels[this.state.selectedIndex]} Categories`,
-          selectedData: this.parseUniqueCategories(this.state.data[this.state.selectedIndex]),
+        }, () => {
+          this.props.updateYelpData(this.parseUniqueCategories(this.state.data[this.state.selectedIndex]));
         });
       }
     }
@@ -206,7 +207,7 @@ class Create extends Component {
           style={{ background: 'rgba(51,51,51,1)' }}
         >
           <GenericList
-            data={this.state.selectedData}
+            data={this.props.yelpData}
             handleTouch={this.handleTouch}
             selectedView={this.state.selectedView}
           />
@@ -222,8 +223,14 @@ class Create extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  hello: state.hello,
+const mapDispatchToProps = (dispatch) => ({
+  updateYelpData: (yelpData) => {
+    dispatch(updateYelpData(yelpData));
+  },
 });
 
-export default connect(mapStateToProps)(Create);
+const mapStateToProps = state => ({
+  yelpData: state.yelpData,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Create);
