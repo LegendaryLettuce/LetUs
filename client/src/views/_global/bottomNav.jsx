@@ -15,22 +15,21 @@ class BottomNav extends Component {
 
   render(){
     return (
-      <BottomToolbar style = {{ ...bottomNavStyle }} >
+      <BottomToolbar style = { bottomNavStyle } >
         <div className="left">
           <ToolbarButton>
-            <Icon icon="fa-home"/>
+            <Icon icon="fa-user"/>
             {/* Home */}
           </ToolbarButton>
         </div>
         <div className="center">
           <ToolbarButton>
-            <Icon icon="fa-calendar-o"/>
-            {/* Events */}
+            <Icon icon="fa-users"/>
           </ToolbarButton>
         </div>
         <div className="right">
           <ToolbarButton>
-            <Icon icon="fa-plus"/>
+            <Icon icon="fa-cog"/>
             {/* Create */}
           </ToolbarButton>
         </div>
