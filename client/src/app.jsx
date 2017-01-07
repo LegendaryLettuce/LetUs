@@ -1,4 +1,4 @@
-import { AppContainer } from 'react-hot-loader';
+// import { AppContainer } from 'react-hot-loader';
 import React            from 'react';
 import { render }       from 'react-dom';
 import { Router, browserHistory, Route } from 'react-router';
@@ -17,22 +17,22 @@ import Login            from './views/login/login.jsx';
 
 const store = createStore(reducer);
 
-const routes = {
-  path: '/',
-  component: Login,
-  childRoutes: [
-    { path: '/plan/create',       component: Create },
-    { path: '/plan/collaborate',  component: Collaborate },
-    { path: '/plan/invite',       component: Invite },
-  //   { path: '/about', component: About },
-  //   {
-  //       path: '/posts',
-  //       component: Posts,
-  //       childRoutes: [ { path: '/post/:nr', component: Post } ]
-  //   },
-    // { path: '*', component: NoMatch}
-  ],
-};
+// const routes = {
+//   path: '/',
+//   component: Create,
+//   childRoutes: [
+//     { path: '/plan/create',       component: Create },
+//     { path: '/plan/collaborate',  component: Collaborate },
+//     { path: '/plan/invite',       component: Invite },
+//   //   { path: '/about', component: About },
+//   //   {
+//   //       path: '/posts',
+//   //       component: Posts,
+//   //       childRoutes: [ { path: '/post/:nr', component: Post } ]
+//   //   },
+//     // { path: '*', component: NoMatch}
+//   ],
+// };
 
 render(
   <Provider store={store}>
@@ -46,17 +46,17 @@ render(
   document.getElementById('app'),
 );
 
-if (module.hot) {
-  module.hot.accept(
-    () => {
-      render(
-        <AppContainer>
-          <Provider store={store}>
-            <Router history={browserHistory} routes={routes} />
-          </Provider>
-        </AppContainer>,
-        document.getElementById('app'),
-      );
-    },
-  );
-}
+// if (module.hot) {
+//   module.hot.accept(
+//     () => {
+//       render(
+//         <AppContainer>
+//           <Provider store={store}>
+//             <Router history={browserHistory} routes={routes} />
+//           </Provider>
+//         </AppContainer>,
+//         document.getElementById('app'),
+//       );
+//     },
+//   );
+// }

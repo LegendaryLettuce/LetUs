@@ -7,24 +7,32 @@ import { Page, Carousel, CarouselItem } from 'react-onsenui';
 // import styles           from '../../styles/styles';
 
 const [RED, GREEN, BLUE] = [0, 1, 2];
+const WIDTH_PERCENT = 66;
 
 class Collaborate extends Component {
 
   constructor(props) {
     super(props);
-    this.fake = ['Italian', 'French', 'Vietnamese', 'Japanese', 'Chinese'];
+    // this.fake = ['Italian', 'French', 'Vietnamese', 'Japanese', 'Chinese'];
+    // yelpData
+    // {
+    //   displayTitle: String,
+    //   imageUrl: String,
+    //   rating: Number,
+    // }
     this.index = 0;
     this.rgb = [200, 200, 200]; // [181, 198, 208];
     this.otherRGB = 200;
-    this.rgbMin = 100;
+    this.rgbMin = 30;
     this.rgbMax = 200;
     this.x = window.innerWidth / 2;
     this.diffx = 0;
     this.y = window.innerHeight / 2; // unused
     this.holding = false;
     this.stationary = false;
+    this.getUrl = url => (`${url.slice(0, url.length - 6)}l${url.slice(url.length - 5, url.length)}`);
     this.state = {
-      word: this.fake[0],
+      word: this.props.yelpData[0].displayTitle,
       pos: 1,
       anim: {},
       rgb: this.rgb,
@@ -53,7 +61,7 @@ class Collaborate extends Component {
   calculateHeight(div = 1) {
     return (
       Math.floor(
-        Math.floor(((this.state.windowWidth / 2) / this.state.windowHeight) * 100)
+        Math.floor(((this.state.windowWidth / 1.5) / this.state.windowHeight) * 100)
       / div)
     );
   }
@@ -62,7 +70,7 @@ class Collaborate extends Component {
     if (e.activeIndex !== 1) {
       console.log(
 `DATA:
-type      - ${this.fake[this.index]}
+type      - ${this.props.yelpData[this.index].displayTitle}
 direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
 intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
       );
@@ -70,14 +78,17 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
         pos: e.activeIndex,
         anim: { duration: 0 },
       }, () => {
-        if (this.index < this.fake.length - 1) {
+        if (this.index < this.props.yelpData.length - 1) {
           this.index++;
         }
         this.setState({
-          word: this.fake[this.index],
+          word: this.props.yelpData[this.index].displayTitle,
           rgb: this.rgb,
-          pos: 1,
-          anim: {},
+        }, () => {
+          setTimeout(this.setState.bind(this, {
+            pos: 1,
+            anim: {},
+          }), 30);
         });
       });
     }
@@ -176,9 +187,9 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     this.moveBoth();
   }
 
-  // TODO: desaturate images and then saturate as card is held, tint on swipe  
-
+  // TODO: desaturate images and then saturate as card is held, tint on swipe
   // !TODO: configure autoscroll to scroll more easily at edges
+  // TODO: programmatically define width and increase width of card
   // TODO: add a loading bar to the bottom of the card showing how intense it is
   // TODO: rewrite to use absolute pixel sizes rather than percents
   // TODO: make contents of card remain in place when card is moved
@@ -189,56 +200,124 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
         onMouseMove={this.moveMouse.bind(this)}
         onTouchMove={this.moveTouch.bind(this)}
       >
-        <Carousel
-          fullscreen
-          swipeable
-          autoScroll
-          overscrollable
-          index={this.state.pos}
-          onPostChange={this.onFlick.bind(this)}
-          animationOptions={this.state.anim}
-          onTouchStart={this.onHoldStart.bind(this)}
-          onTouchEnd={this.onHoldEnd.bind(this)}
-          onMouseDown={this.onHoldStart.bind(this)}
-          onMouseUp={this.onHoldEnd.bind(this)}
-        >
-          <CarouselItem/>
-          <CarouselItem>
-            <div style={{
-              height: `${this.state.topSpace - this.calculateHeight(2)}%`,
-            }}/>
-            <div style={{
-              height: `${this.calculateHeight()}%`,
-              width: '50%',
-              marginLeft: '25%',
-              fontSize: '1.5em',
-              textAlign: 'center',
-              background: `rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]})`,
-              color: '#242424',
-              borderRadius: '10%',
-              boxShadow: '0 0 1em 0 #000 inset',
-              border: '1px solid #ccc',
-            }}>
+          <Carousel
+            fullscreen
+            swipeable
+            autoScroll
+            overscrollable
+            index={this.state.pos}
+            onPostChange={this.onFlick.bind(this)}
+            animationOptions={this.state.anim}
+            onTouchStart={this.onHoldStart.bind(this)}
+            onTouchEnd={this.onHoldEnd.bind(this)}
+            onMouseDown={this.onHoldStart.bind(this)}
+            onMouseUp={this.onHoldEnd.bind(this)}
+            style={{
+              zIndex: '3',
+              // background: '#242424',
+              // WebkitBackgroundClip: '',
+              // backgroundClip: '',
+            }}
+          >
+            <CarouselItem/>
+            <CarouselItem>
               <div style={{
-                // fontWeight: '900',
-                // WebkitTextStroke: '1px #ccc',
-                // textShadow: '0 0 1em #000', // , 0 0 .33em rgba(0,0,0,.33)
-                padding: '10%',
-                paddingTop: '70%',
+                height: `${50 - this.calculateHeight(2)}%`,
+              }}/>
+              <div style={{
+                height: `${this.calculateHeight() + 3}%`, // TODO: change size based on text lines
+                width: `${WIDTH_PERCENT}%`,
+                marginLeft: `${((100 - WIDTH_PERCENT) / 2)}%`,
+                borderRadius: `${0.1 * this.state.windowWidth}px`,
+                boxShadow: '0 0 0 10000em #242424',
+                border: `1px solid rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]})`, // #ccc
+                overflow: 'hidden',
+                // zIndex: '3',
+                // border: '1px solid #ccc',
               }}>
+                <div style={{
+                  height: '100%',
+                  width: '100%',
+                  // height: `${this.calculateHeight()}%`,
+                  // width: `${WIDTH_PERCENT}%`,
+                  // marginLeft: `${((100 - WIDTH_PERCENT) / 2)}%`,
+                  fontSize: 'xx-large',
+                  textAlign: 'center',
+                  background: `rgba(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]},0)`,
+                  // color: '#242424', // TODO: get color from OnsenUI
+                  borderRadius: '10%',
+                  boxShadow: '0 0 2em 0 #333 inset',
+                  // border: '1px solid #ccc',
+                }}>
+                  <div style={{
+                    // fontWeight: '900',
+                    // WebkitTextStroke: '1px #ccc',
+                    // textShadow: '0 0 1em #000', // , 0 0 .33em rgba(0,0,0,.33)
+                    padding: '10%',
+                    paddingTop: '70%',
+                  }}>
+                    {'' /* this.state.word */}
+                  </div>
+                </div>
+              </div>
+            </CarouselItem>
+            <CarouselItem/>
+          </Carousel>
+          <div style={{
+            height: `${50 - this.calculateHeight(2)}%`,
+          }}/>
+          <div style={{
+            fontSize: 'xx-large',
+            textAlign: 'center',
+            color: '#242424', // TODO: get color from OnsenUI
+            position: 'fixed',
+            height: `${this.calculateHeight() + 3.1}%`,
+            width: `${WIDTH_PERCENT + 0.1}%`,
+            marginLeft: `${((100 - WIDTH_PERCENT) / 2)}%`,
+            zIndex: '2',
+            borderRadius: `${0.1 * this.state.windowWidth}px`,
+            boxShadow: '0 0 0 10000em #ccc',
+            background: '#888',
+          }}>
+            <div style={{
+              // color: '#242424',
+              // padding: '10%',
+              // paddingTop: '70%',
+              // TODO: place x and o icons on left and right hidden until revealed by card
+              // TODO: make icon colors more saturated if more intense
+              // TODO: replace background change with loading bar
+              // OR
+              // TODO: attach circle to window and make x or check appear on swipe
+            }}>
+              <div
+                style={{
+                  height: `${(((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1}px`,
+                  width: `${((WIDTH_PERCENT / 100) * this.state.windowWidth) + 1}px`,
+                  // boxShadow: '0 0 0 1px #242424',
+                  borderTopRightRadius: `${0.1 * this.state.windowWidth}px`,
+                  borderTopLeftRadius: `${0.1 * this.state.windowWidth}px`,
+                  overflow: 'hidden',
+                }}
+              >
+                <img
+                  src={this.getUrl(this.props.yelpData[this.index].imageUrl)}
+                  alt=''
+                  height={`${(this.calculateHeight() / 100) * this.state.windowHeight}`}
+                  width={`${(WIDTH_PERCENT / 100) * this.state.windowWidth}`}
+                />
+              </div>
+              <div style={{ padding: `${0.01 * this.state.windowHeight}px` }}>
                 {this.state.word}
               </div>
             </div>
-          </CarouselItem>
-          <CarouselItem/>
-        </Carousel>
+          </div>
       </Page>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  hello: state.hello,
+  yelpData: state.yelpData,
 });
 
 export default connect(mapStateToProps)(Collaborate);

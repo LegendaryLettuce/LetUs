@@ -108,7 +108,9 @@ class Create extends Component {
       this.setState({
         selectedView: item.displayTitle,
       }, () => {
-        this.props.updateYelpData(this.parseBizByCategory(this.state.data[this.state.selectedIndex]));
+        this.props.updateYelpData(
+          this.parseBizByCategory(this.state.data[this.state.selectedIndex]),
+        );
       });
     }
   }
@@ -127,7 +129,9 @@ class Create extends Component {
         this.setState({
           selectedView: `${categoryLabels[this.state.selectedIndex]} Categories`,
         }, () => {
-          this.props.updateYelpData(this.parseUniqueCategories(this.state.data[this.state.selectedIndex]));
+          this.props.updateYelpData(
+            this.parseUniqueCategories(this.state.data[this.state.selectedIndex]),
+          );
         });
       }
     }
@@ -218,14 +222,16 @@ class Create extends Component {
           className='center'
           style={buttonStyle}
           onClick={this.decideTogether}
+
         >Decide Together</Button>
         <BottomNav></BottomNav>
+
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   updateYelpData: (yelpData) => {
     dispatch(updateYelpData(yelpData));
   },
