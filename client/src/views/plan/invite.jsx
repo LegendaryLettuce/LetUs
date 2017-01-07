@@ -62,7 +62,7 @@ class Invite extends Component {
 }
 
 const mapStateToProps = state => ({
-  hello: state.hello,
+  friends: state.friends,
 });
 
 export default connect(mapStateToProps)(Invite);
