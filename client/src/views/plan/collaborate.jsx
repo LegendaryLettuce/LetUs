@@ -13,7 +13,6 @@ class Collaborate extends Component {
 
   constructor(props) {
     super(props);
-    // this.fake = ['Italian', 'French', 'Vietnamese', 'Japanese', 'Chinese'];
     // yelpData
     // {
     //   displayTitle: String,
@@ -21,13 +20,13 @@ class Collaborate extends Component {
     //   rating: Number,
     // }
     this.index = 0;
-    this.rgb = [200, 200, 200]; // [181, 198, 208];
+    this.rgb = [200, 200, 200];
     this.otherRGB = 200;
     this.rgbMin = 30;
     this.rgbMax = 200;
     this.x = window.innerWidth / 2;
     this.diffx = 0;
-    this.y = window.innerHeight / 2; // unused
+    this.y = window.innerHeight / 2;
     this.holding = false;
     this.stationary = false;
     this.getUrl = url => (`${url.slice(0, url.length - 6)}l${url.slice(url.length - 5, url.length)}`);
@@ -115,10 +114,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     });
   }
 
-  // !TODO: allow leeway for intensifying card
-  // TODO: turn green when going right, turn red when going left based on colors
   move(px = this.x, py = this.y) {
-    // TODO: finish vertical movement
     const distFromMid = Math.floor(
       (((this.x - this.diffx) - (this.state.windowWidth / 2))
       / (this.state.windowWidth / 2))
@@ -154,7 +150,6 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
 
   onHoldStart(e) {
     e.preventDefault();
-    // TODO: only allow movement (disable carousel etc.) if not within element
     this.diffx = this.x - (this.state.windowWidth / 2);
     this.holding = true;
     this.stationary = true;
@@ -187,12 +182,14 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     this.moveBoth();
   }
 
-  // TODO: desaturate images and then saturate as card is held, tint on swipe
+
+  // TODO: remove vertical movement
+
   // !TODO: configure autoscroll to scroll more easily at edges
   // TODO: programmatically define width and increase width of card
   // TODO: add a loading bar to the bottom of the card showing how intense it is
+  //       OR make the border a loading bar
   // TODO: rewrite to use absolute pixel sizes rather than percents
-  // TODO: make contents of card remain in place when card is moved
   // TODO: make card a reasonable size on all systems
   render() {
     return (
@@ -214,9 +211,6 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
             onMouseUp={this.onHoldEnd.bind(this)}
             style={{
               zIndex: '3',
-              // background: '#242424',
-              // WebkitBackgroundClip: '',
-              // backgroundClip: '',
             }}
           >
             <CarouselItem/>
@@ -232,40 +226,21 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
                 boxShadow: '0 0 0 10000em #242424',
                 border: `1px solid rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]})`, // #ccc
                 overflow: 'hidden',
-                // zIndex: '3',
-                // border: '1px solid #ccc',
               }}>
                 <div style={{
                   height: '100%',
                   width: '100%',
-                  // height: `${this.calculateHeight()}%`,
-                  // width: `${WIDTH_PERCENT}%`,
-                  // marginLeft: `${((100 - WIDTH_PERCENT) / 2)}%`,
                   fontSize: 'xx-large',
                   textAlign: 'center',
-                  background: `rgba(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]},0)`,
-                  // color: '#242424', // TODO: get color from OnsenUI
+                  background: 'rgba(0,0,0,0)',
                   borderRadius: '10%',
                   boxShadow: '0 0 2em 0 #333 inset',
-                  // border: '1px solid #ccc',
-                }}>
-                  <div style={{
-                    // fontWeight: '900',
-                    // WebkitTextStroke: '1px #ccc',
-                    // textShadow: '0 0 1em #000', // , 0 0 .33em rgba(0,0,0,.33)
-                    padding: '10%',
-                    paddingTop: '70%',
-                  }}>
-                    {'' /* this.state.word */}
-                  </div>
-                </div>
+                }}/>
               </div>
             </CarouselItem>
             <CarouselItem/>
           </Carousel>
-          <div style={{
-            height: `${50 - this.calculateHeight(2)}%`,
-          }}/>
+          <div style={{ height: `${50 - this.calculateHeight(2)}%` }}/>
           <div style={{
             fontSize: 'xx-large',
             textAlign: 'center',
@@ -279,36 +254,31 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
             boxShadow: '0 0 0 10000em #ccc',
             background: '#888',
           }}>
-            <div style={{
-              // color: '#242424',
-              // padding: '10%',
-              // paddingTop: '70%',
-              // TODO: place x and o icons on left and right hidden until revealed by card
-              // TODO: make icon colors more saturated if more intense
-              // TODO: replace background change with loading bar
-              // OR
-              // TODO: attach circle to window and make x or check appear on swipe
-            }}>
-              <div
-                style={{
-                  height: `${(((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1}px`,
-                  width: `${((WIDTH_PERCENT / 100) * this.state.windowWidth) + 1}px`,
-                  // boxShadow: '0 0 0 1px #242424',
-                  borderTopRightRadius: `${0.1 * this.state.windowWidth}px`,
-                  borderTopLeftRadius: `${0.1 * this.state.windowWidth}px`,
-                  overflow: 'hidden',
-                }}
-              >
-                <img
-                  src={this.getUrl(this.props.yelpData[this.index].imageUrl)}
-                  alt=''
-                  height={`${(this.calculateHeight() / 100) * this.state.windowHeight}`}
-                  width={`${(WIDTH_PERCENT / 100) * this.state.windowWidth}`}
-                />
-              </div>
-              <div style={{ padding: `${0.01 * this.state.windowHeight}px` }}>
-                {this.state.word}
-              </div>
+            <div
+              style={{
+                height: `${(((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1}px`,
+                width: `${((WIDTH_PERCENT / 100) * this.state.windowWidth) + 1}px`,
+                borderTopRightRadius: `${0.1 * this.state.windowWidth}px`,
+                borderTopLeftRadius: `${0.1 * this.state.windowWidth}px`,
+                overflow: 'hidden',
+                // TODO: place x and o icons on left and right hidden until revealed by card
+                // TODO: make icon colors more saturated if more intense
+                // TODO: replace background change with loading bar
+                // OR
+                // TODO: attach circle to window and make x or check appear on swipe
+
+                // TODO: display colored shadow from sides when past position required to send card
+              }}
+            >
+              <img
+                src={this.getUrl(this.props.yelpData[this.index].imageUrl)}
+                alt=''
+                height={`${(this.calculateHeight() / 100) * this.state.windowHeight}`}
+                width={`${(WIDTH_PERCENT / 100) * this.state.windowWidth}`}
+              />
+            </div>
+            <div style={{ padding: `${0.01 * this.state.windowHeight}px` }}>
+              {this.state.word}
             </div>
           </div>
       </Page>
