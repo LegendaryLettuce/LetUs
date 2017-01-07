@@ -33,7 +33,7 @@ class Friends extends Component {
       this.state.inviteFriends.splice(friendIndex, 1);
     }
     console.log(this.state.inviteFriends);
-    this.props.dispatch(updateInviteFriends(this.state.inviteFriends));
+    this.props.updateInviteFriends(this.state.inviteFriends);
   }
 
   render() {
@@ -63,8 +63,14 @@ class Friends extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  updateInviteFriends: (friends) => {
+    dispatch(updateInviteFriends(friends));
+  },
+});
+
 const mapStateToProps = state => ({
   hello: state.hello,
 });
 
-export default connect(mapStateToProps)(Friends);
+export default connect(mapStateToProps, mapDispatchToProps)(Friends);
