@@ -1,54 +1,89 @@
 import React, { Component }       from 'react';
-// Redux
-import { connect }      from 'react-redux';
 // Onsen UI
 import ons              from 'onsenui';
 import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
+// Redux
+import { connect }      from 'react-redux';
+import { updateYelpData } from '../../redux/actions';
 // Styles
 import styles           from '../../styles/styles';
-// React Router
-import { browserHistory, Link } from 'react-router';
 // Subcomponents
 import GenericList from './create/genericList.jsx';
 // Import sampleData
-import eatData from './create/sampleData/eatData.js';
-import drinkData from './create/sampleData/drinkData.js';
-import playData from './create/sampleData/playData.js';
+import eatData from './create/sampleData/eatData';
+import drinkData from './create/sampleData/drinkData';
+import playData from './create/sampleData/playData';
+
+const iconSize = '80px';
+
+const containerPadding = '1%';
+
+const icons = color => ({
+  paddingTop: '.4em',
+  paddingBottom: '.4em',
+  // eslint-disable-next-line no-nested-ternary
+  background: (!color) ?        'radial-gradient(#1ee, #5ff, #8ff)' :
+              (color === 1) ?   'radial-gradient(#e1e, #f5f, #f8f)' :
+                                'radial-gradient(#ee1, #ff5, #ff8)',
+  WebkitBackgroundClip: 'text',
+  backgroundClip: 'text',
+  color: 'transparent',
+});
 
 const eatIcon = {
   icon: 'fa-cutlery',
-  style: {
-    color: '#bcbcbc',
-  },
+  size: iconSize,
+  style: icons(0),
 };
 
 const drinkIcon = {
   icon: 'fa-glass',
-  style: {
-    color: '#bcbcbc',
-  },
+  size: iconSize,
+  style: icons(1),
 };
 
 const playIcon = {
   icon: 'fa-smile-o',
-  style: {
-    color: '#bcbcbc',
-  },
+  size: iconSize,
+  style: icons(2),
 };
 
-const createData = [{ displayTitle: 'Eat', useIcon: eatIcon },
-                    { displayTitle: 'Drink', useIcon: drinkIcon },
-                    { displayTitle: 'Play', useIcon: playIcon }];
+const textStyleCreate = {
+  fontSize: '400%',
+  fontWeight: 'bolder',
+};
+
+const eatContainer = {
+  paddingTop: containerPadding,
+  paddingBottom: containerPadding,
+};
+
+const drinkContainer = {
+  paddingTop: containerPadding,
+  paddingBottom: containerPadding,
+};
+
+const playContainer = {
+  paddingTop: containerPadding,
+  paddingBottom: containerPadding,
+};
+
+const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyleCreate, containerStyle: eatContainer },
+                    { displayTitle: 'Drink', useIcon: drinkIcon, textStyle: textStyleCreate, containerStyle: drinkContainer },
+                    { displayTitle: 'Play', useIcon: playIcon, textStyle: textStyleCreate, containerStyle: playContainer }];
+
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
 
 class Create extends Component {
 
+
   constructor(props) {
     super(props);
+    this.props.updateYelpData(createData);
+    // this.props.yelpData; use this to pull from redux
     this.state = {
       selectedView: 'Create',
       selectedIndex: 0,
-      selectedData: createData,
       data: [createData, eatData, drinkData, playData],
     };
     this.decideTogether = this.decideTogether.bind(this);
@@ -65,15 +100,14 @@ class Create extends Component {
       this.setState({
         selectedView: `${categoryLabels[indexSelected]} Categories`,
         selectedIndex: indexSelected,
-        selectedData: this.parseUniqueCategories(this.state.data[indexSelected]),
+      }, () => {
+        this.props.updateYelpData(this.parseUniqueCategories(this.state.data[indexSelected]));
       });
     } else if (this.state.selectedView.split(' ')[1] === 'Categories') {
       this.setState({
         selectedView: item.displayTitle,
       }, () => {
-        this.setState({
-          selectedData: this.parseBizByCategory(this.state.data[this.state.selectedIndex]),
-        });
+        this.props.updateYelpData(this.parseBizByCategory(this.state.data[this.state.selectedIndex]));
       });
     }
   }
@@ -86,14 +120,13 @@ class Create extends Component {
           selectedView: 'Create',
           selectedIndex: 0,
         }, () => {
-          this.setState({
-            selectedData: this.state.data[this.state.selectedIndex],
-          });
+          this.props.updateYelpData(this.state.data[this.state.selectedIndex]);
         });
       } else {
         this.setState({
           selectedView: `${categoryLabels[this.state.selectedIndex]} Categories`,
-          selectedData: this.parseUniqueCategories(this.state.data[this.state.selectedIndex]),
+        }, () => {
+          this.props.updateYelpData(this.parseUniqueCategories(this.state.data[this.state.selectedIndex]));
         });
       }
     }
@@ -103,14 +136,15 @@ class Create extends Component {
   parseUniqueCategories(dataSet) {
     return dataSet.businesses.reduce((accum, business) => {
       business.categories.forEach((item) => {
-        if (!(accum.indexOf(item[0]) + 1)) accum.push(item[0]);
+        if (!(accum.findIndex(ele => ele.displayTitle === item[0]) + 1)) {
+          const newObject = {};
+          newObject.displayTitle = item[0];
+          newObject.imageUrl = business.image_url;
+          accum.push(newObject);
+        }
       });
       return accum;
-    }, []).map((uniq) => {
-      const newObject = {};
-      newObject.displayTitle = uniq;
-      return newObject;
-    });
+    }, []);
   }
 
   parseBizByCategory(dataSet) {
@@ -170,9 +204,10 @@ class Create extends Component {
       <div>
         <Page
           renderToolbar={() => this.renderToolbar(this.state.selectedView)}
+          style={{ background: 'rgba(51,51,51,1)' }}
         >
           <GenericList
-            data={this.state.selectedData}
+            data={this.props.yelpData}
             handleTouch={this.handleTouch}
             selectedView={this.state.selectedView}
           />
@@ -188,8 +223,14 @@ class Create extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  hello: state.hello,
+const mapDispatchToProps = (dispatch) => ({
+  updateYelpData: (yelpData) => {
+    dispatch(updateYelpData(yelpData));
+  },
 });
 
-export default connect(mapStateToProps)(Create);
+const mapStateToProps = state => ({
+  yelpData: state.yelpData,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Create);
