@@ -14,7 +14,7 @@ import Create           from './views/plan/create.jsx';
 import Collaborate      from './views/plan/collaborate.jsx';
 import Invite           from './views/plan/invite.jsx';
 import Login            from './views/login/login.jsx';
-import LiveList         from './views/plan/collaborate/liveList.jsx';
+import LiveList         from './views/plan/liveList.jsx';
 
 const store = createStore(reducer);
 

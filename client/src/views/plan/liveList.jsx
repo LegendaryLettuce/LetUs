@@ -4,10 +4,10 @@ import ons              from 'onsenui';
 import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
-import { updateYelpData } from '../../../redux/actions';
+import { updateYelpData } from '../../redux/actions';
 // Subcomponents
-import GenericList from './../../../views/_global/genericList.jsx';
-import VotesProgress from './progressBar.jsx';
+import GenericList from './../_global/genericList.jsx';
+import VotesProgress from './collaborate/progressBar.jsx';
 
 class LiveList extends Component {
   constructor(props) {
