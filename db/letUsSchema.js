@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 // connection to db
 // TO DO: move to server
-mongoose.connect('mongodb://localhost/letus');
+// mongoose.connect('mongodb://localhost/letus');
 
 // define models
 const userSchema = new Schema({

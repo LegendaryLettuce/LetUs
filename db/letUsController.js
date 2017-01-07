@@ -1,4 +1,4 @@
-const { User, UserFavs, Friends, CheckIns, Events } = require('./userSchema.js');
+const { User, UserFavs, Friends, CheckIns, Events } = require('./letUsSchema.js');
 
 // modular insert function
 
