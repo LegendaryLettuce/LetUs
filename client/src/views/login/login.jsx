@@ -8,27 +8,16 @@ import { Icon, Button, BottomToolbar }             from 'react-onsenui';
 import { login, splashText, fbLogin, bodyStyle, tint, tagline } from '../../styles/styles';
 import TextCarousel from 'react-text-carousel';
 
-// const linkStyle = {
-//   border: '2px solid white',
-//   borderRadius: '10px',
-//   width: '50%',
-//   margin: 'auto',
-//   padding: '10px',
-// };
-// const copyStyle = {
-//   textAlign: 'right',
-// };
+// const images = ["http://68.media.tumblr.com/233a17b2322253404dfc6ce97501613b/tumblr_oh350r0AtK1u9ooogo1_540.gif", ]
 
-const images = ["http://68.media.tumblr.com/233a17b2322253404dfc6ce97501613b/tumblr_oh350r0AtK1u9ooogo1_540.gif", ]
-
-const timedBackground = () => {
-  setTimeout(() => {
-    console.log(x);
-  });
-};
+// const timedBackground = () => {
+//   setTimeout(() => {
+//     console.log(x);
+//   });
+// };
 
 const button = {
-  'font-size': 'x-large',
+  fontSize: 'x-large',
 };
 
 const phrases = [' eat.', ' drink.', ' play.']; // Required
