@@ -173,7 +173,7 @@ class Create extends Component {
 
   // On Click Event
   decideTogether() {
-    this.props.router.push('/plan/invite');
+    this.props.router.push('/invite');
   }
 
   renderToolbar(toolbarTitle) {

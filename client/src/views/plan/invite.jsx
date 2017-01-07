@@ -30,7 +30,7 @@ class Invite extends Component {
   }
 
   routeToCollaborate() {
-    this.props.router.push('/plan/collaborate');
+    this.props.router.push('/collaborate');
     console.log(this.props.friends);
   }
 

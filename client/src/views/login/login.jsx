@@ -30,7 +30,7 @@ class Login extends Component {
   }
 
   decideCreate() {
-    this.props.router.push('/plan/create');
+    this.props.router.push('/create');
   }
 
   render() {

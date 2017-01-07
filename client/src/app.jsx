@@ -1,7 +1,7 @@
 // import { AppContainer } from 'react-hot-loader';
 import React            from 'react';
 import { render }       from 'react-dom';
-import { Router, browserHistory, Route } from 'react-router';
+import { Router, browserHistory, Route, IndexRoute } from 'react-router';
 // Redux
 import { createStore }  from 'redux';
 import { Provider }     from 'react-redux';
@@ -38,9 +38,10 @@ render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/' component={Login} />
-      <Route path='/plan/invite' component={Invite} />
-      <Route path='/plan/create' component={Create} />
-      <Route path='/plan/collaborate' component={Collaborate} />
+      <IndexRoute component={Login} />
+      <Route path='invite' component={Invite} />
+      <Route path='create' component={Create} />
+      <Route path='collaborate' component={Collaborate} />
     </Router>
   </Provider>,
   document.getElementById('app'),
