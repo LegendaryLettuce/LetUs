@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // Redux
 import { connect }      from 'react-redux';
 // Onsen UI
-import { Page, Carousel, CarouselItem } from 'react-onsenui';
+import { Page, Carousel, CarouselItem, Icon } from 'react-onsenui';
 // Styles
 // import styles           from '../../styles/styles';
 
@@ -30,6 +30,13 @@ class Collaborate extends Component {
     this.holding = false;
     this.stationary = false;
     this.getUrl = url => (`${url.slice(0, url.length - 6)}l${url.slice(url.length - 5, url.length)}`);
+    this.ratingToArray = (rating) => {
+      const a = new Array(Math.floor(rating)).fill(0);
+      if (rating - Math.floor(rating) !== 0) {
+        a.push(1);
+      }
+      return a;
+    };
     this.state = {
       word: this.props.yelpData[0].displayTitle,
       pos: 1,
@@ -37,7 +44,6 @@ class Collaborate extends Component {
       rgb: this.rgb,
       windowWidth: 0,
       windowHeight: 0,
-      topSpace: 50,
     };
   }
   componentDidMount() {
@@ -93,6 +99,12 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     }
   }
 
+  getDistFromMid() {
+    return Math.floor(
+      (((this.x - this.diffx) - (this.state.windowWidth / 2)) / (this.state.windowWidth / 2))
+      * 100 * 2);
+  }
+
   makeRGB(color, thisColor, speed) {
     // eslint-disable-next-line no-nested-ternary
     return (color === thisColor) ?
@@ -115,17 +127,10 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
   }
 
   move(px = this.x, py = this.y) {
-    const distFromMid = Math.floor(
-      (((this.x - this.diffx) - (this.state.windowWidth / 2))
-      / (this.state.windowWidth / 2))
-      * 100 * 2);
+    const distFromMid = this.getDistFromMid();
     if (distFromMid >= 50) this.updateRGB(GREEN, 1);
     else if (distFromMid <= -50) this.updateRGB(RED, 1);
     else this.updateRGB(BLUE, 1);
-
-    this.setState({
-      topSpace: Math.floor((this.y / this.state.windowHeight) * 100),
-    });
     if (px === this.x && py === this.y && this.holding) {
       setTimeout(this.move.bind(this, px, py), 1000 / 60);
     }
@@ -162,10 +167,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
   }
 
   moveBoth() {
-    const distFromMid = Math.floor(
-      (((this.x - this.diffx) - (this.state.windowWidth / 2))
-      / (this.state.windowWidth / 2))
-      * 100 * 2);
+    const distFromMid = this.getDistFromMid();
     if (Math.abs(distFromMid) > 9) {
       this.stationary = false;
       this.move();
@@ -276,6 +278,40 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
                 height={`${(this.calculateHeight() / 100) * this.state.windowHeight}`}
                 width={`${(WIDTH_PERCENT / 100) * this.state.windowWidth}`}
               />
+            </div>
+            <div
+              className="rating"
+              style={{
+                position: 'absolute',
+                marginLeft: `${0.08 * this.state.windowWidth}px`,
+                height: `${0.1 * this.state.windowWidth}px`,
+                width: `${(0.1 * this.state.windowWidth) * 5}px`,
+                top: `${((((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1) - (0.1 * this.state.windowWidth)}px`,
+                background: 'rgba(172, 11, 11, 0.88)',
+                borderTopRightRadius: `${0.01 * this.state.windowWidth}px`,
+                borderTopLeftRadius: `${0.01 * this.state.windowWidth}px`,
+                boxShadow: '0 0 0 3px #888',
+              }}
+            >
+              {this.ratingToArray(this.props.yelpData[this.index].rating).map((e, i) => (
+                <Icon
+                  icon={`fa-star${e ? '-half' : ''}`}
+                  fixed-width="false"
+                  size={0.08 * this.state.windowWidth}
+                  key={i}
+                  style={{
+                    position: 'relative',
+                    top: `${((0.08 * this.state.windowWidth) - 30 < 0) ? ((0.08 * this.state.windowWidth) - 30) : 0}px`,
+                    paddingTop: `${0.01 * this.state.windowWidth}px`,
+                    height: `${0.08 * this.state.windowWidth}px`,
+                    width: `${0.08 * this.state.windowWidth}px`,
+                    paddingLeft: '2px',
+                    paddingRight: '2px',
+                    left: `${e ? `-${0.015 * this.state.windowWidth}px` : '0'}`,
+                    zIndex: `${e ? 7 : 8}`,
+                  }}
+                />
+              ))}
             </div>
             <div style={{ padding: `${0.01 * this.state.windowHeight}px` }}>
               {this.state.word}
