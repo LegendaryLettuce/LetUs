@@ -13,6 +13,7 @@ import GenericList from './create/genericList.jsx';
 import eatData from './create/sampleData/eatData';
 import drinkData from './create/sampleData/drinkData';
 import playData from './create/sampleData/playData';
+import  BottomNav from './../../views/_global/bottomNav.jsx';
 
 const iconSize = '80px';
 
@@ -188,7 +189,7 @@ class Create extends Component {
       position: 'fixed',
       bottom: '0',
       height: '5%',
-      marginBottom: '2%',
+      marginBottom: '12%',
       zIndex: '5',
       marginLeft: '25%',
       width: '50%',
@@ -197,7 +198,7 @@ class Create extends Component {
     };
 
     const padStyle = {
-      height: '8%',
+      height: '12%',
     };
 
     return (
@@ -218,6 +219,7 @@ class Create extends Component {
           style={buttonStyle}
           onClick={this.decideTogether}
         >Decide Together</Button>
+        <BottomNav></BottomNav>
       </div>
     );
   }

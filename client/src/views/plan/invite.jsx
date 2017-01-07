@@ -10,6 +10,7 @@ import { }   from '../../styles/styles';
 import  Link            from './invite/link.jsx';
 import  Friends         from './invite/friends.jsx';
 import  Collaborate      from './invite/collaborate.jsx';
+import  BottomNav        from './../../views/_global/bottomNav.jsx';
 
 class Invite extends Component {
 
@@ -54,6 +55,7 @@ class Invite extends Component {
 
         <Collaborate route={this.routeToCollaborate}/>
 
+        <BottomNav></BottomNav>
       </Page>
     );
   }
