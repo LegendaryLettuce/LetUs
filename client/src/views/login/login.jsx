@@ -24,21 +24,32 @@ const phrases = [' eat.', ' drink.', ' play.']; // Required
 const interval = 2000; // The time to wait before rendering the next string
 const typistProps = {} // Props that are passed to the react-typist component
 
-const Login = () => (
-  <div style={login}>
-    <div style={tint}>
-      <div style={splashText}>
-        Let Us
-        <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} />
-      </div>
-      <div style={tagline}>Collaborate event planning with your friends.</div>
-      <BottomToolbar style={fbLogin}>
-        <Button style={button}><Icon icon="fa-facebook-square"/> Login with Facebook</Button>
-      </BottomToolbar>
-    </div>
-  </div>
+class Login extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-);
+  decideCreate() {
+    this.props.router.push('/plan/create');
+  }
+
+  render() {
+    return (
+      <div style={login}>
+        <div style={tint}>
+          <div style={splashText}>
+            Let Us
+            <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} />
+          </div>
+          <div style={tagline}>Collaborate event planning with your friends.</div>
+          <BottomToolbar style={fbLogin} >
+            <Button style={button} onClick={this.decideCreate.bind(this)}><Icon icon="fa-facebook-square"/> Login with Facebook</Button>
+          </BottomToolbar>
+        </div>
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   hello: state.hello,
