@@ -37,11 +37,14 @@ const store = createStore(reducer);
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path='/' component={Login} />
-      <IndexRoute component={Login} />
+      <Route path='/' component={Login}>
+        <IndexRoute component={Login} />
+      </Route>
+      <Route>
       <Route path='invite' component={Invite} />
       <Route path='create' component={Create} />
       <Route path='collaborate' component={Collaborate} />
+      </Route>
     </Router>
   </Provider>,
   document.getElementById('app'),
