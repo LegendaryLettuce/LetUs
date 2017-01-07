@@ -13,12 +13,13 @@ import '../../node_modules/onsenui/css/onsen-css-components-dark-theme.css';
 import Create           from './views/plan/create.jsx';
 import Collaborate      from './views/plan/collaborate.jsx';
 import Invite           from './views/plan/invite.jsx';
+import Login            from './views/login/login.jsx';
 
 const store = createStore(reducer);
 
 const routes = {
   path: '/',
-  component: Create,
+  component: Login,
   childRoutes: [
     { path: '/plan/create',       component: Create },
     { path: '/plan/collaborate',  component: Collaborate },
@@ -36,7 +37,7 @@ const routes = {
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path='/' component={Create} />
+      <Route path='/' component={Login} />
       <Route path='/plan/invite' component={Invite} />
       <Route path='/plan/create' component={Create} />
       <Route path='/plan/collaborate' component={Collaborate} />
