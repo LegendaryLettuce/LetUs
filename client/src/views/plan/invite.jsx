@@ -32,7 +32,7 @@ class Invite extends Component {
 
   routeToCollaborate() {
     this.props.router.push('/collaborate');
-    console.log(this.props.friends);
+    // console.log(this.props.friends);
     // request to server to db to save data
   }
 
