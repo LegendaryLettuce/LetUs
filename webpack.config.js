@@ -31,6 +31,7 @@ const config = {
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js',
+    publicPath: '/',
   },
   plugins: (process.env.NODE_ENV === 'production') ? [
     ...standardPlugins,
