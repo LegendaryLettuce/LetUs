@@ -9,6 +9,23 @@ import { updateYelpData } from '../../redux/actions';
 import GenericList from './../_global/genericList.jsx';
 import VotesProgress from './collaborate/progressBar.jsx';
 
+const buttonStyle = {
+  padding: '0px 20px 0px 20px',
+  position: 'fixed',
+  bottom: '0',
+  height: '5%',
+  marginBottom: '12%',
+  zIndex: '5',
+  marginLeft: '25%',
+  width: '50%',
+  textAlign: 'center',
+  fontWeight: 'bold',
+};
+
+const padStyle = {
+  height: '12%',
+};
+
 class LiveList extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +38,7 @@ class LiveList extends Component {
     };
     this.handleBack = this.handleBack.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
+    this.goEvent = this.goEvent.bind(this);
   }
 
   handleBack() {
@@ -29,6 +47,11 @@ class LiveList extends Component {
 
   handleTouch() {
     console.log('HANDLING TOUCH');
+  }
+
+  goEvent() {
+    // need to send redux the first item in liveData
+    this.props.router.push('/event');
   }
 
   renderToolbar() {
@@ -52,6 +75,12 @@ class LiveList extends Component {
             data={this.props.liveData}
             handleTouch={this.handleTouch}
           />
+        <div style={padStyle}/>
+        <Button
+          className='center'
+          style={buttonStyle}
+          onClick={this.goEvent}
+        >Go To Authums</Button>
       </Page>
     );
   }

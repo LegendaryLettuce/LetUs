@@ -167,6 +167,11 @@ class Create extends Component {
         newObject.displayTitle = business.name;
         newObject.imageUrl = business.image_url;
         newObject.rating = business.rating;
+        newObject.categories = business.categories;
+        newObject.displayAddress = business.location.display_address;
+        newObject.displayPhone = business.display_phone;
+        newObject.snippetText = business.snippet_text;
+        newObject.mobileUrl = business.mobile_url;
         accum.push(newObject);
       }
       return accum;
