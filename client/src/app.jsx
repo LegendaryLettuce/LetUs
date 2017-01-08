@@ -46,6 +46,7 @@ render(
         <Route path='create' component={Create} />
         <Route path='collaborate' component={Collaborate} />
         <Route path='live' component={LiveList} />
+        <Route path='event' component={LiveList} />
       </Route>
     </Router>
   </Provider>,
