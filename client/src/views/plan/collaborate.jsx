@@ -19,6 +19,11 @@ class Collaborate extends Component {
     //   displayTitle: String,
     //   imageUrl: String,
     //   rating: Number,
+    //   categories: Array,
+    //   displayAddress: Array,
+    //   displayPhone: String,
+    //   snippetText: String,
+    //   mobileUrl: String,
     // }
     this.index = 0;
     this.rgb = [200, 200, 200];
@@ -307,10 +312,11 @@ class Collaborate extends Component {
                 height: `${0.1 * this.state.windowWidth}px`,
                 width: `${(0.1 * this.state.windowWidth) * 5}px`,
                 top: `${((((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1) - (0.1 * this.state.windowWidth)}px`,
-                background: 'rgba(172, 11, 11, 0.88)',
+                background: 'rgba(60, 64, 65, 0.71)',
                 borderTopRightRadius: `${0.01 * this.state.windowWidth}px`,
                 borderTopLeftRadius: `${0.01 * this.state.windowWidth}px`,
                 boxShadow: '0 0 0 2px #888',
+                color: '#ccc',
               }}
             >
               {this.ratingToArray(this.props.yelpData[this.index].rating).map((e, i) => (
