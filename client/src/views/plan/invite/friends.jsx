@@ -32,7 +32,7 @@ class Friends extends Component {
     } else if (friendIndex !== -1) {
       this.state.inviteFriends.splice(friendIndex, 1);
     }
-    console.log(this.state.inviteFriends);
+    // console.log(this.state.inviteFriends);
     this.props.updateInviteFriends(this.state.inviteFriends);
   }
 
@@ -42,7 +42,7 @@ class Friends extends Component {
         <List
           dataSource={this.props.friends}
           renderRow={(row, idx) => (
-            <ListItem modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
+            <ListItem key={idx} modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
               <div className="left">
                 <Icon icon="md-face" className="list__item__icon" />
               </div>
