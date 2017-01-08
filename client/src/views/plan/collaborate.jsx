@@ -38,6 +38,7 @@ class Collaborate extends Component {
       }
       return a;
     };
+    this.loaded = false;
     this.state = {
       word: this.props.yelpData[0].displayTitle,
       pos: 1,
@@ -49,16 +50,15 @@ class Collaborate extends Component {
     };
   }
   componentDidMount() {
+    this.loaded = true;
     this.setState({
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
-      loaded: true,
     }, () => window.addEventListener('resize', this.updateWindowSize.bind(this)));
   }
   componentWillUnmount() {
-    this.setState({
-      loaded: false,
-    }, () => window.removeEventListener('resize', this.updateWindowSize.bind(this)));
+    this.loaded = false;
+    window.removeEventListener('resize', this.updateWindowSize.bind(this));
   }
 
   updateWindowSize() {
@@ -83,12 +83,12 @@ class Collaborate extends Component {
         preference: (e.activeIndex) ? -1 : 1,
         intensity: Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100),
       });
-//       console.log(
-// `DATA:
-// type      - ${this.props.yelpData[this.index].displayTitle}
-// direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
-// intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
-//       );
+      console.log(
+`DATA:
+type      - ${this.props.yelpData[this.index].displayTitle}
+direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
+intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
+      );
       this.setState({
         pos: e.activeIndex,
         anim: { duration: 0 },
@@ -129,13 +129,15 @@ class Collaborate extends Component {
   }
 
   updateRGB(color, speed = 1) {
-    this.setState({
-      rgb: [
-        this.makeRGB(color, RED, speed),
-        this.makeRGB(color, GREEN, speed),
-        this.makeRGB(color, BLUE, speed),
-      ],
-    });
+    if (this.loaded) {
+      this.setState({
+        rgb: [
+          this.makeRGB(color, RED, speed),
+          this.makeRGB(color, GREEN, speed),
+          this.makeRGB(color, BLUE, speed),
+        ],
+      });
+    }
   }
 
   move(px = this.x, py = this.y) {
