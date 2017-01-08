@@ -80,7 +80,7 @@ class LiveList extends Component {
           className='center'
           style={buttonStyle}
           onClick={this.goEvent}
-        >Go To Authums</Button>
+        >Top Event</Button>
       </Page>
     );
   }
