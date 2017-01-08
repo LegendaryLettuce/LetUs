@@ -111,7 +111,7 @@ class Collaborate extends Component {
           setTimeout(this.setState.bind(this, {
             pos: 1,
             anim: {},
-          }), 30);
+          }), 50);
         });
       });
     }
@@ -249,9 +249,8 @@ class Collaborate extends Component {
                 height: `${this.calculateHeight() + 3}%`, // TODO: change size based on text lines
                 width: `${WIDTH_PERCENT}%`,
                 marginLeft: `${((100 - WIDTH_PERCENT) / 2)}%`,
-                borderRadius: `${0.1 * this.state.windowWidth}px`,
-                boxShadow: '0 0 0 10000em #242424',
-                border: `1px solid rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]})`, // #ccc
+                // borderRadius: `${0.1 * this.state.windowWidth}px`,
+                boxShadow: `0 0 0 1px rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]}), 0 0 0 10000em #242424`,
                 overflow: 'hidden',
               }}>
                 <div style={{
@@ -260,7 +259,7 @@ class Collaborate extends Component {
                   fontSize: 'xx-large',
                   textAlign: 'center',
                   background: 'rgba(0,0,0,0)',
-                  borderRadius: '10%',
+                  // borderRadius: '10%',
                   boxShadow: '0 0 2em 0 #333 inset',
                 }}/>
               </div>
@@ -273,11 +272,11 @@ class Collaborate extends Component {
             textAlign: 'center',
             color: '#242424', // TODO: get color from OnsenUI
             position: 'fixed',
-            height: `${this.calculateHeight() + 3.1}%`,
-            width: `${WIDTH_PERCENT + 0.1}%`,
+            height: `${this.calculateHeight() + 3}%`,
+            width: `${WIDTH_PERCENT}%`,
             marginLeft: `${((100 - WIDTH_PERCENT) / 2)}%`,
             zIndex: '2',
-            borderRadius: `${0.1 * this.state.windowWidth}px`,
+            // borderRadius: `${0.1 * this.state.windowWidth}px`,
             boxShadow: '0 0 0 10000em #ccc',
             background: '#888',
           }}>
@@ -285,8 +284,8 @@ class Collaborate extends Component {
               style={{
                 height: `${(((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1}px`,
                 width: `${((WIDTH_PERCENT / 100) * this.state.windowWidth) + 1}px`,
-                borderTopRightRadius: `${0.1 * this.state.windowWidth}px`,
-                borderTopLeftRadius: `${0.1 * this.state.windowWidth}px`,
+                // borderTopRightRadius: `${0.1 * this.state.windowWidth}px`,
+                // borderTopLeftRadius: `${0.1 * this.state.windowWidth}px`,
                 overflow: 'hidden',
                 // TODO: place x and o icons on left and right hidden until revealed by card
                 // TODO: make icon colors more saturated if more intense
@@ -313,8 +312,8 @@ class Collaborate extends Component {
                 width: `${(0.1 * this.state.windowWidth) * 5}px`,
                 top: `${((((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1) - (0.1 * this.state.windowWidth)}px`,
                 background: 'rgba(60, 64, 65, 0.71)',
-                borderTopRightRadius: `${0.01 * this.state.windowWidth}px`,
-                borderTopLeftRadius: `${0.01 * this.state.windowWidth}px`,
+                // borderTopRightRadius: `${0.01 * this.state.windowWidth}px`,
+                // borderTopLeftRadius: `${0.01 * this.state.windowWidth}px`,
                 boxShadow: '0 0 0 2px #888',
                 color: '#ccc',
               }}
