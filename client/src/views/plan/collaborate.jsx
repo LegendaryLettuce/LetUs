@@ -38,7 +38,7 @@ class Collaborate extends Component {
     this.new = true;
     this.holding = false;
     this.stationary = false;
-    this.getUrl = url => (`${url.slice(0, url.length - 6)}l${url.slice(url.length - 5, url.length)}`);
+    this.getUrl = url => (`${url.slice(0, url.length - 6)}l${url.slice(url.length - 4, url.length)}`);
     this.ratingToArray = (rating) => {
       const a = new Array(Math.floor(rating)).fill(0);
       if (rating - Math.floor(rating) !== 0) a.push(1);
@@ -234,113 +234,113 @@ class Collaborate extends Component {
         onMouseMove={this.moveMouse.bind(this)}
         onTouchMove={this.moveTouch.bind(this)}
       >
-          <Carousel
-            fullscreen
-            swipeable
-            autoScroll
-            overscrollable
-            index={this.state.pos}
-            onPostChange={this.onFlick.bind(this)}
-            animationOptions={this.state.anim}
-            onTouchStart={this.onHoldStart.bind(this)}
-            onTouchEnd={this.onHoldEnd.bind(this)}
-            onMouseDown={this.onHoldStart.bind(this)}
-            onMouseUp={this.onHoldEnd.bind(this)}
-            style={{
-              zIndex: '3',
-            }}
-          >
-            <CarouselItem/>
-            <CarouselItem>
+        <Carousel
+          fullscreen
+          swipeable
+          autoScroll
+          overscrollable
+          index={this.state.pos}
+          onPostChange={this.onFlick.bind(this)}
+          animationOptions={this.state.anim}
+          onTouchStart={this.onHoldStart.bind(this)}
+          onTouchEnd={this.onHoldEnd.bind(this)}
+          onMouseDown={this.onHoldStart.bind(this)}
+          onMouseUp={this.onHoldEnd.bind(this)}
+          style={{
+            zIndex: '3',
+          }}
+        >
+          <CarouselItem/>
+          <CarouselItem>
+            <div style={{
+              height: `${50 - this.calculateHeight(2)}%`,
+            }}/>
+            <div style={{
+              height: `${this.calculateHeight() + 3}%`, // TODO: change size based on text lines
+              width: `${WIDTH_PERCENT}%`,
+              marginLeft: `${((100 - WIDTH_PERCENT) / 2)}%`,
+              boxShadow: `0 0 0 2px rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]}), 0 0 0 10000em rgb(60, 64, 65)`,
+              overflow: 'hidden',
+            }}>
               <div style={{
-                height: `${50 - this.calculateHeight(2)}%`,
+                height: '100%',
+                width: '100%',
+                fontSize: 'xx-large',
+                textAlign: 'center',
+                background: 'rgba(0,0,0,0)',
+                boxShadow: '0 0 2em 0 #333 inset',
               }}/>
-              <div style={{
-                height: `${this.calculateHeight() + 3}%`, // TODO: change size based on text lines
-                width: `${WIDTH_PERCENT}%`,
-                marginLeft: `${((100 - WIDTH_PERCENT) / 2)}%`,
-                boxShadow: `0 0 0 2px rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]}), 0 0 0 10000em rgb(60, 64, 65)`,
-                overflow: 'hidden',
-              }}>
-                <div style={{
-                  height: '100%',
-                  width: '100%',
-                  fontSize: 'xx-large',
-                  textAlign: 'center',
-                  background: 'rgba(0,0,0,0)',
-                  boxShadow: '0 0 2em 0 #333 inset',
-                }}/>
-              </div>
-            </CarouselItem>
-            <CarouselItem/>
-          </Carousel>
-          <div style={{ height: `${50 - this.calculateHeight(2)}%` }}/>
+            </div>
+          </CarouselItem>
+          <CarouselItem/>
+        </Carousel>
+        <div style={{ height: `${50 - this.calculateHeight(2)}%` }}/>
+        <div style={{
+          fontSize: 'xx-large',
+          textAlign: 'center',
+          color: 'rgb(60, 64, 65)', // TODO: get color from OnsenUI
+          position: 'fixed',
+          height: `${this.calculateHeight() + 3}%`,
+          width: `${WIDTH_PERCENT}%`,
+          marginLeft: `${((100 - WIDTH_PERCENT) / 2)}%`,
+          zIndex: '2',
+          boxShadow: '0 0 0 2px rgb(38, 39, 40), 0 0 0 10000em #ccc',
+          background: '#888',
+        }}>
           <div style={{
-            fontSize: 'xx-large',
-            textAlign: 'center',
-            color: 'rgb(60, 64, 65)', // TODO: get color from OnsenUI
-            position: 'fixed',
-            height: `${this.calculateHeight() + 3}%`,
-            width: `${WIDTH_PERCENT}%`,
-            marginLeft: `${((100 - WIDTH_PERCENT) / 2)}%`,
-            zIndex: '2',
-            boxShadow: '0 0 0 2px rgb(60, 64, 65), 0 0 0 10000em #ccc',
-            background: '#888',
-          }}>
-            <div
-              style={{
-                height: `${(((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1}px`,
-                width: `${((WIDTH_PERCENT_DEC) * this.state.windowWidth)}px`,
-                overflow: 'hidden',
-              }}
-            >
-              <img
-                src={this.getUrl(this.props.yelpData[this.index].imageUrl)}
-                alt=''
-                height={`${(this.calculateHeight() / 100) * this.state.windowHeight}`}
-                width={`${(WIDTH_PERCENT_DEC) * this.state.windowWidth}`}
-              />
-            </div>
-            {this.props.yelpData[this.index].rating ? <div
-              className="rating"
-              style={{
-                position: 'absolute',
-                marginLeft: `${0.08 * this.state.windowWidth}px`,
-                height: `${0.1 * this.state.windowWidth}px`,
-                width: `${(0.1 * this.state.windowWidth) * 5}px`,
-                top: `${((((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1) - (0.1 * this.state.windowWidth)}px`,
-                background: 'rgba(60, 64, 65, 0.71)',
-                // borderTopRightRadius: `${0.01 * this.state.windowWidth}px`,
-                // borderTopLeftRadius: `${0.01 * this.state.windowWidth}px`,
-                boxShadow: '0 0 0 2px #888',
-                color: '#ccc',
-              }}
-            >
-              {this.ratingToArray(this.props.yelpData[this.index].rating).map((e, i) => (
-                <Icon
-                  icon={`fa-star${e ? '-half' : ''}`}
-                  fixed-width="false"
-                  size={0.08 * this.state.windowWidth}
-                  key={i}
-                  style={{
-                    position: 'relative',
-                    top: `${((0.08 * this.state.windowWidth) - 30 < 0) ? ((0.08 * this.state.windowWidth) - 30) : 0}px`,
-                    paddingTop: `${0.01 * this.state.windowWidth}px`,
-                    height: `${0.08 * this.state.windowWidth}px`,
-                    width: `${0.08 * this.state.windowWidth}px`,
-                    paddingLeft: '2px',
-                    paddingRight: '2px',
-                    left: `${e ? `-${0.015 * this.state.windowWidth}px` : '0'}`,
-                    zIndex: `${e ? 7 : 8}`,
-                    textShadow: '0 0 .2em #333',
-                  }}
-                />
-              ))}
-            </div> : <div/>}
-            <div style={{ padding: `${0.01 * this.state.windowHeight}px` }}>
-              {this.state.word}
-            </div>
+            height: `${(((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1}px`,
+            width: `${((WIDTH_PERCENT_DEC) * this.state.windowWidth)}px`,
+            backgroundImage: `url("${this.getUrl(this.props.yelpData[this.index].imageUrl)}")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center',
+            backgroundSize: 'cover',
+            overflow: 'hidden',
+            boxShadow: '0 0 0 2px rgb(38, 39, 40)',
+          }}/>
+          {
+            this.props.yelpData[this.index].rating ?
+              <div
+                className="rating"
+                style={{
+                  position: 'absolute',
+                  marginLeft: `${0.08 * this.state.windowWidth}px`,
+                  height: `${0.1 * this.state.windowWidth}px`,
+                  width: `${(0.1 * this.state.windowWidth) * 5}px`,
+                  top: `${((((this.calculateHeight() - 10) / 100) * this.state.windowHeight) + 1) - (0.1 * this.state.windowWidth)}px`,
+                  background: 'rgba(60, 64, 65, 0.71)',
+                  // borderTopRightRadius: `${0.01 * this.state.windowWidth}px`,
+                  // borderTopLeftRadius: `${0.01 * this.state.windowWidth}px`,
+                  boxShadow: '0 0 0 2px rgb(38, 39, 40)',
+                  color: '#ccc',
+                }}
+              >
+                {this.ratingToArray(this.props.yelpData[this.index].rating).map((e, i) => (
+                  <Icon
+                    icon={`fa-star${e ? '-half' : ''}`}
+                    fixed-width="false"
+                    size={0.08 * this.state.windowWidth}
+                    key={i}
+                    style={{
+                      position: 'relative',
+                      top: `${((0.08 * this.state.windowWidth) - 30 < 0) ? ((0.08 * this.state.windowWidth) - 30) : 0}px`,
+                      paddingTop: `${0.01 * this.state.windowWidth}px`,
+                      height: `${0.08 * this.state.windowWidth}px`,
+                      width: `${0.08 * this.state.windowWidth}px`,
+                      paddingLeft: '2px',
+                      paddingRight: '2px',
+                      left: `${e ? `-${0.015 * this.state.windowWidth}px` : '0'}`,
+                      zIndex: `${e ? 7 : 8}`,
+                      textShadow: '0 0 .2em #333',
+                    }}
+                  />
+                ))}
+              </div> :
+              <div/>
+          }
+          <div style={{ padding: `${0.01 * this.state.windowHeight}px` }}>
+            {this.state.word}
           </div>
+        </div>
       </Page>
     );
   }
