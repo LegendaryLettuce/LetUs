@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-// Redux
-import { connect }      from 'react-redux';
 // Onsen UI
 import { Page, Carousel, CarouselItem, Icon } from 'react-onsenui';
+// Redux
+import { connect }      from 'react-redux';
+import { addLiveData } from '../../redux/actions';
 // Styles
 // import styles           from '../../styles/styles';
 
@@ -44,19 +45,24 @@ class Collaborate extends Component {
       rgb: this.rgb,
       windowWidth: 0,
       windowHeight: 0,
+      loaded: false,
     };
   }
   componentDidMount() {
     this.setState({
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
+      loaded: true,
     }, () => window.addEventListener('resize', this.updateWindowSize.bind(this)));
   }
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowSize.bind(this));
+    this.setState({
+      loaded: false,
+    }, () => window.removeEventListener('resize', this.updateWindowSize.bind(this)));
   }
 
   updateWindowSize() {
+    console.log('hello');
     this.setState({
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
@@ -73,6 +79,11 @@ class Collaborate extends Component {
 
   onFlick(e) {
     if (e.activeIndex !== 1) {
+      this.props.addLiveData({
+        ...this.props.yelpData[this.index],
+        preference: (e.activeIndex) ? -1 : 1,
+        intensity: Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100),
+      });
       console.log(
 `DATA:
 type      - ${this.props.yelpData[this.index].displayTitle}
@@ -85,6 +96,8 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
       }, () => {
         if (this.index < this.props.yelpData.length - 1) {
           this.index++;
+        } else {
+          this.props.router.push('/live');
         }
         this.setState({
           word: this.props.yelpData[this.index].displayTitle,
@@ -131,7 +144,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     if (distFromMid >= 50) this.updateRGB(GREEN, 1);
     else if (distFromMid <= -50) this.updateRGB(RED, 1);
     else this.updateRGB(BLUE, 1);
-    if (px === this.x && py === this.y && this.holding) {
+    if (px === this.x && py === this.y && this.holding && this.loaded) {
       setTimeout(this.move.bind(this, px, py), 1000 / 60);
     }
   }
@@ -290,7 +303,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
                 background: 'rgba(172, 11, 11, 0.88)',
                 borderTopRightRadius: `${0.01 * this.state.windowWidth}px`,
                 borderTopLeftRadius: `${0.01 * this.state.windowWidth}px`,
-                boxShadow: '0 0 0 3px #888',
+                boxShadow: '0 0 0 2px #888',
               }}
             >
               {this.ratingToArray(this.props.yelpData[this.index].rating).map((e, i) => (
@@ -322,8 +335,14 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  addLiveData: (liveData) => {
+    dispatch(addLiveData(liveData));
+  },
+});
+
 const mapStateToProps = state => ({
   yelpData: state.yelpData,
 });
 
-export default connect(mapStateToProps)(Collaborate);
+export default connect(mapStateToProps, mapDispatchToProps)(Collaborate);
