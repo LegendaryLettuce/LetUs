@@ -32,7 +32,7 @@ class Friends extends Component {
     } else if (friendIndex !== -1) {
       this.state.inviteFriends.splice(friendIndex, 1);
     }
-    console.log(this.state.inviteFriends);
+    // console.log(this.state.inviteFriends);
     this.props.updateInviteFriends(this.state.inviteFriends);
   }
 
