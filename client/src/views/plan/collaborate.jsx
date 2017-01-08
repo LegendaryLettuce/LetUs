@@ -34,9 +34,7 @@ class Collaborate extends Component {
     this.getUrl = url => (`${url.slice(0, url.length - 6)}l${url.slice(url.length - 5, url.length)}`);
     this.ratingToArray = (rating) => {
       const a = new Array(Math.floor(rating)).fill(0);
-      if (rating - Math.floor(rating) !== 0) {
-        a.push(1);
-      }
+      if (rating - Math.floor(rating) !== 0) a.push(1);
       return a;
     };
     this.loaded = false;
@@ -156,8 +154,8 @@ class Collaborate extends Component {
 
   onHold() {
     this.diffx = this.x - (this.state.windowWidth / 2);
-    if (this.otherRGB > this.rgbMin) this.otherRGB--;
-    this.updateRGB(BLUE);
+    if (this.otherRGB > this.rgbMin + 1) this.otherRGB -= 2;
+    this.updateRGB(BLUE, 2);
     if (this.loaded && this.new) this.setState({ rgb: this.rgb });
     if (this.loaded && !this.new && this.stationary && this.holding) {
       setTimeout(this.onHold.bind(this), 1000 / 60);
