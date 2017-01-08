@@ -145,9 +145,9 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
 
   move(px = this.x, py = this.y) {
     const distFromMid = this.getDistFromMid();
-    if (distFromMid >= 50) this.updateRGB(GREEN, 1);
-    else if (distFromMid <= -50) this.updateRGB(RED, 1);
-    else this.updateRGB(BLUE, 1);
+    if (distFromMid >= 50) this.updateRGB(GREEN, 2);
+    else if (distFromMid <= -50) this.updateRGB(RED, 2);
+    else this.updateRGB(BLUE, 2);
     if (this.loaded && this.new) this.setState({ rgb: this.rgb });
     if (this.loaded && !this.new && px === this.x && py === this.y && this.holding) {
       setTimeout(this.move.bind(this, px, py), 1000 / 60);
