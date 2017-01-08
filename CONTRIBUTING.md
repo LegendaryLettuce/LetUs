@@ -9,7 +9,7 @@ MAKE CHANGES
 4. git pull --rebase upstream master
 5. git push origin [branch name]
 6. github new pull request - need review
-7. on approval / squash and merge - branch owner needs to DELETE BRANCH
+7. on approval / merge - branch owner needs to DELETE BRANCH
 
 ## General Workflow
 
