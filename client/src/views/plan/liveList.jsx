@@ -49,7 +49,7 @@ class LiveList extends Component {
       >
         <VotesProgress votes={this.state.votes} />
         <GenericList
-            data={this.props.yelpData}
+            data={this.props.liveData}
             handleTouch={this.handleTouch}
           />
       </Page>
@@ -64,7 +64,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  yelpData: state.yelpData,
+  liveData: state.liveData,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LiveList);
