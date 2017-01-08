@@ -24,10 +24,10 @@
 
 ## Requirements
 
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
+- Express 4.14.0
+- Mongoose 4.7.6
+- React
+- Webpack 1.14.0
 - etc
 
 ## Development
@@ -37,14 +37,14 @@
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
+npm run dev
+npm run start
 ```
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/LegendaryLettuce/LetUs/issues)
 
 
 ## Contributing
