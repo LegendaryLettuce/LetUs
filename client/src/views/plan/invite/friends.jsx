@@ -42,7 +42,7 @@ class Friends extends Component {
         <List
           dataSource={this.props.friends}
           renderRow={(row, idx) => (
-            <ListItem modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
+            <ListItem key={idx} modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
               <div className="left">
                 <Icon icon="md-face" className="list__item__icon" />
               </div>
