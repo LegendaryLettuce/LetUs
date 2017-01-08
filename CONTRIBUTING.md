@@ -3,6 +3,7 @@
 ## TL;DR
 
 1. git checkout -b [# of the issue - (feat/fix/etc) branch name]
+
 MAKE CHANGES
 2. git add .
 3. git commit [(feat/fix/etc) commit message]
