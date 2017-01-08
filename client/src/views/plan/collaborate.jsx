@@ -62,7 +62,6 @@ class Collaborate extends Component {
   }
 
   updateWindowSize() {
-    console.log('hello');
     this.setState({
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
@@ -84,12 +83,12 @@ class Collaborate extends Component {
         preference: (e.activeIndex) ? -1 : 1,
         intensity: Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100),
       });
-      console.log(
-`DATA:
-type      - ${this.props.yelpData[this.index].displayTitle}
-direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
-intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
-      );
+//       console.log(
+// `DATA:
+// type      - ${this.props.yelpData[this.index].displayTitle}
+// direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
+// intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
+//       );
       this.setState({
         pos: e.activeIndex,
         anim: { duration: 0 },
