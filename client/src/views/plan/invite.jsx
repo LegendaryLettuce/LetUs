@@ -3,7 +3,7 @@ import React, { Component }       from 'react';
 import { connect }      from 'react-redux';
 // Onsen UI
 import ons              from 'onsenui';
-import { Page, Toolbar } from 'react-onsenui';
+import { Page, Toolbar, BackButton } from 'react-onsenui';
 // Styles
 import { }   from '../../styles/styles';
 
@@ -20,6 +20,7 @@ class Invite extends Component {
       friends: [],
     };
     this.routeToCollaborate = this.routeToCollaborate.bind(this);
+    this.handleBack = this.handleBack.bind(this);
   }
 
   componentDidMount() {
@@ -35,9 +36,16 @@ class Invite extends Component {
     // request to server to db to save data
   }
 
+  handleBack() {
+    this.props.router.push('/create');
+  }
+
   renderToolbar(toolbarTitle) {
     return (
       <Toolbar>
+        <div className="left">
+          <BackButton onClick={this.handleBack}></BackButton>
+        </div>
         <div className='center' style={{ fontWeight: 'bolder' }}>{toolbarTitle}</div>
       </Toolbar>
     );
