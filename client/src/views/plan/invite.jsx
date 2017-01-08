@@ -3,7 +3,7 @@ import React, { Component }       from 'react';
 import { connect }      from 'react-redux';
 // Onsen UI
 import ons              from 'onsenui';
-import { Page } from 'react-onsenui';
+import { Page, Toolbar } from 'react-onsenui';
 // Styles
 import { }   from '../../styles/styles';
 
@@ -35,6 +35,14 @@ class Invite extends Component {
     // request to server to db to save data
   }
 
+  renderToolbar(toolbarTitle) {
+    return (
+      <Toolbar>
+        <div className='center' style={{ fontWeight: 'bolder' }}>{toolbarTitle}</div>
+      </Toolbar>
+    );
+  }
+
   render() {
     const listStyle = {
       height: '50%',
@@ -44,7 +52,7 @@ class Invite extends Component {
       textAlign: 'center',
     };
     return (
-      <Page>
+      <Page renderToolbar={() => this.renderToolbar('Invite')}>
 
         <h1 style={header}>Invite Friends</h1>
         <Link />
