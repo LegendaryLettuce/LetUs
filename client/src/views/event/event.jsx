@@ -88,8 +88,8 @@ const titleText = {
 };
 
 const tags = {
-  'border-radius': '12px',
-  'padding': '5px',
+  borderRadius: '12px',
+  padding: '5px',
   textAlign: 'center',
   background: 'gray',
   margin: '7px',
@@ -136,14 +136,14 @@ class Event extends Component {
                 <span style={eventTitle}>{dummyData.name}</span><br/>
                 <p style={tagline}>{dummyData.snippet_text}</p>
                 <div>
-                  {this.starRating(dummyData.rating).map(e => (
-                    <Icon icon={`fa-star${e ? '-half' : ''}`} fixed-width='false'></Icon>
+                  {this.starRating(dummyData.rating).map((e,i) => (
+                    <Icon icon={`fa-star${e ? '-half' : ''}`} fixed-width='false' key={i}></Icon>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-          <div style={{ display: 'flex', 'justify-content': 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             {dummyData.categories.map((cat, i) => (
               <div style={tags} key={i}>{cat[0]}</div>
             ))}
