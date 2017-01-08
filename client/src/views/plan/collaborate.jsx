@@ -62,7 +62,6 @@ class Collaborate extends Component {
   }
 
   updateWindowSize() {
-    console.log('hello');
     this.setState({
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
@@ -84,12 +83,12 @@ class Collaborate extends Component {
         preference: (e.activeIndex) ? -1 : 1,
         intensity: Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100),
       });
-      console.log(
-`DATA:
-type      - ${this.props.yelpData[this.index].displayTitle}
-direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
-intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
-      );
+//       console.log(
+// `DATA:
+// type      - ${this.props.yelpData[this.index].displayTitle}
+// direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
+// intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
+//       );
       this.setState({
         pos: e.activeIndex,
         anim: { duration: 0 },
@@ -144,7 +143,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     if (distFromMid >= 50) this.updateRGB(GREEN, 1);
     else if (distFromMid <= -50) this.updateRGB(RED, 1);
     else this.updateRGB(BLUE, 1);
-    if (px === this.x && py === this.y && this.holding && this.loaded) {
+    if (this.loaded && px === this.x && py === this.y && this.holding) {
       setTimeout(this.move.bind(this, px, py), 1000 / 60);
     }
   }
@@ -153,7 +152,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
     this.diffx = this.x - (this.state.windowWidth / 2);
     if (this.otherRGB > this.rgbMin) this.otherRGB--;
     this.updateRGB(BLUE);
-    if (this.stationary && this.holding) {
+    if (this.loaded && this.stationary && this.holding) {
       setTimeout(this.onHold.bind(this), 1000 / 60);
     }
   }
@@ -161,7 +160,8 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
   onHoldDone() {
     if (this.otherRGB < this.rgbMax) this.otherRGB++;
     this.updateRGB(BLUE);
-    if (!this.holding && JSON.stringify(this.state.rgb) !== JSON.stringify(this.rgb)) {
+    if (this.loaded && !this.holding &&
+        JSON.stringify(this.state.rgb) !== JSON.stringify(this.rgb)) {
       setTimeout(this.onHoldDone.bind(this), 1000 / 60);
     }
   }
