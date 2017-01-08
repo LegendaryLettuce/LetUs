@@ -20,7 +20,7 @@
 
 ## Usage
 
-> Some usage instructions
+> Set to run at http://localhost:3000/
 
 ## Requirements
 
