@@ -5,9 +5,11 @@ const serveStatic   = require('serve-static');
 const logger        = require('morgan');
 const cookieParser  = require('cookie-parser');
 const bodyParser    = require('body-parser');
+const db      = require('./db/index');
 
 // const index = require('./routes/index');
 // const users = require('./routes/users');
+// const letUsRouter = require('./routes/letUsRouter');
 
 const app = express();
 
@@ -21,6 +23,18 @@ app.use(cookieParser());
 app.use(serveStatic(path.join(__dirname, 'client/dist'), {
   index: 'index.html',
 }));
+
+app.get('*', (req, res) => {
+//   // and drop 'public' in the middle of here
+  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
+});
+
+const port = 3000;
+app.listen(port, () => {
+  console.log('Connected on  ' + port);
+});
+
+// app.use('/', letUsRouter);
 
 // app.use('/', index);
 // app.use('/users', users);
