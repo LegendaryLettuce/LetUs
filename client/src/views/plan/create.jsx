@@ -15,9 +15,11 @@ import drinkData from './create/sampleData/drinkData';
 import playData from './create/sampleData/playData';
 import BottomNav from './../../views/_global/bottomNav.jsx';
 
+const isIOS = ons.platform.isIOS();
+
 const iconSize = '80px';
 
-const containerPadding = '1%';
+const containerPadding = isIOS ? '9%' : '0';
 
 const icons = color => ({
   paddingTop: '.4em',
