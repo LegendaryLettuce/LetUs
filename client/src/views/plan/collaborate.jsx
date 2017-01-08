@@ -294,7 +294,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
                 width={`${(WIDTH_PERCENT / 100) * this.state.windowWidth}`}
               />
             </div>
-            <div
+            {this.props.yelpData[this.index].rating ? <div
               className="rating"
               style={{
                 position: 'absolute',
@@ -327,7 +327,7 @@ intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rg
                   }}
                 />
               ))}
-            </div>
+            </div> : <div/>}
             <div style={{ padding: `${0.01 * this.state.windowHeight}px` }}>
               {this.state.word}
             </div>
