@@ -75,6 +75,7 @@ class Event extends Component {
         <div className='center' style={{ fontWeight: 'bolder' }}>{toolbarTitle}</div>
       </Toolbar>
     );
+    this.getUrl = url => (url.replace('ms.jpg', 'l.jpg'));
   }
 
   // router
@@ -88,7 +89,7 @@ class Event extends Component {
         style={{ background: 'rgba(51,51,51,1)' }}>
           <div style={{
             ...imageDiv,
-            background: `url(${this.props.data.imageUrl})`,
+            background: `url(${this.getUrl(this.props.data.imageUrl)}) 100%`,
           }}>
             <div style={imageTint}>
               <div style={titleText}>
@@ -108,10 +109,10 @@ class Event extends Component {
             ))}
           </div>
           <List>
-            <a href={`http://maps.google.com/?q=${this.props.data.location.displayAddress.join(', ')}`} target='_blank' style={{ textDecoration: 'none' }}>
+            <a href={`http://maps.google.com/?q=${this.props.data.displayAddress.join(', ')}`} target='_blank' style={{ textDecoration: 'none' }}>
               <ListItem tappable>
                 <Icon icon='fa-map-marker' style={iconPadding}/>
-                {this.props.data.location.displayAddress.join(', ')}
+                {this.props.data.displayAddress.join(', ')}
               </ListItem>
             </a>
             <ListItem tappable><Icon icon='fa-phone' style={iconPadding} />
@@ -131,7 +132,7 @@ class Event extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.data[0],
+  data: state.liveData[0],
 });
 
 export default connect(mapStateToProps)(Event);
