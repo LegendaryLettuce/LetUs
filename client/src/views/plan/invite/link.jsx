@@ -13,6 +13,8 @@ const linkStyle = {
   width: '50%',
   margin: 'auto',
   padding: '10px',
+  textAlign: 'center',
+  marginBottom: '5%',
 };
 const copyStyle = {
   textAlign: 'right',
@@ -24,7 +26,7 @@ const link = {
 const Link = () => (
 
   <div style={linkStyle}>
-    <p style={link}>Shortened link</p>
+    <p style={link}>let.us/aEc67</p>
 
     <Icon style={copyStyle} icon='fa-clone' />
 

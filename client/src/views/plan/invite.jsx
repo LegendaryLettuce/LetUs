@@ -25,7 +25,7 @@ class Invite extends Component {
   componentDidMount() {
     // query database for friends of user
     this.setState({
-      friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Louis', 'Omar'],
+      friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Marc', 'Rebecca', 'Fiona'],
     });
   }
 
@@ -40,13 +40,14 @@ class Invite extends Component {
       height: '50%',
       overflowY: 'scroll',
     };
+    const header = {
+      textAlign: 'center',
+    };
     return (
       <Page>
 
-        <h1>Link</h1>
+        <h1 style={header}>Invite Friends</h1>
         <Link />
-
-        <h1>Invite Friends</h1>
 
         <div style={listStyle}>
 
