@@ -84,12 +84,12 @@ class Collaborate extends Component {
         preference: (e.activeIndex) ? -1 : 1,
         intensity: Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100),
       });
-      console.log(
-`DATA:
-type      - ${this.props.yelpData[this.index].displayTitle}
-direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
-intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
-      );
+//       console.log(
+// `DATA:
+// type      - ${this.props.yelpData[this.index].displayTitle}
+// direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
+// intensity - ${Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100)}%`,
+//       );
       this.new = true;
       this.otherRGB = this.rgbMax;
       this.setState({
