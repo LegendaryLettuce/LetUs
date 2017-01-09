@@ -3,11 +3,6 @@ const express = require('express');
 const letUsRouter = express.Router();
 const letUsController = require('../db/letUsController');
 
-/* GET home page. */
-letUsRouter.get('/collaborate', (req, res, next) => {
-  letUsController.inviteFriends();
-});
-
 // template routes
 
 // letUsRouter.route('/')
