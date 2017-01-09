@@ -11,6 +11,7 @@ export const bottomNavStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
+  position: 'fixed',
 };
 
 export const login = {
