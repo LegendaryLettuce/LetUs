@@ -17,7 +17,7 @@ import BottomNav from './../../views/_global/bottomNav.jsx';
 
 const osCheck = !ons.platform.isAndroid();
 
-const iconSize = '80px';
+const iconSize = '50px';
 
 const containerPadding = osCheck ? '9%' : '0';
 
@@ -25,9 +25,9 @@ const icons = color => ({
   paddingTop: '.4em',
   paddingBottom: '.4em',
   // eslint-disable-next-line no-nested-ternary
-  background: (!color) ?        'radial-gradient(#1ee, #5ff, #8ff)' :
-              (color === 1) ?   'radial-gradient(#e1e, #f5f, #f8f)' :
-                                'radial-gradient(#ee1, #ff5, #ff8)',
+  background: (!color) ?        '#E26A6A' :
+              (color === 1) ?   '#67809F' :
+                                '#F4B350',
   WebkitBackgroundClip: 'text',
   backgroundClip: 'text',
   color: 'transparent',
@@ -52,8 +52,9 @@ const playIcon = {
 };
 
 const textStyleCreate = {
+  fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
   fontSize: '400%',
-  fontWeight: 'bolder',
+  // fontWeight: 'bolder',
 };
 
 const eatContainer = {
@@ -198,21 +199,20 @@ class Create extends Component {
       padding: '0px 20px 0px 20px',
       position: 'fixed',
       bottom: '0',
-      height: '5%',
-      marginBottom: '12%',
+      height: '35px',
+      marginBottom: '44px',
       zIndex: '5',
-      marginLeft: '25%',
-      width: '50%',
+      marginLeft: '0',
+      width: '100%',
       textAlign: 'center',
       fontWeight: 'bold',
     };
 
     const padStyle = {
-      height: '12%',
+      height: '79px',
     };
 
     if (this.state.selectedView.split(' ')[1] === 'Categories' || this.state.selectedView === 'Create') {
-      console.log('hide <button></button>');
       buttonStyle.display = 'none';
     } else {
       buttonStyle.display = '';
