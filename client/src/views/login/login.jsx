@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 // Redux
 import { connect }          from 'react-redux';
 // Onsen UI
-import ons                  from 'onsenui';
+import TextCarousel from 'react-text-carousel';
 import { Icon, Button, BottomToolbar }             from 'react-onsenui';
 // Styles
-import { login, splashText, fbLogin, bodyStyle, tint, tagline } from '../../styles/styles';
-import TextCarousel from 'react-text-carousel';
+import { login, splashText, fbLogin, tint, tagline } from '../../styles/styles';
 
 // const images = ["http://68.media.tumblr.com/233a17b2322253404dfc6ce97501613b/tumblr_oh350r0AtK1u9ooogo1_540.gif", ]
 
@@ -23,12 +22,12 @@ const button = {
 
 const phrases = [' eat.', ' drink.', ' play.']; // Required
 const interval = 2000; // The time to wait before rendering the next string
-const typistProps = {} // Props that are passed to the react-typist component
+const typistProps = {}; // Props that are passed to the react-typist component
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   decideCreate() {
     this.props.router.push('/create');
@@ -44,7 +43,9 @@ class Login extends Component {
           </div>
           <div style={tagline}>Collaborate event planning with your friends.</div>
           <BottomToolbar style={fbLogin} >
-            <Button style={button} onClick={this.decideCreate.bind(this)}><Icon icon="fa-facebook-square"/> Login with Facebook</Button>
+            <Button style={button} onClick={this.decideCreate.bind(this)}>
+              <Icon icon="fa-facebook-square"/> Login with Facebook
+            </Button>
           </BottomToolbar>
         </div>
       </div>
