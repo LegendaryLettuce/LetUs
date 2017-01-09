@@ -16,7 +16,7 @@ import Invite           from './views/plan/invite.jsx';
 import Login            from './views/login/login.jsx';
 import LiveList         from './views/plan/liveList.jsx';
 import Event            from './views/event/event.jsx';
-import Profile            from './views/profile/profile.jsx';
+import Profile          from './views/profile/profile.jsx';
 
 const store = createStore(reducer);
 

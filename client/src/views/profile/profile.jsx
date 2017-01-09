@@ -1,7 +1,7 @@
 import React, { Component }     from 'react';
 // Redux
 import { connect }              from 'react-redux';
-import { Page, List, ListItem, Icon, Toolbar } from 'react-onsenui';
+import { Page, List, ListItem, Icon, Toolbar, BackButton } from 'react-onsenui';
 // Styles
 import { bodyStyle }            from '../../styles/styles';
 // Pages
@@ -12,6 +12,9 @@ class Profile extends Component {
     super(props);
     this.renderToolbar = toolbarTitle => (
       <Toolbar>
+        <div className="left">
+          <BackButton></BackButton>
+        </div>
         <div className='center' style={{ fontWeight: 'bolder' }}>{toolbarTitle}</div>
       </Toolbar>
     );
@@ -21,7 +24,11 @@ class Profile extends Component {
     return (
       <Page renderToolbar={() => this.renderToolbar('User Profile')}
       style={{ background: 'rgba(51,51,51,1)' }}>
-      Hello Suckas
+      <div>Wilson Ng</div>
+      <div>@nosliw</div>
+      <List>
+        <ListItem>Something here</ListItem>
+      </List>
       <BottomNav></BottomNav>
       </Page>
     );
