@@ -6,7 +6,7 @@ import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui
 import { connect }      from 'react-redux';
 import { updateYelpData } from '../../redux/actions';
 // Styles
-import styles           from '../../styles/styles';
+import { bodyStyle } from '../../styles/styles';
 // Subcomponents
 import GenericList from './../../views/_global/genericList.jsx';
 // Import sampleData
@@ -52,8 +52,9 @@ const playIcon = {
 };
 
 const textStyleCreate = {
+  fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
   fontSize: '400%',
-  fontWeight: 'bolder',
+  // fontWeight: 'bolder',
 };
 
 const eatContainer = {

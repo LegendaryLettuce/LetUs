@@ -18,6 +18,7 @@ import TextCarousel from 'react-text-carousel';
 
 const button = {
   fontSize: 'x-large',
+  backgroundColor: '#3d74ff',
 };
 
 const phrases = [' eat.', ' drink.', ' play.']; // Required

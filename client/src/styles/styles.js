@@ -15,7 +15,9 @@ export const bottomNavStyle = {
 
 export const login = {
   backgroundImage: 'url("http://68.media.tumblr.com/b4f33d654b4448794313633770cc8572/tumblr_oh34v07h9w1u9ooogo1_540.gif")',
-  position: 'fixed',
+  backgroundAttachment: 'fixed',
+  backgroundPosition: 'center center',
+  backgroundSize: 'cover',
   width: '100%',
   height: '100vh',
 };
@@ -30,8 +32,8 @@ export const fbLogin = {
 
 export const splashText = {
   color: 'white',
-  marginTop: '150px',
-  marginBottom: '100px',
+  marginTop: '10%',
+  marginBottom: '10%',
   fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
   fontWeight: '300',
   fontSize: '90px',
