@@ -4,6 +4,11 @@ import { connect }      from 'react-redux';
 // Onsen UI
 import ons              from 'onsenui';
 import { Page, Toolbar, BackButton } from 'react-onsenui';
+
+// Axios for requests
+import axios            from 'axios';
+
+
 // Styles
 import { }   from '../../styles/styles';
 
@@ -20,6 +25,7 @@ class Invite extends Component {
       friends: [],
     };
     this.routeToCollaborate = this.routeToCollaborate.bind(this);
+    this.pushToCollaborate = this.routeToCollaborate.bind(this);
     this.handleBack = this.handleBack.bind(this);
   }
 
@@ -30,10 +36,24 @@ class Invite extends Component {
     });
   }
 
-  routeToCollaborate() {
+  pushToCollaborate() {
     this.props.router.push('/collaborate');
-    // console.log(this.props.friends);
+  }
+
     // request to server to db to save data
+  routeToCollaborate() {
+    axios.put('/collaborate/1234', { attendees: this.props.friends })
+      .then((response) => {
+        console.log('Saved invited friends', response);
+        // this.pushToCollaborate();
+        // shit promise doesn't work
+      })
+        .catch((error) => {
+          console.log('Inviting friends error', error);
+        });
+    this.props.router.push('/collaborate');
+
+    // console.log(this.props.friends);
   }
 
   handleBack() {
