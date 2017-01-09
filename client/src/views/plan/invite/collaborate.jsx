@@ -13,7 +13,7 @@ const buttonStyle = {
   position: 'fixed',
   bottom: '0',
   height: '5%',
-  marginBottom: '12%',
+  marginBottom: '15%',
   zIndex: '5',
   marginLeft: '25%',
   width: '50%',
