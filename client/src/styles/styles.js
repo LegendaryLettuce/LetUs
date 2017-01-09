@@ -32,7 +32,7 @@ export const fbLogin = {
 
 export const splashText = {
   color: 'white',
-  marginTop: '10%',
+  marginTop: '40%',
   marginBottom: '10%',
   fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
   fontWeight: '300',

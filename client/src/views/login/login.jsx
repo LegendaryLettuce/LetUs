@@ -41,7 +41,7 @@ class Login extends Component {
             Let Us
             <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} />
           </div>
-          <div style={tagline}>Collaborate event planning with your friends.</div>
+          <div style={tagline}>Collaborative event planning with friends.</div>
           <BottomToolbar style={fbLogin} >
             <Button style={button} onClick={this.decideCreate.bind(this)}>
               <Icon icon="fa-facebook-square"/> Login with Facebook
