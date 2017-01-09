@@ -56,6 +56,10 @@ const tags = {
   margin: '7px',
 };
 
+const spacingDiv = {
+  height: '44px',
+}
+
 // const address = (location) => {
 //   return location.display_address.join(',');
 // }
@@ -125,6 +129,7 @@ class Event extends Component {
               </ListItem>
             </a>
           </List>
+          <div style={spacingDiv}></div>
           <BottomNav></BottomNav>
         </Page>
     );
