@@ -17,7 +17,7 @@ import BottomNav from './../../views/_global/bottomNav.jsx';
 
 const isIOS = ons.platform.isIOS();
 
-const iconSize = '80px';
+const iconSize = '50px';
 
 const containerPadding = isIOS ? '9%' : '0';
 
@@ -25,9 +25,9 @@ const icons = color => ({
   paddingTop: '.4em',
   paddingBottom: '.4em',
   // eslint-disable-next-line no-nested-ternary
-  background: (!color) ?        'radial-gradient(#1ee, #5ff, #8ff)' :
-              (color === 1) ?   'radial-gradient(#e1e, #f5f, #f8f)' :
-                                'radial-gradient(#ee1, #ff5, #ff8)',
+  background: (!color) ?        '#E26A6A' :
+              (color === 1) ?   '#67809F' :
+                                '#F4B350',
   WebkitBackgroundClip: 'text',
   backgroundClip: 'text',
   color: 'transparent',
@@ -201,7 +201,7 @@ class Create extends Component {
       position: 'fixed',
       bottom: '0',
       height: '5%',
-      marginBottom: '12%',
+      marginBottom: '15%',
       zIndex: '5',
       marginLeft: '25%',
       width: '50%',
