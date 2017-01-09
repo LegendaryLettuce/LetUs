@@ -15,7 +15,9 @@ export const bottomNavStyle = {
 
 export const login = {
   backgroundImage: 'url("http://68.media.tumblr.com/b4f33d654b4448794313633770cc8572/tumblr_oh34v07h9w1u9ooogo1_540.gif")',
-  position: 'fixed',
+  backgroundAttachment: 'fixed',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
   width: '100%',
   height: '100vh',
 };
