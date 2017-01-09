@@ -1,11 +1,11 @@
-const { User, UserFavs, Friends, CheckIns, Events } = require('./letUsSchema.js');
+const { User, UserFavs, Friends, CheckIns, Events, Attendees } = require('./letUsSchema.js');
 
 // modular insert function
 
 const savetoDB = (model) => {
   model.save((err, data) => {
     if (err) {
-      console.log(err);
+      console.log('Controller error', err);
     } else {
       console.log('Inserted into DB', data);
     }
@@ -31,7 +31,7 @@ const findUser = (data) => {
     if (!err) {
       return user;
     }
-    return console.log(err);
+    return console.log('Find user', err);
   });
 };
 
@@ -40,11 +40,9 @@ const getAllUsers = () => {
     if (!err) {
       return users;
     }
-    return console.log(err);
+    return console.log('getAllUsers', err);
   });
 };
-
-console.log(getAllUsers());
 
 const addUserFavorites = (data) => {
   const newUserFav = new UserFavs({
@@ -61,6 +59,7 @@ const addFriend = (data) => {
   });
   savetoDB(newFriend);
 };
+
 
 const addCheckIn = (data) => {
   const newCheckIn = new CheckIns({
@@ -81,6 +80,30 @@ const addEvent = (data) => {
   savetoDB(newEvent);
 };
 
+// controllers for Invite -> Collaborate view
+
+// use created event ID that is attached to the userID, save invited friends to that row
+
+// const retrieveCollaborate = () => {
+//   Event.find((err, users) => {
+//     if (!err) {
+//       return users;
+//     }
+//     return console.log('getAllUsers', err);
+//   });
+// };
+
+
+const updateAttendees = (data) => {
+  // console.log(data);
+  const newAttendees = new Attendees({
+    collaborateID: data.params.number,
+    attendees: data.body.attendees,
+  });
+  savetoDB(newAttendees);
+  console.log('controlller received');
+};
+
 module.exports = {
   addUser,
   addFriend,
@@ -89,4 +112,8 @@ module.exports = {
   addEvent,
   findUser,
   getAllUsers,
+
+  updateAttendees,
+
 };
+

@@ -37,12 +37,19 @@ const eventsSchema = new Schema({
   attendees: String,
 });
 
+const attendeesSchema = new Schema({
+  collaborateID: Number,
+  attendees: [String],
+});
+
 // add models to db
 const User = mongoose.model('User', userSchema);
 const UserFavs = mongoose.model('UserInfo', userFavoritesSchema);
 const Friends = mongoose.model('Friends', userFriendsSchema);
 const CheckIns = mongoose.model('CheckIns', checkInsSchema);
 const Events = mongoose.model('Events', eventsSchema);
+
+const Attendees = mongoose.model('Attendees', attendeesSchema);
 
 
 // modularize code for controller
@@ -52,4 +59,5 @@ module.exports = {
   Friends,
   CheckIns,
   Events,
+  Attendees,
 };

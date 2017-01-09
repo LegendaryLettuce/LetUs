@@ -5,8 +5,9 @@ const serveStatic   = require('serve-static');
 const logger        = require('morgan');
 const cookieParser  = require('cookie-parser');
 const bodyParser    = require('body-parser');
-const db      = require('./db/index');
+const db            = require('./db/index');
 const letUsSchema   = require('./db/letUsSchema');
+const letUsRouter   = require('./routes/letUsRouter');
 
 // const index = require('./routes/index');
 // const users = require('./routes/users');
@@ -24,6 +25,8 @@ app.use(cookieParser());
 app.use(serveStatic(path.join(__dirname, 'client/dist'), {
   index: 'index.html',
 }));
+
+app.use('/', letUsRouter);
 
 app.get('*', (req, res) => {
 //   // and drop 'public' in the middle of here
