@@ -6,7 +6,7 @@ import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui
 import { connect }      from 'react-redux';
 import { updateYelpData } from '../../redux/actions';
 // Styles
-import { bodyStyle } from '../../styles/styles';
+import styles           from '../../styles/styles';
 // Subcomponents
 import GenericList from './../../views/_global/genericList.jsx';
 // Import sampleData
@@ -15,11 +15,11 @@ import drinkData from './create/sampleData/drinkData';
 import playData from './create/sampleData/playData';
 import BottomNav from './../../views/_global/bottomNav.jsx';
 
-const isIOS = ons.platform.isIOS();
+const osCheck = !ons.platform.isAndroid();
 
 const iconSize = '50px';
 
-const containerPadding = isIOS ? '9%' : '0';
+const containerPadding = osCheck ? '9%' : '0';
 
 const icons = color => ({
   paddingTop: '.4em',
@@ -79,7 +79,6 @@ const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyl
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
 
 class Create extends Component {
-
 
   constructor(props) {
     super(props);
@@ -200,18 +199,24 @@ class Create extends Component {
       padding: '0px 20px 0px 20px',
       position: 'fixed',
       bottom: '0',
-      height: '5%',
-      marginBottom: '15%',
+      height: '35px',
+      marginBottom: '44px',
       zIndex: '5',
-      marginLeft: '25%',
-      width: '50%',
+      marginLeft: '0',
+      width: '100%',
       textAlign: 'center',
       fontWeight: 'bold',
     };
 
     const padStyle = {
-      height: '12%',
+      height: '79px',
     };
+
+    if (this.state.selectedView.split(' ')[1] === 'Categories' || this.state.selectedView === 'Create') {
+      buttonStyle.display = 'none';
+    } else {
+      buttonStyle.display = '';
+    }
 
     return (
       <div>
@@ -230,7 +235,6 @@ class Create extends Component {
           className='center'
           style={buttonStyle}
           onClick={this.decideTogether}
-
         >Decide Together</Button>
         <BottomNav></BottomNav>
 
