@@ -6,7 +6,7 @@ import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui
 import { connect }      from 'react-redux';
 import { updateYelpData } from '../../redux/actions';
 // Styles
-import { bodyStyle } from '../../styles/styles';
+import styles           from '../../styles/styles';
 // Subcomponents
 import GenericList from './../../views/_global/genericList.jsx';
 // Import sampleData
@@ -15,19 +15,19 @@ import drinkData from './create/sampleData/drinkData';
 import playData from './create/sampleData/playData';
 import BottomNav from './../../views/_global/bottomNav.jsx';
 
-const isIOS = ons.platform.isIOS();
+const osCheck = !ons.platform.isAndroid();
 
-const iconSize = '50px';
+const iconSize = '80px';
 
-const containerPadding = isIOS ? '9%' : '0';
+const containerPadding = osCheck ? '9%' : '0';
 
 const icons = color => ({
   paddingTop: '.4em',
   paddingBottom: '.4em',
   // eslint-disable-next-line no-nested-ternary
-  background: (!color) ?        '#E26A6A' :
-              (color === 1) ?   '#67809F' :
-                                '#F4B350',
+  background: (!color) ?        'radial-gradient(#1ee, #5ff, #8ff)' :
+              (color === 1) ?   'radial-gradient(#e1e, #f5f, #f8f)' :
+                                'radial-gradient(#ee1, #ff5, #ff8)',
   WebkitBackgroundClip: 'text',
   backgroundClip: 'text',
   color: 'transparent',
@@ -52,9 +52,8 @@ const playIcon = {
 };
 
 const textStyleCreate = {
-  fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
   fontSize: '400%',
-  // fontWeight: 'bolder',
+  fontWeight: 'bolder',
 };
 
 const eatContainer = {
@@ -79,7 +78,6 @@ const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyl
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
 
 class Create extends Component {
-
 
   constructor(props) {
     super(props);
@@ -201,7 +199,7 @@ class Create extends Component {
       position: 'fixed',
       bottom: '0',
       height: '5%',
-      marginBottom: '15%',
+      marginBottom: '12%',
       zIndex: '5',
       marginLeft: '25%',
       width: '50%',
@@ -212,6 +210,13 @@ class Create extends Component {
     const padStyle = {
       height: '12%',
     };
+
+    if (this.state.selectedView.split(' ')[1] === 'Categories' || this.state.selectedView === 'Create') {
+      console.log('hide <button></button>');
+      buttonStyle.display = 'none';
+    } else {
+      buttonStyle.display = '';
+    }
 
     return (
       <div>
@@ -230,7 +235,6 @@ class Create extends Component {
           className='center'
           style={buttonStyle}
           onClick={this.decideTogether}
-
         >Decide Together</Button>
         <BottomNav></BottomNav>
 
