@@ -42,7 +42,7 @@ class Profile extends Component {
       style={{ background: 'rgba(51,51,51,1)' }}>
       <div style={top}>
         <img style={image} alt='{name}' src="http://www.animenewsnetwork.com/thumbnails/hotlink-max1000x1500/cms/news/105293/parappa.jpg"/>
-        <div>Wilson Ng</div>
+        <div style={bodyStyle}>Wilson Ng</div>
         <div>@nosliw</div>
       </div>
       <List>
