@@ -6,20 +6,7 @@ import { connect }      from 'react-redux';
 import ons              from 'onsenui';
 import { Button } from 'react-onsenui';
 // Styles
-import { }   from '../../../styles/styles';
-
-const buttonStyle = {
-  padding: '0px 20px 0px 20px',
-  position: 'fixed',
-  bottom: '0',
-  height: '5%',
-  marginBottom: '15%',
-  zIndex: '5',
-  marginLeft: '25%',
-  width: '50%',
-  textAlign: 'center',
-  fontWeight: 'bold',
-};
+import { buttonStyle }   from '../../../styles/styles';
 
 const Collaborate = props => (
   <div>

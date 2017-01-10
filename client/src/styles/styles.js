@@ -63,6 +63,18 @@ export const tagline = {
   color: 'white',
 };
 
+export const buttonStyle = {
+  padding: '0px 20px 0px 20px',
+  position: 'fixed',
+  bottom: '0',
+  height: '35px',
+  marginBottom: '44px',
+  zIndex: '5',
+  marginLeft: '0',
+  width: '100%',
+  textAlign: 'center',
+  fontWeight: 'bold',
+};
 // export const titleStyle = {
 //   ...styles.body,
 // };
