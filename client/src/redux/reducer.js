@@ -3,12 +3,18 @@ export const reducer = (state = {
   friends: [],
   yelpData: [],
   liveData: [],
+  eventHash: '',
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
       return {
         ...state,
         friends: action.friends,
+      };
+    case 'UPDATE_EVENT_HASH':
+      return {
+        ...state,
+        eventHash: action.eventHash,
       };
     case 'UPDATE_YELP_DATA':
       return {

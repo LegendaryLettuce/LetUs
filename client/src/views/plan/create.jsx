@@ -6,7 +6,7 @@ import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui
 import axios            from 'axios';
 // Redux
 import { connect }      from 'react-redux';
-import { updateYelpData } from '../../redux/actions';
+import { updateYelpData, updateEventHash } from '../../redux/actions';
 // Styles
 import styles           from '../../styles/styles';
 // Subcomponents
@@ -191,7 +191,9 @@ class Create extends Component {
       .then((res) => {
         console.log('Saved invited friends', res);
         // this.pushToCollaborate();
+        this.props.updateEventHash(res.data.linkHash);
         // shit promise doesn't work
+        console.log('EVENT HASH', this.props.eventHash);
         this.decideTogether();
       })
       .catch((error) => {
@@ -269,10 +271,14 @@ const mapDispatchToProps = dispatch => ({
   updateYelpData: (yelpData) => {
     dispatch(updateYelpData(yelpData));
   },
+  updateEventHash: (eventHash) => {
+    dispatch(updateEventHash(eventHash));
+  },
 });
 
 const mapStateToProps = state => ({
   yelpData: state.yelpData,
+  eventHash: state.eventHash,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);

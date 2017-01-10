@@ -74,7 +74,7 @@ class Invite extends Component {
       <Page renderToolbar={() => this.renderToolbar('Invite')}>
 
         <h1 style={header}>Invite Friends</h1>
-        <Link />
+        <Link hash={'this.props.eventHash'}/>
 
         <div style={listStyle}>
 
@@ -93,6 +93,7 @@ class Invite extends Component {
 const mapStateToProps = state => ({
   friends: state.friends,
   yelpData: state.yelpData,
+  eventHash: state.eventHash,
 });
 
 export default connect(mapStateToProps)(Invite);
