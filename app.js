@@ -12,7 +12,6 @@ const letUsRouter   = require('./routes/letUsRouter');
 
 // const index = require('./routes/index');
 // const users = require('./routes/users');
-// const letUsRouter = require('./routes/letUsRouter');
 
 const app = express();
 
@@ -48,7 +47,6 @@ io.on('connection', (socket) => {
 });
 
 
-// app.use('/', letUsRouter);
 
 // app.use('/', index);
 // app.use('/users', users);
