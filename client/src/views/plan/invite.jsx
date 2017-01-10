@@ -8,7 +8,6 @@ import { Page, Toolbar, BackButton } from 'react-onsenui';
 // Axios for requests
 import axios            from 'axios';
 
-
 // Styles
 import { }   from '../../styles/styles';
 
@@ -27,6 +26,7 @@ class Invite extends Component {
     this.routeToCollaborate = this.routeToCollaborate.bind(this);
     this.pushToCollaborate = this.routeToCollaborate.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    this.randomHash = this.randomHash.bind(this);
   }
 
   componentDidMount() {
@@ -41,9 +41,19 @@ class Invite extends Component {
     this.props.router.push('/collaborate');
   }
 
-    // request to server to db to save data
+  randomHash() {
+    return Math.floor(Math.random() * 1000) + 'a';
+  }
+
   routeToCollaborate() {
-    axios.put('/collaborate/1234', { attendees: this.props.friends })
+    axios.put(`/collaborate/ ${this.randomHash()}`, {
+      creator: 'Wilson',
+      yelpId: 'yelp id',
+      data: this.props.yelpData,
+      attendees: this.props.friends,
+      checkIns: [true],
+
+    })
       .then((response) => {
         console.log('Saved invited friends', response);
         // this.pushToCollaborate();
@@ -101,6 +111,7 @@ class Invite extends Component {
 }
 
 const mapStateToProps = state => ({
+  friends: state.friends,
   yelpData: state.yelpData,
 });
 
