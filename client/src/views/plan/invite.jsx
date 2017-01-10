@@ -100,7 +100,7 @@ class Invite extends Component {
 }
 
 const mapStateToProps = state => ({
-  friends: state.friends,
+  yelpData: state.yelpData,
 });
 
 export default connect(mapStateToProps)(Invite);
