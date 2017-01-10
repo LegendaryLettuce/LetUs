@@ -43,23 +43,7 @@ class Invite extends Component {
   }
 
   routeToCollaborate() {
-    axios.post('/collaborate/', {
-      creator: 'Wilson',
-      data: this.props.yelpData,
-      attendees: this.props.friends,
-      checkIns: [true],
-      linkHash: '',
-    })
-      .then((response) => {
-        console.log('Saved invited friends', response);
-        // this.pushToCollaborate();
-        // shit promise doesn't work
-      })
-      .catch((error) => {
-        console.log('Inviting friends error', error);
-      });
     this.props.router.push('/collaborate');
-
     // console.log(this.props.friends);
   }
 
