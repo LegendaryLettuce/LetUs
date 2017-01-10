@@ -9,18 +9,8 @@ import { updateYelpData } from '../../redux/actions';
 import GenericList from './../_global/genericList.jsx';
 import VotesProgress from './collaborate/progressBar.jsx';
 
-const buttonStyle = {
-  padding: '0px 20px 0px 20px',
-  position: 'fixed',
-  bottom: '0',
-  height: '5%',
-  marginBottom: '12%',
-  zIndex: '5',
-  marginLeft: '25%',
-  width: '50%',
-  textAlign: 'center',
-  fontWeight: 'bold',
-};
+// Styles
+import { buttonStyle }   from '../../styles/styles';
 
 const padStyle = {
   height: '12%',

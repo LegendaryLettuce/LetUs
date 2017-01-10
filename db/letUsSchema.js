@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
-// connection to db
-// TO DO: move to server
-// mongoose.connect('mongodb://localhost/letus');
 
 // define models
 const Users = new Schema({
@@ -21,18 +18,12 @@ const Events = new Schema({
   creator: { type: String, required: true },
   yelpId: String,
   data: { type: String, required: true },
-  attendees: [{ type: ObjectId, ref: 'Users' }],
+  attendees: [{ type: String, ref: 'Users' }], // change String back to ObjectId
   checkIns: [{ type: Boolean, ref: 'Users' }],
   linkHash: { type: String, required: true },
-});
-
-const Attendees = new Schema({
-  collaborateID: Number,
-  attendees: [String],
 });
 
 // add models to db
 module.exports.Users = mongoose.model('Users', Users);
 module.exports.Events = mongoose.model('Events', Events);
 
-module.exports.Attendees = mongoose.model('Attendees', Attendees);
