@@ -34,6 +34,7 @@ class Invite extends Component {
     this.setState({
       friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Marc', 'Rebecca', 'Fiona'],
     });
+    const socket = io();
   }
 
   pushToCollaborate() {

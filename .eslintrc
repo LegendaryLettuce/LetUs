@@ -12,7 +12,8 @@
     "describe": true,
     "it": true,
     "document": true,
-    "window": true
+    "window": true,
+    "io": true
   },
   "rules": {
     "react/prop-types": "off",
