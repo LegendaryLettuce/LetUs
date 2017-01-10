@@ -1,4 +1,4 @@
-const { User, UserFavs, Friends, CheckIns, Events, Attendees } = require('./letUsSchema.js');
+const { User, UserFavs, Friends, CheckIns, Events } = require('./letUsSchema.js');
 
 // modular insert function
 
@@ -94,14 +94,18 @@ const addEvent = (data) => {
 // };
 
 
-const updateAttendees = (data) => {
+const updateEvents = (data) => {
   // console.log(data);
-  const newAttendees = new Attendees({
-    collaborateID: data.params.number,
+  const newEvents = new Events({
+    creator: data.body.creator,
+    yelpId: data.body.yelpId,
+    data: data.body.data,
     attendees: data.body.attendees,
+    checkIns: data.body.checkIns,
+    linkHash: data.params.string,
   });
-  savetoDB(newAttendees);
-  console.log('controlller received');
+  savetoDB(newEvents);
+  console.log('controller received');
 };
 
 module.exports = {
@@ -112,8 +116,7 @@ module.exports = {
   addEvent,
   findUser,
   getAllUsers,
-
-  updateAttendees,
+  updateEvents,
 
 };
 

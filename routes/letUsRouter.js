@@ -18,18 +18,33 @@ const letUsController = require('../db/letUsController');
 
 // unique collaborate link routes
 
-letUsRouter.route('/collaborate/:number')
+// letUsRouter.route('/collaborate/:number')
+//   .get((req, res, next) => {
+//     req.body.number = req.params.number;
+//     letUsController.retrieveCollaborate(req, res);
+//   })
+//   .put((req, res, next) => {
+//     req.body.number = req.params.number;
+//     letUsController.updateAttendees(req, res);
+//     console.log('router received');
+//   })
+//   .delete((req, res, next) => {
+//     req.body.number = req.params.number;
+//     letUsController.deleteOne(req, res);
+//   });
+
+letUsRouter.route('/collaborate/:string')
   .get((req, res, next) => {
-    req.body.number = req.params.number;
+    req.body.string = req.params.string;
     letUsController.retrieveCollaborate(req, res);
   })
   .put((req, res, next) => {
-    req.body.number = req.params.number;
-    letUsController.updateAttendees(req, res);
+    req.body.string = req.params.string;
+    letUsController.updateEvents(req, res);
     console.log('router received');
   })
   .delete((req, res, next) => {
-    req.body.number = req.params.number;
+    req.body.string = req.params.string;
     letUsController.deleteOne(req, res);
   });
 
