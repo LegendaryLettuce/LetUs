@@ -26,7 +26,6 @@ class Invite extends Component {
     this.routeToCollaborate = this.routeToCollaborate.bind(this);
     this.pushToCollaborate = this.routeToCollaborate.bind(this);
     this.handleBack = this.handleBack.bind(this);
-    this.randomHash = this.randomHash.bind(this);
   }
 
   componentDidMount() {
@@ -41,18 +40,13 @@ class Invite extends Component {
     this.props.router.push('/collaborate');
   }
 
-  randomHash() {
-    return Math.floor(Math.random() * 1000) + 'a';
-  }
-
   routeToCollaborate() {
-    axios.put(`/collaborate/ ${this.randomHash()}`, {
+    axios.post('/collaborate/', {
       creator: 'Wilson',
-      yelpId: 'yelp id',
       data: this.props.yelpData,
       attendees: this.props.friends,
       checkIns: [true],
-
+      linkHash: '',
     })
       .then((response) => {
         console.log('Saved invited friends', response);

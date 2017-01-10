@@ -33,15 +33,21 @@ const letUsController = require('../db/letUsController');
 //     letUsController.deleteOne(req, res);
 //   });
 
-letUsRouter.route('/collaborate/:string')
+letUsRouter.route('/test')
   .get((req, res, next) => {
-    req.body.string = req.params.string;
-    letUsController.retrieveCollaborate(req, res);
+    letUsController.retrieveEvents(req, res);
+  });
+
+letUsRouter.route('/collaborate/')
+  .get((req, res, next) => {
+    letUsController.retrieveEvents(req, res);
   })
-  .put((req, res, next) => {
-    req.body.string = req.params.string;
-    letUsController.updateEvents(req, res);
-    console.log('router received');
+  .post((req, res, next) => {
+    letUsController.createNewHash()
+      .then((hash) => { 
+        req.body.hash = hash;
+        letUsController.updateEvents(req, res);
+      });
   })
   .delete((req, res, next) => {
     req.body.string = req.params.string;
