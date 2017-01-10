@@ -195,7 +195,7 @@ class Collaborate extends Component {
 
   moveBoth() {
     const distFromMid = this.getDistFromMid();
-    if (Math.abs(distFromMid) > 9) {
+    if (Math.abs(distFromMid) > 9) { // TODO: define by pixels
       this.stationary = false;
       this.move();
     }
