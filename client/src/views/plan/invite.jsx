@@ -15,6 +15,8 @@ import  Link            from './invite/link.jsx';
 import  Friends         from './invite/friends.jsx';
 import  Collaborate      from './invite/collaborate.jsx';
 import  BottomNav        from './../../views/_global/bottomNav.jsx';
+// Import Sockets
+import addSockets from './../../sockets/sockets';
 
 class Invite extends Component {
 
@@ -33,7 +35,7 @@ class Invite extends Component {
     this.setState({
       friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Marc', 'Rebecca', 'Fiona'],
     });
-    const socket = io();
+    addSockets('1337');
   }
 
   pushToCollaborate() {
