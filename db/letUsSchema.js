@@ -16,7 +16,6 @@ const Users = new Schema({
 
 const Events = new Schema({
   creator: { type: String, required: true },
-  yelpId: String,
   data: { type: String, required: true },
   attendees: [{ type: String, ref: 'Users' }], // change String back to ObjectId
   checkIns: [{ type: Boolean, ref: 'Users' }],
