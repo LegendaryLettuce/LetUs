@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-const ObjectId = mongoose.Schema.Types.ObjectId;
-
 mongoose.Promise = require('bluebird');
 
 const { User, UserFavs, Friends, CheckIns, Events } = require('./letUsSchema.js');
@@ -10,15 +8,14 @@ const { User, UserFavs, Friends, CheckIns, Events } = require('./letUsSchema.js'
 const createHash = require('hash-generator');
 
 
-const savetoDB = (model) => {
-  model.save((err, data) => {
-    if (err) {
-      console.log('Controller error', err);
-    } else {
-      console.log('Inserted into DB', data);
-    }
+const savetoDB = model => model.save()
+  .then((data) => {
+    console.log(JSON.stringify(data));
+    return data;
+  })
+  .catch((err) => {
+    console.log('Controller error', err);
   });
-};
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 // models to insert
@@ -109,12 +106,9 @@ const createNewHash = (data) => {
   return Events.findOne({ linkHash: hash })
     .then((doc) => {
       if (!doc) {
-        console.log('DOCCCCCCCC', doc);
-        console.log('HAAAAAASH', hash);
         return hash;
-      } else {
-        return createNewHash();
       }
+      return createNewHash();
     });
 };
 
@@ -131,8 +125,8 @@ const updateEvents = (data) => {
     checkIns: data.body.checkIns,
     linkHash: data.body.hash,
   });
-  savetoDB(newEvents);
   console.log('controller received');
+  return savetoDB(newEvents);
 };
 
 module.exports = {

@@ -2,6 +2,8 @@ import React, { Component }       from 'react';
 // Onsen UI
 import ons              from 'onsenui';
 import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
+// Axios for requests
+import axios            from 'axios';
 // Redux
 import { connect }      from 'react-redux';
 import { updateYelpData } from '../../redux/actions';
@@ -94,6 +96,7 @@ class Create extends Component {
     this.handleBack = this.handleBack.bind(this);
     this.parseUniqueCategories = this.parseUniqueCategories.bind(this);
     this.parseBizByCategory = this.parseBizByCategory.bind(this);
+    this.createEventHash = this.createEventHash.bind(this);
   }
 
   handleTouch(item) {
@@ -178,6 +181,25 @@ class Create extends Component {
     }, []);
   }
 
+  createEventHash() {
+    axios.post('/collaborate/', {
+      creator: 'Wilson',
+      data: this.props.yelpData,
+      checkIns: [true],
+      linkHash: '',
+    })
+      .then((res) => {
+        console.log('Saved invited friends', res);
+        // this.pushToCollaborate();
+        // shit promise doesn't work
+        this.decideTogether();
+      })
+      .catch((error) => {
+        console.log('Inviting friends error', error);
+      });
+    // console.log(this.props.friends);
+  }
+
   // On Click Event
   decideTogether() {
     this.props.router.push('/invite');
@@ -234,7 +256,7 @@ class Create extends Component {
         <Button
           className='center'
           style={buttonStyle}
-          onClick={this.decideTogether}
+          onClick={this.createEventHash}
         >Decide Together</Button>
         <BottomNav></BottomNav>
 

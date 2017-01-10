@@ -44,9 +44,12 @@ letUsRouter.route('/collaborate/')
   })
   .post((req, res, next) => {
     letUsController.createNewHash()
-      .then((hash) => { 
+      .then((hash) => {
         req.body.hash = hash;
-        letUsController.updateEvents(req, res);
+        return letUsController.updateEvents(req, res);
+      })
+      .then((data) => {
+        res.send(data);
       });
   })
   .delete((req, res, next) => {
