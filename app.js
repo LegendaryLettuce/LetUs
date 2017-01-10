@@ -9,11 +9,13 @@ const db            = require('./db/index');
 const letUsSchema   = require('./db/letUsSchema');
 const letUsRouter   = require('./routes/letUsRouter');
 
+
 // const index = require('./routes/index');
 // const users = require('./routes/users');
 // const letUsRouter = require('./routes/letUsRouter');
 
 const app = express();
+
 
 // uncomment after placing your favicon in /client/src
 // app.use(favicon(path.join(__dirname, 'client/dist', 'favicon.ico')));
@@ -34,9 +36,17 @@ app.get('*', (req, res) => {
 });
 
 const port = 3000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log('Connected on  ' + port);
 });
+
+// Socket Testing
+const io = require('socket.io').listen(server);
+
+io.on('connection', (socket) => {
+  console.log('User Connected | Socket:', socket);
+});
+
 
 // app.use('/', letUsRouter);
 
