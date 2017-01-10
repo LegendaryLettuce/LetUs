@@ -23,10 +23,11 @@ const link = {
   display: 'inline',
 };
 
-const Link = () => (
+const hostUrl = 'let.us/';
 
+const Link = props => (
   <div style={linkStyle}>
-    <p style={link}>let.us/aEc67</p>
+    <p style={link}>{hostUrl.concat(props.eventHash)}</p>
 
     <Icon style={copyStyle} icon='fa-clone' />
 
@@ -35,7 +36,7 @@ const Link = () => (
 );
 
 const mapStateToProps = state => ({
-  hello: state.hello,
+  eventHash: state.eventHash,
 });
 
 export default connect(mapStateToProps)(Link);
