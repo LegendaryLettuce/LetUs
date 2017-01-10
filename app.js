@@ -8,7 +8,7 @@ const bodyParser    = require('body-parser');
 const db            = require('./db/index');
 const letUsSchema   = require('./db/letUsSchema');
 const letUsRouter   = require('./routes/letUsRouter');
-
+const addSockets    = require('./sockets');
 
 // const index = require('./routes/index');
 // const users = require('./routes/users');
@@ -39,14 +39,10 @@ const server = app.listen(port, () => {
   console.log('Connected on  ' + port);
 });
 
-// Socket Testing
+// Sockets
 const io = require('socket.io').listen(server);
 
-io.on('connection', (socket) => {
-  console.log('User Connected | Socket:', socket);
-});
-
-
+addSockets(io, '1337');
 
 // app.use('/', index);
 // app.use('/users', users);
