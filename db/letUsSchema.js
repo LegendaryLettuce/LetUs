@@ -1,63 +1,38 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-
+const ObjectId = mongoose.Schema.Types.ObjectId;
 // connection to db
 // TO DO: move to server
 // mongoose.connect('mongodb://localhost/letus');
 
 // define models
-const userSchema = new Schema({
-  userid: { type: String, unique: true, required: true },
+const Users = new Schema({
+  name: { type: String, unique: true, required: true },
   pic: String,
-  phonenumber: String,
-  friendrank: Number,
-  lettuceleaves: Number,
+  phoneNumber: String,
+  friendRank: Number,
+  lettuceLeaves: Number,
+  friends: [{ type: ObjectId, ref: 'Users' }],
+  favorites: [String], // yelp ids
 });
 
-const userFavoritesSchema = new Schema({
-  userid: { type: String, unique: true, required: true },
-  favoriteid: String,
+const Events = new Schema({
+  creator: { type: String, required: true },
+  yelpId: String,
+  data: { type: String, required: true },
+  attendees: [{ type: ObjectId, ref: 'Users' }],
+  checkIns: [{ type: Boolean, ref: 'Users' }],
+  linkHash: { type: String, required: true },
 });
 
-const userFriendsSchema = new Schema({
-  userid: { type: String, unique: true, required: true },
-  friendid: String,
-});
-
-const checkInsSchema = new Schema({
-  attendee: String,
-  eventid: String,
-  checkedin: { type: Boolean, unique: true, required: true },
-});
-
-const eventsSchema = new Schema({
-  eventlord: { type: String, unique: true, required: true },
-  yelpid: String,
-  attendees: String,
-});
-
-const attendeesSchema = new Schema({
+const Attendees = new Schema({
   collaborateID: Number,
   attendees: [String],
 });
 
 // add models to db
-const User = mongoose.model('User', userSchema);
-const UserFavs = mongoose.model('UserInfo', userFavoritesSchema);
-const Friends = mongoose.model('Friends', userFriendsSchema);
-const CheckIns = mongoose.model('CheckIns', checkInsSchema);
-const Events = mongoose.model('Events', eventsSchema);
+module.exports.Users = mongoose.model('Users', Users);
+module.exports.Events = mongoose.model('Events', Events);
 
-const Attendees = mongoose.model('Attendees', attendeesSchema);
-
-
-// modularize code for controller
-module.exports = {
-  User,
-  UserFavs,
-  Friends,
-  CheckIns,
-  Events,
-  Attendees,
-};
+module.exports.Attendees = mongoose.model('Attendees', Attendees);

@@ -48,9 +48,9 @@ class Invite extends Component {
         // this.pushToCollaborate();
         // shit promise doesn't work
       })
-        .catch((error) => {
-          console.log('Inviting friends error', error);
-        });
+      .catch((error) => {
+        console.log('Inviting friends error', error);
+      });
     this.props.router.push('/collaborate');
 
     // console.log(this.props.friends);
@@ -100,7 +100,7 @@ class Invite extends Component {
 }
 
 const mapStateToProps = state => ({
-  friends: state.friends,
+  yelpData: state.yelpData,
 });
 
 export default connect(mapStateToProps)(Invite);
