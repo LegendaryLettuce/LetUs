@@ -2,7 +2,7 @@ const addSockets = (io, hash) => {
   const eventNameSpace = '/event/';
   const nsp = io.of(eventNameSpace.concat(hash));
   nsp.on('connection', (socket) => {
-    console.log(`User Connected to: ${hash}`);
+    console.log(`User Connected to: /event/${hash}`);
   });
 };
 

@@ -15,6 +15,8 @@ import  Link            from './invite/link.jsx';
 import  Friends         from './invite/friends.jsx';
 import  Collaborate      from './invite/collaborate.jsx';
 import  BottomNav        from './../../views/_global/bottomNav.jsx';
+// Import Sockets
+import addSockets from './../../sockets/sockets';
 
 class Invite extends Component {
 
@@ -34,9 +36,7 @@ class Invite extends Component {
     this.setState({
       friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Marc', 'Rebecca', 'Fiona'],
     });
-    const hash = '1337';
-    const eventNameSpace = '/event/';
-    const socket = io(eventNameSpace.concat(hash));
+    addSockets('1337');
   }
 
   pushToCollaborate() {
