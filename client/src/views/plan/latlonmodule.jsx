@@ -1,19 +1,18 @@
-import React, { Component }           from 'react';
+import React, { Component }                   from 'react';
 // Redux
-import { connect }                    from 'react-redux';
-import { Page, Button, Input } from 'react-onsenui';
+import { connect }                            from 'react-redux';
+import { Page, Button } from 'react-onsenui';
 // Packages
-import Autocomplete                   from 'react-google-autocomplete';
+import Autocomplete                           from 'react-google-autocomplete';
 // import { GoogleMapLoader, GoogleMap, Marker } from "react-google-maps";
 
-import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
-
-import axios                          from 'axios';
+// import axios                          from 'axios';
 // Styles
-import { bodyStyle }                  from '../../styles/styles';
+import { bodyStyle }                          from '../../styles/styles';
 import '../../styles/mapStyle.css';
 // Pages
 // import  BottomNav                     from './../../views/_global/bottomNav.jsx';
+
 const inputField = {
   ...bodyStyle,
 };
@@ -52,46 +51,40 @@ class LatLonModule extends Component {
         geocodeResults: null,
       });
     };
-  }
-
-  componentDidMount() {
-    const target = document.getElementsByTagName('body')[0];
-    const config = { childList: true };
-
-    const childObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          node.classList.add('needsclick');
-          node.childNodes.forEach((child) => {
-            child.classList.add('needsclick');
+    this.componentDidMount = () => {
+      const target = document.getElementsByTagName('body')[0];
+      const config = { childList: true };
+      const childObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            node.classList.add('needsclick');
+            node.childNodes.forEach((child) => {
+              child.classList.add('needsclick');
+            });
           });
         });
       });
-    });
-
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        mutation.addedNodes.forEach((node) => {
-          if ([...node.classList].indexOf('pac-container') !== -1) {
-            childObserver.observe(node, config);
-          }
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            if ([...node.classList].indexOf('pac-container') !== -1) {
+              childObserver.observe(node, config);
+            }
+          });
         });
       });
-    });
-    observer.observe(target, config);
+      observer.observe(target, config);
+    };
+    this.componentWillUnmount = () => {
+      observer.disconnect();
+    };
   }
 
-  componentWillUnmount() {
-    observer.disconnect();
-  }
 
   render() {
-
     return (
       <Page>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"/>
-        <p style={title}>Where do you wanna go?</p>
-        <div className='HERPDERP'>
+        <p style={title}>Where to?</p>
           <div style={searchForm}>
             <Autocomplete
               style={inputField}
@@ -103,16 +96,6 @@ class LatLonModule extends Component {
             />
             <Button onClick={console.log(this.state.input)}>Submit</Button>
           </div>
-        </div>
-
-      {/* <PlacesAutocomplete
-        style={inputField}
-        value={this.state.address}
-        onChange={this.handleChange}
-        onSelect={this.handleSelect}
-        autocompleteItem={AutocompleteItem}
-       /> */}
-
       </Page>
     );
   }

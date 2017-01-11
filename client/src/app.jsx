@@ -9,6 +9,7 @@ import { reducer }      from './redux/reducer';
 // CSS
 import '../../node_modules/onsenui/css/onsenui.css';
 import '../../node_modules/onsenui/css/onsen-css-components-dark-theme.css';
+import './styles/mapStyle.css';
 // Views
 import Create           from './views/plan/create.jsx';
 import Collaborate      from './views/plan/collaborate.jsx';
@@ -18,6 +19,7 @@ import LiveList         from './views/plan/liveList.jsx';
 import Event            from './views/event/event.jsx';
 import Profile          from './views/profile/profile.jsx';
 import Friends          from './views/profile/friends.jsx';
+import LatLonModule     from './views/plan/latlonmodule.jsx';
 
 const store = createStore(reducer);
 
@@ -54,6 +56,8 @@ render(
         <Route path='event' component={Event} />
         <Route path='profile' component={Profile} />
         <Route path='friends' component={Friends} />
+        <Route path='search' component={LatLonModule} />
+        {/* <Route path='test' component={Test} /> */}
       </Route>
     </Router>
   </Provider>,
