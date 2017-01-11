@@ -26,7 +26,6 @@ class Invite extends Component {
       friends: [],
     };
     this.routeToCollaborate = this.routeToCollaborate.bind(this);
-    this.pushToCollaborate = this.routeToCollaborate.bind(this);
     this.handleBack = this.handleBack.bind(this);
   }
 
@@ -38,11 +37,19 @@ class Invite extends Component {
     addSockets(this.props.eventHash);
   }
 
-  pushToCollaborate() {
-    this.props.router.push('/collaborate');
-  }
-
   routeToCollaborate() {
+    axios.put('/collaborate/', {
+      attendees: this.props.friends,
+      linkHash: this.props.eventHash,
+    })
+    .then((res) => {
+      console.log('Saved invited friends', res);
+      // this.pushToCollaborate();
+      // shit promise doesn't work
+    })
+    .catch((error) => {
+      console.log('Inviting friends error', error);
+    });
     this.props.router.push('/collaborate');
     // console.log(this.props.friends);
   }
