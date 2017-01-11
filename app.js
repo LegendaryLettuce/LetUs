@@ -11,8 +11,6 @@ const letUsSchema   = require('./db/letUsSchema');
 const letUsRouter   = require('./routes/letUsRouter');
 const fb            = require('./config/facebook-secret');
 
-console.log('check order');
-
 // const index = require('./routes/index');
 // const users = require('./routes/users');
 
