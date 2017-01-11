@@ -28,6 +28,7 @@ class Loading extends Component {
         })
         .then(() => {
           console.log('After AJAX', this.props.yelpData);
+          addSockets(hash);
           this.props.router.push('/collaborate');
         });
   }
