@@ -38,7 +38,7 @@ class Invite extends Component {
   }
 
   routeToCollaborate() {
-    axios.put('/collaborate/', {
+    axios.put('/events/', {
       attendees: this.props.friends,
       linkHash: this.props.eventHash,
     })

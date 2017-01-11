@@ -182,9 +182,9 @@ class Create extends Component {
   }
 
   createEventHash() {
-    axios.post('/collaborate/', {
-      creator: 'Wilson',
-      data: this.props.yelpData,
+    axios.post('/events/', {
+      creator: this.props.user.name,
+      data: JSON.stringify(this.props.yelpData),
       checkIns: [true],
       linkHash: '',
     })
@@ -279,6 +279,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   yelpData: state.yelpData,
   eventHash: state.eventHash,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);

@@ -22,21 +22,18 @@ const copyStyle = {
   right: '0',
   margin: '0',
   padding: '0',
-  float: 'right'
+  float: 'right',
 };
 const link = {
   display: 'inline',
 };
 
-const hostUrl = 'let.us/';
+const hostUrl = 'localhost:3000/c/';
 
 const Link = props => (
   <div style={linkStyle}>
     <div style={{ float: 'left' }}>
-      <p style={link}>{hostUrl.concat(props.eventHash)}</p>
-    </div>
-    <div style={copyStyle}>
-      <Icon icon='fa-clone' />
+      <p style={link}>{`${hostUrl}${props.eventHash}`}</p>
     </div>
   </div>
 
@@ -47,4 +44,9 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(Link);
+
+
+    // <div style={copyStyle}>
+    //   <Icon icon='fa-clone' />
+    // </div>
 
