@@ -11,13 +11,18 @@ const linkStyle = {
   border: '2px solid white',
   borderRadius: '10px',
   width: '50%',
+  height: '3.5%',
   margin: 'auto',
   padding: '10px',
+  paddingBottom: '10px',
   textAlign: 'center',
   marginBottom: '5%',
 };
 const copyStyle = {
-  textAlign: 'right',
+  right: '0',
+  margin: '0',
+  padding: '0',
+  float: 'right'
 };
 const link = {
   display: 'inline',
@@ -27,10 +32,12 @@ const hostUrl = 'let.us/';
 
 const Link = props => (
   <div style={linkStyle}>
-    <p style={link}>{hostUrl.concat(props.eventHash)}</p>
-
-    <Icon style={copyStyle} icon='fa-clone' />
-
+    <div style={{ float: 'left' }}>
+      <p style={link}>{hostUrl.concat(props.eventHash)}</p>
+    </div>
+    <div style={copyStyle}>
+      <Icon icon='fa-clone' />
+    </div>
   </div>
 
 );
