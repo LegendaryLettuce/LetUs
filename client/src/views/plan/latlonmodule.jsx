@@ -1,14 +1,13 @@
-import React, { Component }                   from 'react';
+import React, { Component } from 'react';
 // Redux
-import { connect }                            from 'react-redux';
-import { Page, Button } from 'react-onsenui';
+import { connect }          from 'react-redux';
+import { Page, Button }     from 'react-onsenui';
 // Packages
-import Autocomplete                           from 'react-google-autocomplete';
-// import { GoogleMapLoader, GoogleMap, Marker } from "react-google-maps";
-
+import Autocomplete         from 'react-google-autocomplete';
+import apikey               from './../../../../config/google-maps-api';
 // import axios                          from 'axios';
 // Styles
-import { bodyStyle }                          from '../../styles/styles';
+import { bodyStyle }        from '../../styles/styles';
 import '../../styles/mapStyle.css';
 // Pages
 // import  BottomNav                     from './../../views/_global/bottomNav.jsx';
@@ -84,6 +83,7 @@ class LatLonModule extends Component {
   render() {
     return (
       <Page>
+        <script type="text/javascript" src={`https://maps.googleapis.com/maps/api/js?key=${apikey}&libraries=places`}/>
         <p style={title}>Where to?</p>
           <div style={searchForm}>
             <Autocomplete
