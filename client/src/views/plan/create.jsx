@@ -182,7 +182,7 @@ class Create extends Component {
   }
 
   createEventHash() {
-    axios.post('/collaborate/', {
+    axios.post('/c/', {
       creator: this.props.user.name,
       data: this.props.yelpData,
       checkIns: [true],
