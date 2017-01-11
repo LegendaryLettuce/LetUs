@@ -7,6 +7,7 @@ const { User, UserFavs, Friends, CheckIns, Events } = require('./letUsSchema.js'
 // modular insert function
 const createHash = require('hash-generator');
 
+const socket = require('./../sockets');
 
 const savetoDB = model => model.save()
   .then((data) => {

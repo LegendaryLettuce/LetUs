@@ -8,13 +8,12 @@ const bodyParser    = require('body-parser');
 const db            = require('./db/index');
 const letUsSchema   = require('./db/letUsSchema');
 const letUsRouter   = require('./routes/letUsRouter');
-const addSockets    = require('./sockets');
+console.log('check order');
 
 // const index = require('./routes/index');
 // const users = require('./routes/users');
 
 const app = express();
-
 
 // uncomment after placing your favicon in /client/src
 // app.use(favicon(path.join(__dirname, 'client/dist', 'favicon.ico')));
@@ -39,10 +38,7 @@ const server = app.listen(port, () => {
   console.log('Connected on  ' + port);
 });
 
-// Sockets
 const io = require('socket.io').listen(server);
-
-addSockets(io, '1337');
 
 // app.use('/', index);
 // app.use('/users', users);
@@ -65,4 +61,8 @@ addSockets(io, '1337');
 //   res.render('error');
 // });
 
-module.exports = app;
+module.exports = {
+  app,
+  io,
+};
+
