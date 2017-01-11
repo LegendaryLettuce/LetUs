@@ -3,6 +3,8 @@ const express = require('express');
 const letUsRouter = express.Router();
 const letUsController = require('../db/letUsController');
 
+const sockets = require('./../sockets');
+
 // template routes
 
 // letUsRouter.route('/')
@@ -49,6 +51,7 @@ letUsRouter.route('/collaborate/')
         return letUsController.updateEvents(req, res);
       })
       .then((data) => {
+        sockets.add(data.linkHash);
         res.send(data);
       });
   })

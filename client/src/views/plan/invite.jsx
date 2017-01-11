@@ -35,7 +35,7 @@ class Invite extends Component {
     this.setState({
       friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Marc', 'Rebecca', 'Fiona'],
     });
-    addSockets('1337');
+    addSockets(this.props.eventHash);
   }
 
   pushToCollaborate() {
@@ -74,7 +74,7 @@ class Invite extends Component {
       <Page renderToolbar={() => this.renderToolbar('Invite')}>
 
         <h1 style={header}>Invite Friends</h1>
-        <Link hash={'this.props.eventHash'}/>
+        <Link />
 
         <div style={listStyle}>
 
