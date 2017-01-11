@@ -40,7 +40,7 @@ letUsRouter.route('/test')
     letUsController.retrieveEvents(req, res);
   });
 
-letUsRouter.route('/c/*')
+letUsRouter.route('/events/*')
   .get((req, res, next) => {
     letUsController.retrieveEvents(req, res)
       .then((data) => {
