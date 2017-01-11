@@ -47,7 +47,9 @@ render(
       <Route>
         <Route path='invite' component={Invite} />
         <Route path='create' component={Create} />
-        <Route path='collaborate' component={Collaborate} />
+        <Route path='collaborate' component={Collaborate} >
+          <Route path='/*' component={Collaborate} />
+        </Route>
         <Route path='live' component={LiveList} />
         <Route path='event' component={Event} />
         <Route path='profile' component={Profile} />

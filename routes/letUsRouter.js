@@ -48,10 +48,16 @@ letUsRouter.route('/collaborate/')
     letUsController.createNewHash()
       .then((hash) => {
         req.body.hash = hash;
-        return letUsController.updateEvents(req, res);
+        return letUsController.createEvent(req, res);
       })
       .then((data) => {
         sockets.add(data.linkHash);
+        res.send(data);
+      });
+  })
+  .put((req, res, next) => {
+    letUsController.updateEventAttendees(req)
+      .then((data) => {
         res.send(data);
       });
   })

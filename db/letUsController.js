@@ -113,7 +113,7 @@ const createNewHash = (data) => {
     });
 };
 
-const updateEvents = (data) => {
+const createEvent = (data) => {
   // console.log(data);
   // console.log('EVENTS BODY FROM CONTROLLER', data.body);
 
@@ -130,6 +130,15 @@ const updateEvents = (data) => {
   return savetoDB(newEvents);
 };
 
+const updateEventAttendees = (data) => {
+  const hash = data.body.linkHash;
+  return Events.findOne({ linkHash: hash })
+    .then((doc) => {
+      doc.attendees = data.body.attendees;
+      return savetoDB(doc);
+    });
+};
+
 module.exports = {
   addUser,
   addFriend,
@@ -140,6 +149,7 @@ module.exports = {
   getAllUsers,
   createNewHash,
   retrieveEvents,
-  updateEvents,
+  createEvent,
+  updateEventAttendees,
 };
 
