@@ -48,17 +48,7 @@ class LoginView extends Component {
       fjs.parentNode.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk'));
   }
-  /*
-  {
-    status: 'connected', // not_authorized (logged into fb but app is not authorized)
-    authResponse: {
-      accessToken: '...',
-      expiresIn:'...',
-      signedRequest:'...',
-      userID:'...'
-    }
-  }
-  */
+
   fbLogin() {
     const result = {};
     FB.login((lRes) => {
@@ -69,15 +59,6 @@ class LoginView extends Component {
           { fields: 'first_name,last_name,picture' },
           (uRes) => {
             if (uRes && !uRes.error) {
-              /*
-                name: { type: String, unique: true, required: true },
-                pic: String,
-                phoneNumber: String,
-                friendRank: Number,
-                lettuceLeaves: Number,
-                friends: [{ type: ObjectId, ref: 'Users' }],
-                favorites: [String], // yelp ids
-              */
               result.name = `${uRes.first_name} ${uRes.last_name}`;
               result.pic = uRes.picture.data.url;
               FB.api(
