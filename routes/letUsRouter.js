@@ -40,9 +40,12 @@ letUsRouter.route('/test')
     letUsController.retrieveEvents(req, res);
   });
 
-letUsRouter.route('/collaborate/')
+letUsRouter.route('/c/*')
   .get((req, res, next) => {
-    letUsController.retrieveEvents(req, res);
+    letUsController.retrieveEvents(req, res)
+      .then((data) => {
+        res.send(data);
+      });
   })
   .post((req, res, next) => {
     letUsController.createNewHash()

@@ -94,10 +94,15 @@ const addEvent = (data) => {
 //   console.log(document.name);
 // });
 
-const retrieveEvents = () => {
-  Events.findById('58753486363daf603924c8c0', (err, document) => {
-    console.log(document);
-  });
+const retrieveEvents = (data) => {
+  const hash = data.params[0];
+  return Events.findOne({ linkHash: hash })
+      .then((doc) => {
+        if (!doc) {
+          return null;
+        }
+        return doc;
+      });
 };
 
 const createNewHash = (data) => {
