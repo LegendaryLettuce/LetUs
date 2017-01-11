@@ -1,12 +1,12 @@
 
-const post = data => (
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(data);
-    }, 1000);
-  })
+import axios from 'axios';
+
+export const postLogin = user => (
+  axios.post('/login', user)
 );
 
-post('ASYNC OPERATION COMPLETE').then((data) => {
-  console.log(data);
-});
+// export const post = data => (
+//   new Promise((resolve, reject) => {
+//     resolve(data);
+//   })
+// );

@@ -4,6 +4,7 @@ export const reducer = (state = {
   yelpData: [],
   liveData: [],
   eventHash: '',
+  user: null,
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
@@ -28,6 +29,11 @@ export const reducer = (state = {
           ...state.liveData,
           action.element,
         ].sort((a, b) => ((b.preference * b.intensity) - (a.preference * a.intensity))),
+      };
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        user: action.token,
       };
     default:
       return state;
