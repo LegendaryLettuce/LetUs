@@ -12,6 +12,7 @@ import '../../node_modules/onsenui/css/onsen-css-components-dark-theme.css';
 // Views
 import Create           from './views/plan/create.jsx';
 import Collaborate      from './views/plan/collaborate.jsx';
+import Loading          from './views/plan/loading.jsx';
 import Invite           from './views/plan/invite.jsx';
 import Login            from './views/login/login.jsx';
 import LiveList         from './views/plan/liveList.jsx';
@@ -47,9 +48,8 @@ render(
       <Route>
         <Route path='invite' component={Invite} />
         <Route path='create' component={Create} />
-        <Route path='collaborate' component={Collaborate} >
-          <Route path='/*' component={Collaborate} />
-        </Route>
+        <Route path='collaborate' component={Collaborate} />
+        <Route path='c/*' component={Loading} />
         <Route path='live' component={LiveList} />
         <Route path='event' component={Event} />
         <Route path='profile' component={Profile} />
