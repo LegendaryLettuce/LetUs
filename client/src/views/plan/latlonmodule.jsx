@@ -91,7 +91,6 @@ class LatLonModule extends Component {
       script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
       script.async = true;
       document.body.appendChild(script);
-      console.log('FUCK u')
     }
   }
 
