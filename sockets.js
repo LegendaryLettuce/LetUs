@@ -6,25 +6,27 @@ const updateClientsCount = (socket, count) => {
   socket.emit('update connection', count);
 };
 
-const updateData = (socket, liveData) => {
+const updateData = (socket, nsp, liveData) => {
   if (!letUsController) {
     console.log('Loaded DB Controller');
     letUsController = require('./db/letUsController');
   }
   const hash = socket.nsp.name.split('/')[2];
-  console.log(`SOCKET: event hash: ${hash}`);
+  // console.log(`SOCKET: event hash: ${hash}`);
   letUsController.handleClientVotes(hash, liveData)
-    .then((doc) => {
-      socket.emit('update livedata', doc.data);
+    .then((data) => {
+      // console.log('SOCKET: sending live data...');
+      // console.log(data);
+      nsp.emit('update livedata', data);
     });
 };
 
-const handleLiveData = (socket) => {
+const handleLiveData = (socket, nsp) => {
   console.log('SOCKET: loaded event listeners');
   // console.log(socket);
   socket.on('submit livedata', (liveData) => {
-    console.log('SERVER: recieved liveData');
-    updateData(socket, liveData);
+    // console.log('SERVER: recieved liveData');
+    updateData(socket, nsp, liveData);
   });
 };
 
@@ -43,7 +45,7 @@ const add = (hash) => {
     // const clientsCount = socket.conn.server.clientsCount;
     console.log(`SOCKET: user connected to: /event/${hash} || ${connectionsCounter}`);
     updateClientsCount(nsp, connectionsCounter);
-    handleLiveData(socket);
+    handleLiveData(socket, nsp);
     socket.on('disconnect', () => {
       connectionsCounter--;
       console.log(`SOCKET: user disconnected from: /event/${hash} || ${connectionsCounter}`);
@@ -52,9 +54,6 @@ const add = (hash) => {
   });
   // handleLiveData(nsp);
 };
-
-// need to generate namespaces  as the client sends a get requestto create
-// an event
 
 module.exports = {
   add,

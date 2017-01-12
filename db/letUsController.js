@@ -184,6 +184,20 @@ const retrieveYelpData = (lat, lng) => (
   })
 );
 
+const calculateVoteScore = (data, vote) => {
+  // console.log('DATABASE: calculating new vote scores');
+  const votes = data.votes;
+  const score = data.preference * data.intensity * votes;
+  const voteScore = vote.preference * vote.intensity;
+  const newScore = score + voteScore;
+  if (newScore > 0) {
+    data.preference = 1;
+  } else {
+    data.preference = -1;
+  }
+  data.intensity = Math.abs(newScore / (votes + 1));
+};
+
 const handleClientVotes = (hash, vote) => {
   console.log('DATABASE: received vote from client');
   console.log(vote);
@@ -196,14 +210,25 @@ const handleClientVotes = (hash, vote) => {
         }
         return accum;
       }, -1);
+      const selectedData = data[indexVotedItem];
       console.log(`DATABASE: index of voted item: ${indexVotedItem}`);
-      data[indexVotedItem].votes++;
+      if (!selectedData.votes) {
+        selectedData.preference = vote.preference;
+        selectedData.intensity = vote.intensity;
+      } else {
+        // Mutates input data
+        calculateVoteScore(selectedData, vote);
+      }
+      selectedData.votes++;
       doc.data = JSON.stringify(data);
-      return savetoDB(doc);
-    })
-    .then((doc) => {
-      console.log('DATABASE: document saved!');
-      return doc;
+      savetoDB(doc);
+      const sendToSockets = {
+        displayTitle: selectedData.displayTitle,
+        votes: selectedData.votes,
+        intensity: selectedData.intensity,
+        preference: selectedData.preference,
+      };
+      return sendToSockets;
     });
 };
 
