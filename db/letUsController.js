@@ -145,29 +145,36 @@ const updateEventAttendees = (data) => {
 };
 
 const retrieveYelpData = (lat, lng) => {
+  // console.log('Line 148: ',lat, lng);
   const yelp = new Yelp(apikeys);
-  const ll = lat + ',' + lng;
+  const cll = `${lat},${lng}`;
+  // console.log(cll);
   // See http://www.yelp.com/developers/documentation/v2/search_api
   const queries = [{
-    term: 'food', ll,
+    term: 'food',
+    ll: cll,
   }, {
-    term: 'nightlife', ll,
+    term: 'nightlife',
+    ll: cll,
   }, {
-    term: 'active', ll,
+    term: 'active',
+    ll: cll,
   }];
+  // TODO: check for wrong lat and long in request
   const terms = ['eat', 'drink', 'play'];
   const request = {};
   queries.forEach((searchTerm, i) => {
     yelp.search(searchTerm)
       .then((data) => {
         request[terms[i]] = data;
-        return data;
-        });
       })
       .catch((err) => {
         console.error(err);
+      })
+      .then(() => {
+        return request;
       });
-  })
+  });
 };
 
 module.exports = {
@@ -178,7 +185,7 @@ module.exports = {
   addEvent,
   findUser,
   getAllUsers,
-  cr'eat'eNewHash,
+  createNewHash,
   retrieveEvents,
   createEvent,
   updateEventAttendees,

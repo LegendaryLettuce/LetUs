@@ -110,10 +110,11 @@ letUsRouter.route('/events/*')
 
 letUsRouter.route('/eventdata/:lat/:lng')
   .get((req, res, next) => {
-    letUsController.retrieveYelpData(req, res)
+    letUsController.retrieveYelpData(req.params.lat, req.params.lng)
       .then((data) => {
         res.send(data);
       });
   });
+
 
 module.exports = letUsRouter;
