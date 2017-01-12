@@ -36,6 +36,12 @@ class LatLonModule extends Component {
     super(props);
     this.state = {
       input: '',
+      loaded: false,
+    };
+    window.googleLoaded = () => {
+      this.setState({
+        loaded: true,
+      });
     };
     this.getInput = (e) => {
       this.setState({ input: e.target.value });
@@ -77,31 +83,45 @@ class LatLonModule extends Component {
       observer.observe(target, config);
     };
     this.componentWillUnmount = () => {
+      // click handling for google drop down
       observer.disconnect();
     };
+    this.componentWillMount = () => {
+      const script = document.createElement('script');
+      script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
+      script.async = true;
+      document.body.appendChild(script);
+      console.log('FUCK u')
+    }
   }
-
 
   render() {
     return (
       <Page>
-        <script type="text/javascript" src={`https://maps.googleapis.com/maps/api/js?key=${apikey}&libraries=places`}/>
+        {/* <script
+          type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded"
+        /> */}
         <p style={title}>Where to?</p>
-          <div style={searchForm}>
-            <Autocomplete
-              style={inputField}
-              onPlaceSelected={(place) => {
-                this.props.updateCoords([
-                  place.geometry.location.lat(),
-                  place.geometry.location.lng(),
-                ]);
-                console.log(place.geometry.location.lat(), place.geometry.location.lng());
-              }}
-              types={['geocode']}
-              componentRestrictions={{ country: 'us' }}
-            />
-            <Button onClick={console.log(this.state.input)}>Submit</Button>
-          </div>
+        {
+          this.state.loaded ?
+            <div style={searchForm}>
+              <Autocomplete
+                style={inputField}
+                onPlaceSelected={(place) => {
+                  this.props.updateCoords([
+                    place.geometry.location.lat(),
+                    place.geometry.location.lng(),
+                  ]);
+                  console.log(place.geometry.location.lat(), place.geometry.location.lng());
+                }}
+                types={['geocode']}
+                componentRestrictions={{ country: 'us' }}
+              />
+              <Button onClick={console.log(this.state.input)}>Submit</Button>
+            </div> :
+            <div/> // TODO: add loading bar
+        }
       </Page>
     );
   }

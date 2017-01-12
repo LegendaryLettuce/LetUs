@@ -5,6 +5,7 @@
 input {
   background-color: #242424;
   -webkit-user-select: auto;
+  user-select: auto;
   color: white;
   border: 0;
   border-bottom: 1px solid white;

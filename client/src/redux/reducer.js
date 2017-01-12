@@ -39,7 +39,7 @@ export const reducer = (state = {
     case 'UPDATE_COORDS':
       return {
         ...state,
-        coords: action.token,
+        coords: action.coords,
       };
     default:
       return state;
