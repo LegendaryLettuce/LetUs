@@ -14,7 +14,8 @@
     "document": true,
     "window": true,
     "io": true,
-    "FB": true
+    "FB": true,
+    "sessionStorage": true
   },
   "rules": {
     "react/prop-types": "off",

@@ -1,8 +1,9 @@
+/* eslint-disable no-param-reassign */
 const mongoose = require('mongoose');
 
 mongoose.Promise = require('bluebird');
 
-const { User, UserFavs, Friends, CheckIns, Events } = require('./letUsSchema.js');
+const { Users, UserFavs, Friends, CheckIns, Events } = require('./letUsSchema.js');
 
 // modular insert function
 const createHash = require('hash-generator');
@@ -22,27 +23,23 @@ const savetoDB = model => model.save()
 // models to insert
 
 const addUser = (data) => {
-  const newUser = new User({
-    userid: data.userid,
+  const newUser = new Users({
+    id: data.id,
+    name: data.name,
     pic: data.pic,
-    phonenumber: data.number,
-    friendrank: data.rank,
-    lettuceleaves: data.leaves,
+    phoneNumber: (data.number) ? data.number : 0,
+    friendRank: 0,
+    lettuceLeaves: 0,
+    friends: (data.friends.length > 0) ? data.friends.map(friend => friend.id) : [],
+    favorites: [],
   });
-  savetoDB(newUser);
+  return newUser.save();
 };
 
-const findUser = (data) => {
-  User.findOne({ userid: data }, (err, user) => {
-    if (!err) {
-      return user;
-    }
-    return console.log('Find user', err);
-  });
-};
+const findUser = data => Users.findOne({ id: data });
 
 const getAllUsers = () => {
-  User.find((err, users) => {
+  Users.find((err, users) => {
     if (!err) {
       return users;
     }
