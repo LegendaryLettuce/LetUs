@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-// Redux
-import { connect }          from 'react-redux';
+// Onsen UI
 import { Page, Button }     from 'react-onsenui';
 // Packages
 import Autocomplete         from 'react-google-autocomplete';
-import apikey               from './../../../../config/google-maps-api';
 // import axios                          from 'axios';
+// Redux
+import { connect }          from 'react-redux';
+import { updateCoords }     from '../../redux/actions';
 // Styles
 import { bodyStyle }        from '../../styles/styles';
 import '../../styles/mapStyle.css';
-// Pages
+// API Key
+import apikey               from './../../../../config/google-maps-api';
 // import  BottomNav                     from './../../views/_global/bottomNav.jsx';
 
 const inputField = {
@@ -89,6 +91,10 @@ class LatLonModule extends Component {
             <Autocomplete
               style={inputField}
               onPlaceSelected={(place) => {
+                this.props.updateCoords([
+                  place.geometry.location.lat(),
+                  place.geometry.location.lng(),
+                ]);
                 console.log(place.geometry.location.lat(), place.geometry.location.lng());
               }}
               types={['geocode']}
@@ -101,8 +107,14 @@ class LatLonModule extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  hello: state.hello,
+const mapDispatchToProps = dispatch => ({
+  updateCoords: (coords) => {
+    dispatch(updateCoords(coords));
+  },
 });
 
-export default connect(mapStateToProps)(LatLonModule);
+const mapStateToProps = state => ({
+  coords: state.coords,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LatLonModule);

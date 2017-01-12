@@ -5,6 +5,7 @@ export const reducer = (state = {
   liveData: [],
   eventHash: '',
   user: null,
+  coords: [],
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
@@ -34,6 +35,11 @@ export const reducer = (state = {
       return {
         ...state,
         user: action.token,
+      };
+    case 'UPDATE_COORDS':
+      return {
+        ...state,
+        coords: action.token,
       };
     default:
       return state;
