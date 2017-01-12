@@ -9,6 +9,7 @@ export const reducer = (state = {
   talliedVotes: 0,
   loaded: false,
   fbLoaded: false,
+  coords: [],
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
@@ -64,6 +65,11 @@ export const reducer = (state = {
       return {
         ...state,
         fbLoaded: action.loaded,
+      };
+    case 'UPDATE_COORDS':
+      return {
+        ...state,
+        coords: action.token,
       };
     default:
       return state;
