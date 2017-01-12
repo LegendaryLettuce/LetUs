@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Page, Button }     from 'react-onsenui';
 // Packages
 import Autocomplete         from 'react-google-autocomplete';
-// import axios                          from 'axios';
+import axios                from 'axios';
 // Redux
 import { connect }          from 'react-redux';
 import { updateCoords }     from '../../redux/actions';
@@ -94,6 +94,16 @@ class LatLonModule extends Component {
     }
   }
 
+  request(lat, lng) {
+    axios.get(`/eventdata/${lat}/${lng}`)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   render() {
     return (
       <Page>
@@ -109,6 +119,7 @@ class LatLonModule extends Component {
                     place.geometry.location.lng(),
                   ]);
                   console.log(place.geometry.location.lat(), place.geometry.location.lng());
+                  this.request(this.props.coords[0],this.props.coords[1]);
                 }}
                 types={['geocode']}
                 componentRestrictions={{ country: 'us' }}

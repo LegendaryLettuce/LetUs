@@ -2,7 +2,6 @@
 const mongoose = require('mongoose');
 const Yelp = require('yelp');
 const apikeys = require('./../config/yelp-api.js');
-const fs = require('fs');
 
 mongoose.Promise = require('bluebird');
 

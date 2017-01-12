@@ -116,5 +116,4 @@ letUsRouter.route('/eventdata/:lat/:lng')
       });
   });
 
-
 module.exports = letUsRouter;
