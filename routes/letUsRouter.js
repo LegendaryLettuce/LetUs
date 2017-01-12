@@ -108,5 +108,12 @@ letUsRouter.route('/events/*')
     letUsController.deleteOne(req, res);
   });
 
+letUsRouter.route('/eventdata/:lat/:lng')
+  .get((req, res, next) => {
+    letUsController.retrieveYelpData(req, res)
+      .then((data) => {
+        res.send(data);
+      });
+  });
 
 module.exports = letUsRouter;
