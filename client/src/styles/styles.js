@@ -67,13 +67,15 @@ export const buttonStyle = {
   padding: '0px 20px 0px 20px',
   position: 'fixed',
   bottom: '0',
-  height: '35px',
+  height: '40px',
   marginBottom: '44px',
   zIndex: '5',
   marginLeft: '0',
   width: '100%',
   textAlign: 'center',
+  fontSize: 'large',
   fontWeight: 'bold',
+  borderRadius: '0',
 };
 // export const titleStyle = {
 //   ...styles.body,
