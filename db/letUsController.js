@@ -199,8 +199,8 @@ const calculateVoteScore = (data, vote) => {
 };
 
 const handleClientVotes = (hash, vote) => {
-  console.log('DATABASE: received vote from client');
-  console.log(vote);
+  // console.log('DATABASE: received vote from client');
+  // console.log(vote);
   return retrieveEventByHash(hash)
     .then((doc) => {
       const data = JSON.parse(doc.data);
@@ -211,7 +211,7 @@ const handleClientVotes = (hash, vote) => {
         return accum;
       }, -1);
       const selectedData = data[indexVotedItem];
-      console.log(`DATABASE: index of voted item: ${indexVotedItem}`);
+      // console.log(`DATABASE: index of voted item: ${indexVotedItem}`);
       if (!selectedData.votes) {
         selectedData.preference = vote.preference;
         selectedData.intensity = vote.intensity;
