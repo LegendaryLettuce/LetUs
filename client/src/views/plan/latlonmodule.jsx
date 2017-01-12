@@ -97,10 +97,6 @@ class LatLonModule extends Component {
   render() {
     return (
       <Page>
-        {/* <script
-          type="text/javascript"
-          src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded"
-        /> */}
         <p style={title}>Where to?</p>
         {
           this.state.loaded ?
