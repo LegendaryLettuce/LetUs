@@ -45,7 +45,7 @@ class LoginView extends Component {
         version: 'v2.8',
       });
       FB.AppEvents.logPageView();
-      this.setState({ fbload: true });
+      this.setState({ fbLoad: true });
     };
     (((d, s, id) => {
       const fjs = d.getElementsByTagName(s)[0];
