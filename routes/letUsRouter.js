@@ -1,9 +1,12 @@
+/* eslint-disable no-param-reassign */
 const express = require('express');
 
 const letUsRouter = express.Router();
 const letUsController = require('../db/letUsController');
 
 const sockets = require('./../sockets');
+
+/* eslint-disable no-unused-vars */
 
 // template routes
 
@@ -34,6 +37,42 @@ const sockets = require('./../sockets');
 //     req.body.number = req.params.number;
 //     letUsController.deleteOne(req, res);
 //   });
+
+letUsRouter.route('/login')
+  .post((req, res, next) => {
+    const user = req.body;
+    letUsController.findUser(user.id)
+      .then((data) => {
+        if (data) {
+          req.session.userId = user.id;
+          res.end('logged in');
+        }
+        // eslint-disable-next-line brace-style
+        else {
+          letUsController.addUser(user)
+            .then((newData) => {
+              if (newData) {
+                req.session.id = user.id;
+                res.end('logged in');
+              } else {
+                const err = new Error('Internal Server Error');
+                err.status = 500;
+                next(err);
+              }
+            })
+            .catch((error) => {
+              const err = new Error('Internal Server Error');
+              err.status = 500;
+              next(err);
+            });
+        }
+      })
+      .catch((error) => {
+        const err = new Error('Internal Server Error');
+        err.status = 500;
+        next(err);
+      });
+  });
 
 letUsRouter.route('/test')
   .get((req, res, next) => {

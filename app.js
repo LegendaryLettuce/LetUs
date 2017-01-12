@@ -2,12 +2,14 @@ const express       = require('express');
 const path          = require('path');
 const favicon       = require('serve-favicon');
 const serveStatic   = require('serve-static');
+const session       = require('express-session');
 const logger        = require('morgan');
 const cookieParser  = require('cookie-parser');
 const bodyParser    = require('body-parser');
 const db            = require('./db/index');
 const letUsSchema   = require('./db/letUsSchema');
 const letUsRouter   = require('./routes/letUsRouter');
+
 console.log('check order');
 
 // const index = require('./routes/index');
@@ -22,11 +24,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+const fb = '07ac8777ef2fc869ecf728a1a5184e93';
+
+app.use(session({
+  secret: fb,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 2628000000 },
+}));
+
 app.use(serveStatic(path.join(__dirname, 'client/dist'), {
   index: 'index.html',
 }));
 
 app.use('/', letUsRouter);
+
+app.use('*', (req, res, next) => {
+  if (req.session && req.session.userId) next();
+  else res.redirect('/');
+});
 
 app.get('*', (req, res) => {
 //   // and drop 'public' in the middle of here
@@ -35,7 +51,7 @@ app.get('*', (req, res) => {
 
 const port = 3000;
 const server = app.listen(port, () => {
-  console.log('Connected on  ' + port);
+  console.log(`Connected on ${port}`);
 });
 
 const io = require('socket.io').listen(server);

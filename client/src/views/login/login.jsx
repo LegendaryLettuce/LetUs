@@ -66,11 +66,11 @@ class LoginView extends Component {
                 (fRes) => {
                   if (fRes && !fRes.error) {
                     result.friends = fRes.data;
-                    // postLogin(result)
-                    //   .then(() => {
-                    this.props.updateUser(result);
-                    this.props.router.push('/create');
-                    //   });
+                    postLogin(result)
+                      .then(() => {
+                        this.props.updateUser(result);
+                        this.props.router.push('/create');
+                      });
                   }
                 },
               );
@@ -111,8 +111,8 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-// const mapStateToProps = state => ({
-//   user: state.user,
-// });
+const mapStateToProps = state => ({
+  // user: state.user,
+});
 
-export default connect(/* mapStateToProps, */mapDispatchToProps)(LoginView);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginView);

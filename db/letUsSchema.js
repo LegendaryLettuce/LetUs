@@ -5,12 +5,13 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 // define models
 const Users = new Schema({
+  id: { type: String, unique: true, required: true },
   name: { type: String, unique: true, required: true },
   pic: String,
   phoneNumber: String,
   friendRank: Number,
   lettuceLeaves: Number,
-  friends: [{ type: ObjectId, ref: 'Users' }],
+  friends: [{ type: String }],
   favorites: [String], // yelp ids
 });
 
