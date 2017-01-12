@@ -29,6 +29,12 @@ const interval = 2000; // The time to wait before rendering the next string
 const typistProps = {}; // Props that are passed to the react-typist component
 
 class LoginView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fbLoad: false,
+    };
+  }
   // eslint-disable-next-line class-methods-use-this
   componentDidMount() {
     window.fbAsyncInit = () => {
@@ -39,6 +45,7 @@ class LoginView extends Component {
         version: 'v2.8',
       });
       FB.AppEvents.logPageView();
+      this.setState({ fbload: true });
     };
     (((d, s, id) => {
       const fjs = d.getElementsByTagName(s)[0];
@@ -93,11 +100,17 @@ class LoginView extends Component {
               <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} />
             </div>
             <div style={tagline}>Collaborative event planning with friends.</div>
-            <BottomToolbar style={fbLogin}>
-              <Button style={button} onClick={this.fbLogin.bind(this)}>
-                <Icon icon="fa-facebook-square"/> Log In
-              </Button>
-            </BottomToolbar>
+            {
+              this.state.fbLoad ?
+              <BottomToolbar style={fbLogin}>
+                <Button style={button} onClick={this.fbLogin.bind(this)}>
+                  <Icon icon="fa-facebook-square"/> Log In
+                </Button>
+              </BottomToolbar> :
+              <div
+                // TODO: Add loading symbol when button is not loaded
+              />
+            }
           </div>
         </div>
       </Page>
