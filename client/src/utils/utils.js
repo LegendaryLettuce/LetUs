@@ -6,11 +6,11 @@ export const postLogin = user => (
 );
 
 export const getStore = () => ({
-  friends: sessionStorage.getItem('friends') || [],
-  yelpData: sessionStorage.getItem('yelpData') || [],
-  eventHash: sessionStorage.getItem('eventHash') || [],
-  element: sessionStorage.getItem('element') || '',
-  user: sessionStorage.getItem('user') || null,
+  friends: JSON.parse(sessionStorage.getItem('friends')) || [],
+  yelpData: JSON.parse(sessionStorage.getItem('yelpData')) || [],
+  eventHash: JSON.parse(sessionStorage.getItem('eventHash')) || [],
+  element: JSON.parse(sessionStorage.getItem('element')) || '',
+  user: JSON.parse(sessionStorage.getItem('user')) || null,
   loaded: true,
 });
 

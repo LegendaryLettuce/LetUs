@@ -4,9 +4,9 @@ import TextCarousel         from 'react-text-carousel';
 import { Page, Icon, Button, BottomToolbar }             from 'react-onsenui';
 // Redux
 import { connect }          from 'react-redux';
-import { updateUser }       from '../../redux/actions';
+import { updateUser, load, loadFB } from '../../redux/actions';
 // Utils
-import { postLogin }        from '../../utils/utils';
+import { postLogin, getStore } from '../../utils/utils';
 // Styles
 import { login, splashText, fbLogin, tint, tagline } from '../../styles/styles';
 
@@ -35,8 +35,8 @@ class LoginView extends Component {
       fbLoad: false,
     };
   }
-  // eslint-disable-next-line class-methods-use-this
-  componentDidMount() {
+
+  loadFacebook() {
     window.fbAsyncInit = () => {
       FB.init({
         appId: '1233081016779123',
@@ -54,6 +54,18 @@ class LoginView extends Component {
       js.src = '//connect.facebook.net/en_US/sdk.js';
       fjs.parentNode.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk'));
+    this.props.loadFB(true);
+  }
+  // eslint-disable-next-line class-methods-use-this
+  componentDidMount() {
+    if (!this.props.loaded) {
+      this.loadFacebook();
+      this.props.load(getStore());
+    } else if (!this.props.fbLoaded) {
+      this.loadFacebook();
+    } else {
+      this.setState({ fbLoad: true });
+    }
   }
 
   fbLogin() {
@@ -92,8 +104,6 @@ class LoginView extends Component {
     return (
       <Page>
         <div style={login}>
-          <div id="fb-root"/>
-          <script/>
           <div style={tint}>
             <div style={splashText}>
               Let Us
@@ -122,10 +132,17 @@ const mapDispatchToProps = dispatch => ({
   updateUser: (token) => {
     dispatch(updateUser(token));
   },
+  load: (state) => {
+    dispatch(load(state));
+  },
+  loadFB: (loaded) => {
+    dispatch(loadFB(loaded));
+  },
 });
 
 const mapStateToProps = state => ({
-  // user: state.user,
+  loaded: state.loaded,
+  fbLoaded: state.fbLoaded,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginView);

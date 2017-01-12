@@ -8,6 +8,7 @@ export const reducer = (state = {
   connectedPeers: 0,
   talliedVotes: 0,
   loaded: false,
+  fbLoaded: false,
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
@@ -58,6 +59,11 @@ export const reducer = (state = {
       return {
         ...state,
         ...action.state,
+      };
+    case 'LOAD_FB':
+      return {
+        ...state,
+        fbLoaded: action.loaded,
       };
     default:
       return state;
