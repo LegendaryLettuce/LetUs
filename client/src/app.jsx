@@ -50,13 +50,14 @@ render(
       <Route>
         <Route path='invite' component={Invite} />
         <Route path='create' component={Create} />
-        <Route path='collaborate' component={Collaborate} />
-        <Route path='c/*' component={Loading} />
+        <Route path='search' component={LatLonModule} />
+        <Route path='collaborate' component={Collaborate} >
+          <Route path='/*' component={Collaborate} />
+        </Route>
         <Route path='live' component={LiveList} />
         <Route path='event' component={Event} />
         <Route path='profile' component={Profile} />
         <Route path='friends' component={Friends} />
-        <Route path='search' component={LatLonModule} />
         {/* <Route path='test' component={Test} /> */}
       </Route>
     </Router>
