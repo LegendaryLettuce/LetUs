@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-// Redux
-import { connect }          from 'react-redux';
+// Onsen UI
 import { Page, Button }     from 'react-onsenui';
 // Packages
 import Autocomplete         from 'react-google-autocomplete';
-import apikey               from './../../../../config/google-maps-api';
 // import axios                          from 'axios';
+// Redux
+import { connect }          from 'react-redux';
+import { updateCoords }     from '../../redux/actions';
 // Styles
 import { bodyStyle }        from '../../styles/styles';
 import '../../styles/mapStyle.css';
-// Pages
+// API Key
+import apikey               from './../../../../config/google-maps-api';
 // import  BottomNav                     from './../../views/_global/bottomNav.jsx';
 
 const inputField = {
@@ -34,6 +36,12 @@ class LatLonModule extends Component {
     super(props);
     this.state = {
       input: '',
+      loaded: false,
+    };
+    window.googleLoaded = () => {
+      this.setState({
+        loaded: true,
+      });
     };
     this.getInput = (e) => {
       this.setState({ input: e.target.value });
@@ -75,34 +83,57 @@ class LatLonModule extends Component {
       observer.observe(target, config);
     };
     this.componentWillUnmount = () => {
+      // click handling for google drop down
       observer.disconnect();
     };
+    this.componentWillMount = () => {
+      const script = document.createElement('script');
+      script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
+      script.async = true;
+      document.body.appendChild(script);
+    }
   }
-
 
   render() {
     return (
       <Page>
-        <script type="text/javascript" src={`https://maps.googleapis.com/maps/api/js?key=${apikey}&libraries=places`}/>
+        {/* <script
+          type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded"
+        /> */}
         <p style={title}>Where to?</p>
-          <div style={searchForm}>
-            <Autocomplete
-              style={inputField}
-              onPlaceSelected={(place) => {
-                console.log(place.geometry.location.lat(), place.geometry.location.lng());
-              }}
-              types={['geocode']}
-              componentRestrictions={{ country: 'us' }}
-            />
-            <Button onClick={console.log(this.state.input)}>Submit</Button>
-          </div>
+        {
+          this.state.loaded ?
+            <div style={searchForm}>
+              <Autocomplete
+                style={inputField}
+                onPlaceSelected={(place) => {
+                  this.props.updateCoords([
+                    place.geometry.location.lat(),
+                    place.geometry.location.lng(),
+                  ]);
+                  console.log(place.geometry.location.lat(), place.geometry.location.lng());
+                }}
+                types={['geocode']}
+                componentRestrictions={{ country: 'us' }}
+              />
+              <Button onClick={console.log(this.state.input)}>Submit</Button>
+            </div> :
+            <div/> // TODO: add loading bar
+        }
       </Page>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  hello: state.hello,
+const mapDispatchToProps = dispatch => ({
+  updateCoords: (coords) => {
+    dispatch(updateCoords(coords));
+  },
 });
 
-export default connect(mapStateToProps)(LatLonModule);
+const mapStateToProps = state => ({
+  coords: state.coords,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LatLonModule);

@@ -9,7 +9,6 @@ const yelp = new Yelp(apikeys);
 // Change/Update this data by running node yelpRequest.js
 
 const queries = [{
-  term: 'food',
   ll: '37.788022,-122.399797',
 }, {
   term: 'nightlife',
