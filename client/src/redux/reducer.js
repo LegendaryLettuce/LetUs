@@ -62,11 +62,13 @@ export const reducer = (state = {
         user: action.user,
       };
     case 'LOAD':
+      // DO NOT STORE IN SESSION
       return {
         ...state,
         ...action.state,
       };
     case 'LOAD_FB':
+      // DO NOT STORE IN SESSION
       return {
         ...state,
         fbLoaded: action.loaded,
