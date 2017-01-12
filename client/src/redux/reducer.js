@@ -40,6 +40,11 @@ export const reducer = (state = {
         ...state,
         liveData: data,
       };
+    case 'UPDATE_LIVE_DATA':
+      return {
+        ...state,
+        liveData: action.liveData,
+      };
     case 'UPDATED_CONNECTED_PEERS':
       return {
         ...state,

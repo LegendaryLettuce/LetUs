@@ -12,7 +12,7 @@ const socket = require('./../sockets');
 
 const savetoDB = model => model.save()
   .then((data) => {
-    console.log(JSON.stringify(data));
+    // console.log(JSON.stringify(data));
     return data;
   })
   .catch((err) => {
@@ -128,7 +128,7 @@ const createEvent = (data) => {
     checkIns: data.body.checkIns,
     linkHash: data.body.hash,
   });
-  console.log('controller received');
+  // console.log('controller received');
   return savetoDB(newEvents);
 };
 

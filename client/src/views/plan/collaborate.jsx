@@ -4,6 +4,8 @@ import { Page, Carousel, CarouselItem, Icon } from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
 import { addLiveData }  from '../../redux/actions';
+// Sockets
+import { emitLiveData } from '../../sockets/sockets';
 // Styles
 // import styles           from '../../styles/styles';
 
@@ -84,11 +86,21 @@ class Collaborate extends Component {
 
   onFlick(e) {
     if (e.activeIndex !== 1) {
-      this.props.addLiveData({
+      const liveData = {
         ...this.props.yelpData[this.index],
         preference: (e.activeIndex) ? -1 : 1,
         intensity: Math.floor(((this.rgbMax - this.otherRGB) / (this.rgbMax - this.rgbMin)) * 100),
-      });
+      };
+
+      const socketVote = {
+        displayTitle: liveData.displayTitle,
+        preference: liveData.preference,
+        intensity: liveData.intensity,
+      };
+
+      emitLiveData(socketVote);
+
+      this.props.addLiveData(liveData);
 //       console.log(
 // `DATA:
 // type      - ${this.props.yelpData[this.index].displayTitle}
@@ -354,6 +366,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   yelpData: state.yelpData,
+  liveData: state.liveData,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Collaborate);
