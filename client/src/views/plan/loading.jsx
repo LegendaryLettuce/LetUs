@@ -1,7 +1,7 @@
 import React, { Component }       from 'react';
 // Redux
 import { connect }      from 'react-redux';
-import { updateInviteFriends, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes  }  from '../../redux/actions';
+import { updateInviteFriends, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes,   }  from '../../redux/actions';
 
 
 // Axios for requests
@@ -11,7 +11,7 @@ import axios            from 'axios';
 import { }   from '../../styles/styles';
 
 // Import Sockets
-import addSockets from './../../sockets/sockets';
+import socket from './../../sockets/sockets';
 
 class Loading extends Component {
 
@@ -29,7 +29,12 @@ class Loading extends Component {
         })
         .then(() => {
           console.log('After AJAX', this.props.yelpData);
-          addSockets(hash, this.props.updateConnectedPeers, this.props.updateTalliedVotes);
+          const eventPeerUpdaters = {
+            connectedPeers: this.props.updateConnectedPeers,
+            talliedVotes: this.props.updateTalliedVotes,
+            liveData: this.props.updateLiveData,
+          };
+          socket.initSocket(hash, eventPeerUpdaters);
           this.props.router.push('/collaborate');
         });
   }

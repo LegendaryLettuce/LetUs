@@ -1,7 +1,7 @@
 import React, { Component }       from 'react';
 // Redux
 import { connect }      from 'react-redux';
-import { updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes  }  from '../../redux/actions';
+import { updateLiveData, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes  }  from '../../redux/actions';
 
 // Onsen UI
 import ons              from 'onsenui';
@@ -18,7 +18,7 @@ import  Friends         from './invite/friends.jsx';
 import  Collaborate      from './invite/collaborate.jsx';
 import  BottomNav        from './../../views/_global/bottomNav.jsx';
 // Import Sockets
-import addSockets from './../../sockets/sockets';
+import { initSocket } from './../../sockets/sockets';
 
 class Invite extends Component {
 
@@ -36,7 +36,12 @@ class Invite extends Component {
     this.setState({
       friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Marc', 'Rebecca', 'Fiona'],
     });
-    addSockets(this.props.eventHash, this.props.updateConnectedPeers, this.props.updateTalliedVotes);
+    const eventOwnerUpdaters = {
+      connectedPeers: this.props.updateConnectedPeers,
+      talliedVotes: this.props.updateTalliedVotes,
+      liveData: this.props.updateLiveData,
+    };
+    initSocket(this.props.eventHash, eventOwnerUpdaters);
   }
 
   routeToCollaborate() {
@@ -111,6 +116,9 @@ const mapDispatchToProps = dispatch => ({
   },
   updateTalliedVotes: (talliedVotes) => {
     dispatch(updateTalliedVotes(talliedVotes));
+  },
+  updateLiveData: (liveData) => {
+    dispatch(updateLiveData(liveData));
   },
 });
 
