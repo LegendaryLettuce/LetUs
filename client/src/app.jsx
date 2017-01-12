@@ -50,15 +50,10 @@ render(
       <Route>
         <Route path='invite' component={Invite} />
         <Route path='create' component={Create} />
-<<<<<<< HEAD
-        <Route path='collaborate' component={Collaborate} />
-        <Route path='c/*' component={Loading} />
-=======
         <Route path='search' component={LatLonModule} />
         <Route path='collaborate' component={Collaborate} >
           <Route path='/*' component={Collaborate} />
         </Route>
->>>>>>> added latlng to redux states
         <Route path='live' component={LiveList} />
         <Route path='event' component={Event} />
         <Route path='profile' component={Profile} />
