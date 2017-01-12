@@ -42,9 +42,13 @@ export const reducer = (state = {
         liveData: data,
       };
     case 'UPDATE_LIVE_DATA':
+      const newLiveData = [
+        ...action.liveData,
+      ].sort((a, b) => ((b.preference * b.intensity) - (a.preference * a.intensity)));
+      sessionStorage.setItem('liveData', JSON.stringify(newLiveData));
       return {
         ...state,
-        liveData: action.liveData,
+        liveData: newLiveData,
       };
     case 'UPDATED_CONNECTED_PEERS':
       return {

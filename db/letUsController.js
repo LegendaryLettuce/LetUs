@@ -93,15 +93,19 @@ const addEvent = (data) => {
 //   console.log(document.name);
 // });
 
+const retrieveEventByHash = (hash) => {
+  return Events.findOne({ linkHash: hash })
+    .then((doc) => {
+      if (!doc) {
+        return null;
+      }
+      return doc;
+    });
+};
+
 const retrieveEvents = (data) => {
   const hash = data.params[0];
-  return Events.findOne({ linkHash: hash })
-      .then((doc) => {
-        if (!doc) {
-          return null;
-        }
-        return doc;
-      });
+  return retrieveEventByHash(hash);
 };
 
 const createNewHash = (data) => {
@@ -180,6 +184,29 @@ const retrieveYelpData = (lat, lng) => (
   })
 );
 
+const handleClientVotes = (hash, vote) => {
+  console.log('DATABASE: received vote from client');
+  console.log(vote);
+  return retrieveEventByHash(hash)
+    .then((doc) => {
+      const data = JSON.parse(doc.data);
+      const indexVotedItem = JSON.parse(doc.data).reduce((accum, item, index) => {
+        if (item.displayTitle === vote.displayTitle) {
+          return index;
+        }
+        return accum;
+      }, -1);
+      console.log(`DATABASE: index of voted item: ${indexVotedItem}`);
+      data[indexVotedItem].votes++;
+      doc.data = JSON.stringify(data);
+      return savetoDB(doc);
+    })
+    .then((doc) => {
+      console.log('DATABASE: document saved!');
+      return doc;
+    });
+};
+
 module.exports = {
   addUser,
   addFriend,
@@ -193,4 +220,6 @@ module.exports = {
   createEvent,
   updateEventAttendees,
   retrieveYelpData,
+  retrieveEventByHash,
+  handleClientVotes,
 };

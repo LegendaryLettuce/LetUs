@@ -175,6 +175,7 @@ class Create extends Component {
         newObject.displayPhone = business.display_phone;
         newObject.snippetText = business.snippet_text;
         newObject.mobileUrl = business.mobile_url;
+        newObject.votes = 0;
         accum.push(newObject);
       }
       return accum;

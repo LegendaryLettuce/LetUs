@@ -1,23 +1,37 @@
 // const server = require('./app');
 let server;
+let letUsController;
 
-const updateClientsCount = (nsp, count) => {
-  nsp.emit('update connection', count);
+const updateClientsCount = (socket, count) => {
+  socket.emit('update connection', count);
+};
+
+const updateData = (socket, liveData) => {
+  if (!letUsController) {
+    console.log('Loaded DB Controller');
+    letUsController = require('./db/letUsController');
+  }
+  const hash = socket.nsp.name.split('/')[2];
+  console.log(`SOCKET: event hash: ${hash}`);
+  letUsController.handleClientVotes(hash, liveData)
+    .then((doc) => {
+      socket.emit('update livedata', doc.data);
+    });
 };
 
 const handleLiveData = (socket) => {
-  console.log('loaded handler for live data');
+  console.log('SOCKET: loaded event listeners');
   // console.log(socket);
   socket.on('submit livedata', (liveData) => {
     console.log('SERVER: recieved liveData');
-    socket.broadcast.emit('update livedata', liveData);
+    updateData(socket, liveData);
   });
 };
 
 const add = (hash) => {
   let connectionsCounter = 0;
   if (!server) {
-    console.log('FIRST TIME LOADED SOCKETS');
+    console.log('SOCKETS: loaded server dependancies');
     server = require('./app');
   }
   const io = server.io;
@@ -27,12 +41,12 @@ const add = (hash) => {
     // console.log('SOCKET TEST');
     // console.log(socket.nsp.server.sockets);
     // const clientsCount = socket.conn.server.clientsCount;
-    console.log(`Users Connected to: /event/${hash} || ${connectionsCounter}`);
+    console.log(`SOCKET: user connected to: /event/${hash} || ${connectionsCounter}`);
     updateClientsCount(nsp, connectionsCounter);
     handleLiveData(socket);
     socket.on('disconnect', () => {
       connectionsCounter--;
-      console.log(`Users Disconnected from: /event/${hash} || ${connectionsCounter}`);
+      console.log(`SOCKET: user disconnected from: /event/${hash} || ${connectionsCounter}`);
       updateClientsCount(nsp, connectionsCounter);
     });
   });
