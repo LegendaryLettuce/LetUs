@@ -9,6 +9,7 @@ const bodyParser    = require('body-parser');
 const db            = require('./db/index');
 const letUsSchema   = require('./db/letUsSchema');
 const letUsRouter   = require('./routes/letUsRouter');
+const fb            = require('./config/facebook-secret');
 
 console.log('check order');
 
@@ -23,8 +24,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-const fb = '07ac8777ef2fc869ecf728a1a5184e93';
 
 app.use(session({
   secret: fb,
