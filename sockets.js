@@ -1,16 +1,30 @@
 // const server = require('./app');
 let server;
 
+const updateClientsCount = (nsp, count) => {
+  nsp.emit('update connection', count);
+};
+
 const add = (hash) => {
+  let connectionsCounter = 0;
   if (!server) {
     console.log('FIRST TIME LOADED SOCKETS');
     server = require('./app');
   }
   const io = server.io;
-  const eventNameSpace = '/event/';
-  const nsp = io.of(eventNameSpace.concat(hash));
+  const nsp = io.of(`/event/${hash}`);
   nsp.on('connection', (socket) => {
-    console.log(`User Connected to: /event/${hash}`);
+    connectionsCounter++;
+    console.log('SOCKET TEST');
+    // console.log(socket.nsp.server.sockets);
+    // const clientsCount = socket.conn.server.clientsCount;
+    console.log(`Users Connected to: /event/${hash} || ${connectionsCounter}`);
+    updateClientsCount(nsp, connectionsCounter);
+    nsp.on('disconnect', () => {
+      connectionsCounter--;
+      console.log(`Users Disconnected from: /event/${hash} || ${connectionsCounter}`);
+      updateClientsCount(nsp, connectionsCounter);
+    });
   });
 };
 

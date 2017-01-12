@@ -21,9 +21,9 @@ class LiveList extends Component {
     super(props);
     this.state = {
       votes: {
-        expectedVotes: 10,
-        connectedPeers: 8,
-        talliedVotes: 4,
+        expectedVotes: ((this.props.friends.length + 1) * this.props.liveData.length),
+        connectedPeers: (this.props.connectedPeers * this.props.liveData.length),
+        talliedVotes: this.props.talliedVotes,
       },
     };
     this.handleBack = this.handleBack.bind(this);
@@ -60,7 +60,11 @@ class LiveList extends Component {
       <Page
         renderToolbar={() => this.renderToolbar()}
       >
-        <VotesProgress votes={this.state.votes} />
+        <VotesProgress
+          expectedVotes={((this.props.friends.length + 1) * this.props.liveData.length)}
+          talliedVotes={this.props.talliedVotes}
+          connectedPeers={(this.props.connectedPeers * this.props.liveData.length)}
+        />
         <GenericList
             data={this.props.liveData}
             handleTouch={this.handleTouch}
@@ -84,6 +88,9 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   liveData: state.liveData,
+  friends: state.friends,
+  connectedPeers: state.connectedPeers,
+  talliedVotes: state.talliedVotes,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LiveList);
