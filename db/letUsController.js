@@ -1,5 +1,8 @@
 /* eslint-disable no-param-reassign */
 const mongoose = require('mongoose');
+const Yelp = require('yelp');
+const apikeys = require('./../config/yelp-api.js');
+const fs = require('fs');
 
 mongoose.Promise = require('bluebird');
 
@@ -141,6 +144,32 @@ const updateEventAttendees = (data) => {
     });
 };
 
+const retrieveYelpData = (lat, lng) => {
+  const yelp = new Yelp(apikeys);
+  const ll = lat + ',' + lng;
+  // See http://www.yelp.com/developers/documentation/v2/search_api
+  const queries = [{
+    term: 'food', ll,
+  }, {
+    term: 'nightlife', ll,
+  }, {
+    term: 'active', ll,
+  }];
+  const terms = ['eat', 'drink', 'play'];
+  const request = {};
+  queries.forEach((searchTerm, i) => {
+    yelp.search(searchTerm)
+      .then((data) => {
+        request[terms[i]] = data;
+        return data;
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  })
+};
+
 module.exports = {
   addUser,
   addFriend,
@@ -149,9 +178,9 @@ module.exports = {
   addEvent,
   findUser,
   getAllUsers,
-  createNewHash,
+  cr'eat'eNewHash,
   retrieveEvents,
   createEvent,
   updateEventAttendees,
+  retrieveYelpData,
 };
-
