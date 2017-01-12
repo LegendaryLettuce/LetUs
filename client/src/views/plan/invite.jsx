@@ -1,6 +1,8 @@
 import React, { Component }       from 'react';
 // Redux
 import { connect }      from 'react-redux';
+import { updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes  }  from '../../redux/actions';
+
 // Onsen UI
 import ons              from 'onsenui';
 import { Page, Toolbar, BackButton } from 'react-onsenui';
@@ -34,7 +36,7 @@ class Invite extends Component {
     this.setState({
       friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Marc', 'Rebecca', 'Fiona'],
     });
-    addSockets(this.props.eventHash);
+    addSockets(this.props.eventHash, this.props.updateConnectedPeers, this.props.updateTalliedVotes);
   }
 
   routeToCollaborate() {
@@ -97,10 +99,25 @@ class Invite extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  updateYelpData: (yelpData) => {
+    dispatch(updateYelpData(yelpData));
+  },
+  updateEventHash: (eventHash) => {
+    dispatch(updateEventHash(eventHash));
+  },
+  updateConnectedPeers: (connectedPeers) => {
+    dispatch(updateConnectedPeers(connectedPeers));
+  },
+  updateTalliedVotes: (talliedVotes) => {
+    dispatch(updateTalliedVotes(talliedVotes));
+  },
+});
+
 const mapStateToProps = state => ({
   friends: state.friends,
   yelpData: state.yelpData,
   eventHash: state.eventHash,
 });
 
-export default connect(mapStateToProps)(Invite);
+export default connect(mapStateToProps, mapDispatchToProps)(Invite);

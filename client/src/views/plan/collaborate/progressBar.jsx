@@ -10,9 +10,11 @@ class VotesProgress extends Component {
   }
 
   render() {
-    const talliedPercent = (this.props.votes.talliedVotes / this.props.votes.expectedVotes) * 100;
-    const connectedPercent = (this.props.votes.connectedPeers / this.props.votes.expectedVotes) * 100;
-
+    const talliedPercent = (this.props.talliedVotes / this.props.expectedVotes) * 100;
+    const connectedPercent = (this.props.connectedPeers / this.props.expectedVotes) * 100;
+    console.log('TALLIED PERCENT', talliedPercent);
+    console.log('CONNEDTED PERCENT', connectedPercent);
+    
     return (
       <section style={{
         padding: '4%',
