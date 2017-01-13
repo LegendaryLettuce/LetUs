@@ -1,0 +1,33 @@
+version: '2'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: docker.server
+    image: express-server
+    container_name: express-server
+    ports:
+      - "3000:3000"
+    volumes:
+      - wwwroot:/wwwroot
+    links:
+      - database
+  webpack:
+    build:
+      context: .
+      dockerfile: docker.webpack
+    image: my-webpack
+    container_name: my-webpack-container
+    # ports:
+      # - "35729:35729" // for live reload
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - wwwroot:/wwwroot
+  database: # name of the third service
+    image: mongo # specify image to build container from
+    ports:
+      - "27017:27017" # specify port forewarding
+volumes:
+  wwwroot:
+    driver: local
