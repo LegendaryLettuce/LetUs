@@ -42,6 +42,13 @@ npm run dev
 npm run start
 ```
 
+### Docker Instructions
+ - Download [Docker](https://docs.docker.com/engine/installation/)
+ - Compose Docker containers. This will run the server/webpack/database: docker-compose up --build -d
+ - Access Database 
+  - Display all containers: docker ps
+  - Run Mongo: docker exec -it letus_database_1 bash
+
 ### Roadmap
 
 View the project roadmap [here](https://github.com/LegendaryLettuce/LetUs/issues)
