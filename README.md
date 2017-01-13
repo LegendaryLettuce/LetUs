@@ -48,7 +48,7 @@ npm run start
  - Compose Docker containers. This will run the server/webpack/database: 
 ``` 
 From directory
-$ docker-compose up --build -d
+$ docker-compose up --build
 ```
  - Access Database 
   - Display all containers 
