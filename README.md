@@ -60,6 +60,7 @@ $ docker ps
 From directory
 $ docker exec -it letus_database_1 bash
 $ mongo
+$ use docker
 ```
 
 ### Roadmap
