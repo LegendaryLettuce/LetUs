@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component }        from 'react';
 // Onsen UI
-import { Page, Button }     from 'react-onsenui';
+import { Page, Button }            from 'react-onsenui';
 // Packages
-import Autocomplete         from 'react-google-autocomplete';
-import axios                from 'axios';
+import Autocomplete                from 'react-google-autocomplete';
+import axios                       from 'axios';
 // Redux
-import { connect }                      from 'react-redux';
-import { updateCoords, updateEDP }     from '../../redux/actions';
+import { connect }                 from 'react-redux';
+import { updateCoords, updateEDP } from '../../redux/actions';
 // Styles
-import { bodyStyle }        from '../../styles/styles';
+import { bodyStyle }               from '../../styles/styles';
 import '../../styles/mapStyle.css';
 // API Key
-import apikey               from './../../../../config/google-maps-api';
+import apikey                      from './../../../../config/google-maps-api';
 // import  BottomNav                     from './../../views/_global/bottomNav.jsx';
 
 // TODO: Add api key
@@ -31,7 +31,6 @@ const searchForm = {
   alignItems: 'center',
   justifyContent: 'space-around',
 };
-
 
 class LatLonModule extends Component {
   constructor(props) {
