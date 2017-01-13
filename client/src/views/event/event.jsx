@@ -58,7 +58,7 @@ const tags = {
 
 const spacingDiv = {
   height: '44px',
-}
+};
 
 // const address = (location) => {
 //   return location.display_address.join(',');
@@ -119,9 +119,11 @@ class Event extends Component {
                 {this.props.data.displayAddress.join(', ')}
               </ListItem>
             </a>
-            <ListItem tappable><Icon icon='fa-phone' style={iconPadding} />
-              {this.props.data.displayPhone}
-            </ListItem>
+            <a href={`tel:${this.props.data.displayPhone}`} target='_blank' style={{ textDecoration: 'none' }}>
+              <ListItem tappable><Icon icon='fa-phone' style={iconPadding} />
+                {this.props.data.displayPhone}
+              </ListItem>
+            </a>
             <a href={this.props.data.mobileUrl} target='_blank' style={{ textDecoration: 'none' }}>
               <ListItem tappable>
                 <Icon icon='fa-yelp' style={iconPadding}/>
