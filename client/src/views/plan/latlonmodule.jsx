@@ -148,7 +148,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateCoords(coords));
   },
   updateEDP: (edp) => {
-    dispatch(updateEDP(edp)),
+    dispatch(updateEDP(edp));
   },
 });
 

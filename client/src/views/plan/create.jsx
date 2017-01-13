@@ -56,7 +56,6 @@ const playIcon = {
 const textStyleCreate = {
   fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
   fontSize: '400%',
-  // fontWeight: 'bolder',
 };
 
 const eatContainer = {
@@ -89,7 +88,7 @@ class Create extends Component {
     this.state = {
       selectedView: 'Create',
       selectedIndex: 0,
-      data: [createData, eatData, drinkData, playData],
+      data: [createData, this.props.eat, this.props.drink, this.props.play],
     };
     this.decideTogether = this.decideTogether.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
@@ -282,6 +281,7 @@ const mapStateToProps = state => ({
   yelpData: state.yelpData,
   eventHash: state.eventHash,
   user: state.user,
+  edp: state.edp,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);
