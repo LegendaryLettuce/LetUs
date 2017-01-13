@@ -28,7 +28,7 @@
 - Mongoose 4.7.6
 - React
 - Webpack 1.14.0
-- etc
+- Docker
 
 ## Development
 
