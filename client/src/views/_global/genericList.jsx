@@ -1,9 +1,7 @@
-import React, { Component }       from 'react';
+import React, { Component } from 'react';
 // Redux
-import { connect }      from 'react-redux';
-// Onsen UI
-import ons              from 'onsenui';
-import { List, ListItem } from 'react-onsenui';
+import { connect }          from 'react-redux';
+import { List, ListItem }   from 'react-onsenui';
 
 class GenericList extends Component {
   constructor(props) {
@@ -11,7 +9,7 @@ class GenericList extends Component {
     this.renderRow = this.renderRow.bind(this);
     this.renderIcon = this.renderIcon.bind(this);
   }
-
+  // eslint-disable-next-line class-methods-use-this
   renderIcon(iconData) {
     return (
       <ons-icon
@@ -24,9 +22,10 @@ class GenericList extends Component {
     );
   }
 
+  // eslint-disable-next-line class-methods-use-this
   renderImage(imageUrl) {
     return (
-      <img src={imageUrl} className='list__item__thumbnail' />
+      <img src={imageUrl} className='list__item__thumbnail' alt=''/>
     );
   }
 
@@ -78,7 +77,7 @@ class GenericList extends Component {
 }
 
 const mapStateToProps = state => ({
-  hello: state.hello,
+  edp: state.edp,
 });
 
 export default connect(mapStateToProps)(GenericList);

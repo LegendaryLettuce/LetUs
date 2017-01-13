@@ -5,7 +5,7 @@ import { Page, Button }     from 'react-onsenui';
 import Autocomplete         from 'react-google-autocomplete';
 import axios                from 'axios';
 // Redux
-import { connect }          from 'react-redux';
+import { connect }                      from 'react-redux';
 import { updateCoords, updateEDP }     from '../../redux/actions';
 // Styles
 import { bodyStyle }        from '../../styles/styles';
@@ -60,9 +60,11 @@ class LatLonModule extends Component {
         geocodeResults: null,
       });
     };
+
     this.componentDidMount = () => {
       const target = document.getElementsByTagName('body')[0];
       const config = { childList: true };
+      // eslint-disable-next-line
       const childObserver = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           mutation.addedNodes.forEach((node) => {
@@ -73,6 +75,7 @@ class LatLonModule extends Component {
           });
         });
       });
+      // eslint-disable-next-line
       this.observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           mutation.addedNodes.forEach((node) => {
@@ -93,22 +96,22 @@ class LatLonModule extends Component {
       script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
       script.async = true;
       document.body.appendChild(script);
-    }
+    };
   }
 
   request(lat, lng) {
     axios.get(`/eventdata/${lat}/${lng}`)
-    .then((response) => {
-      console.log(response);
-      if (response) {
-        this.props.updateEDP(response.data);
-        // push to next page
-        this.props.router.push('/create');
-      };
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .then((response) => {
+        console.log(response);
+        if (response) {
+          this.props.updateEDP(response.data);
+          // push to next page
+          this.props.router.push('/create');
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -145,8 +148,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateCoords(coords));
   },
   updateEDP: (edp) => {
-    dispatch(updateEDP(edp));
-  }
+    dispatch(updateEDP(edp)),
+  },
 });
 
 const mapStateToProps = state => ({
