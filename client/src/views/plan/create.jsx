@@ -147,9 +147,10 @@ class Create extends Component {
     return dataSet.businesses.reduce((accum, business) => {
       business.categories.forEach((item) => {
         if (!(accum.findIndex(ele => ele.displayTitle === item[0]) + 1)) {
-          const newObject = {};
-          newObject.displayTitle = item[0];
-          newObject.imageUrl = business.image_url;
+          const newObject = {
+            displayTitle: item[0],
+            imageUrl: business.image_url,
+          };
           accum.push(newObject);
         }
       });
@@ -166,16 +167,19 @@ class Create extends Component {
         return accum2;
       }, false);
       if (validBiz) {
-        const newObject = {};
-        newObject.displayTitle = business.name;
-        newObject.imageUrl = business.image_url;
-        newObject.rating = business.rating;
-        newObject.categories = business.categories;
-        newObject.displayAddress = business.location.display_address;
-        newObject.displayPhone = business.display_phone;
-        newObject.snippetText = business.snippet_text;
-        newObject.mobileUrl = business.mobile_url;
-        newObject.votes = 0;
+        const newObject = {
+          displayTitle: business.name,
+          imageUrl: business.image_url,
+          rating: business.rating,
+          categories: business.categories,
+          displayAddress: business.location.display_address,
+          displayPhone: business.display_phone,
+          snippetText: business.snippet_text,
+          mobileUrl: business.mobile_url,
+          votes: 0,
+          preference: -1,
+          intensity: 0,
+        };
         accum.push(newObject);
       }
       return accum;
@@ -191,16 +195,13 @@ class Create extends Component {
     })
       .then((res) => {
         console.log('Saved invited friends', res);
-        // this.pushToCollaborate();
         this.props.updateEventHash(res.data.linkHash);
-        // shit promise doesn't work
         console.log('EVENT HASH', this.props.eventHash);
         this.decideTogether();
       })
       .catch((error) => {
         console.log('Inviting friends error', error);
       });
-    // console.log(this.props.friends);
   }
 
   // On Click Event

@@ -28,17 +28,15 @@ class Invite extends Component {
     this.handleBack = this.handleBack.bind(this);
   }
 
+  componentWillMount() {
+    this.props.updateLiveData(this.props.yelpData);
+  }
+
   componentDidMount() {
     // query database for friends of user
     this.setState({
       friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Marc', 'Rebecca', 'Fiona'],
     });
-    const eventOwnerUpdaters = {
-      connectedPeers: this.props.updateConnectedPeers,
-      talliedVotes: this.props.updateTalliedVotes,
-      liveData: this.props.updateLiveData,
-    };
-    initSocket(this.props.eventHash, eventOwnerUpdaters);
   }
 
   routeToCollaborate() {
@@ -48,13 +46,24 @@ class Invite extends Component {
     })
     .then((res) => {
       console.log('Saved invited friends', res);
-      // this.pushToCollaborate();
-      // shit promise doesn't work
+      console.log('CLIENT: init socket connection');
+      const eventOwnerUpdaters = {
+        connectedPeers: this.props.updateConnectedPeers,
+        talliedVotes: this.props.updateTalliedVotes,
+        liveData: this.props.updateLiveData,
+      };
+      console.log('liveData', this.props.liveData);
+      const eventOwnerStates = {
+        liveData: this.props.liveData,
+        talliedVotes: this.props.talliedVotes,
+        yelpData: this.props.yelpData,
+      };
+      initSocket(this.props.eventHash, eventOwnerUpdaters, eventOwnerStates);
+      this.props.router.push('/collaborate');
     })
     .catch((error) => {
       console.log('Inviting friends error', error);
     });
-    this.props.router.push('/collaborate');
     // console.log(this.props.friends);
   }
 
@@ -123,6 +132,8 @@ const mapStateToProps = state => ({
   friends: state.friends,
   yelpData: state.yelpData,
   eventHash: state.eventHash,
+  liveData: state.liveData,
+  talliedVotes: state.talliedVotes,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Invite);

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Page, Carousel, CarouselItem, Icon } from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
-import { addLiveData }  from '../../redux/actions';
+// import { addLiveData }  from '../../redux/actions';
 // Sockets
 import { emitLiveData } from '../../sockets/sockets';
 // Styles
@@ -100,7 +100,7 @@ class Collaborate extends Component {
 
       emitLiveData(socketVote);
 
-      this.props.addLiveData(liveData);
+      // this.props.addLiveData(liveData);
 //       console.log(
 // `DATA:
 // type      - ${this.props.yelpData[this.index].displayTitle}
@@ -359,9 +359,9 @@ class Collaborate extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  addLiveData: (liveData) => {
-    dispatch(addLiveData(liveData));
-  },
+  // addLiveData: (liveData) => {
+  //   dispatch(addLiveData(liveData));
+  // },
 });
 
 const mapStateToProps = state => ({
