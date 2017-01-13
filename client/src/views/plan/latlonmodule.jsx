@@ -73,7 +73,7 @@ class LatLonModule extends Component {
           });
         });
       });
-      const observer = new MutationObserver((mutations) => {
+      this.observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           mutation.addedNodes.forEach((node) => {
             if ([...node.classList].indexOf('pac-container') !== -1) {
@@ -82,11 +82,11 @@ class LatLonModule extends Component {
           });
         });
       });
-      observer.observe(target, config);
+      this.observer.observe(target, config);
     };
     this.componentWillUnmount = () => {
       // click handling for google drop down
-      observer.disconnect();
+      this.observer.disconnect();
     };
     this.componentWillMount = () => {
       const script = document.createElement('script');
@@ -98,9 +98,10 @@ class LatLonModule extends Component {
 
   request(lat, lng) {
     axios.get(`/eventdata/${lat}/${lng}`)
-    .then(function (response) {
+    .then((response) => {
+      console.log(response);
       if (response) {
-        this.props.updateCoords(response);
+        this.props.updateEDP(response.data);
         // push to next page
         this.props.router.push('/create');
       };
@@ -144,7 +145,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateCoords(coords));
   },
   updateEDP: (edp) => {
-    dispath(updateEDP(epd));
+    dispatch(updateEDP(edp));
   }
 });
 
