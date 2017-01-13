@@ -88,7 +88,7 @@ export const reducer = (state = {
     case 'UPDATE_EDP':
       return {
         ...state,
-        coords: action.edp,
+        edp: action.edp,
       };
     default:
       return state;

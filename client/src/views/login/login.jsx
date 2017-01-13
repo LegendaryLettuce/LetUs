@@ -88,7 +88,7 @@ class LoginView extends Component {
                     postLogin(result)
                       .then(() => {
                         this.props.updateUser(result);
-                        this.props.router.push('/create');
+                        this.props.router.push('/search');
                       });
                   }
                 },
