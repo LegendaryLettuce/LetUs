@@ -5,7 +5,7 @@ const apikeys = require('./../config/yelp-api.js');
 
 mongoose.Promise = require('bluebird');
 
-const { Users, UserFavs, Friends, CheckIns, Events } = require('./letUsSchema.js');
+const { Users, Events, EventGoers } = require('./letUsSchema.js');
 
 // modular insert function
 const createHash = require('hash-generator');
@@ -13,10 +13,7 @@ const createHash = require('hash-generator');
 const socket = require('./../sockets');
 
 const savetoDB = model => model.save()
-  .then((data) => {
-    // console.log(JSON.stringify(data));
-    return data;
-  })
+  .then(data => data)
   .catch((err) => {
     console.log('Controller error', err);
   });
@@ -49,32 +46,6 @@ const getAllUsers = () => {
   });
 };
 
-const addUserFavorites = (data) => {
-  const newUserFav = new UserFavs({
-    userid: data.userid,
-    favoriteid: data.favid,
-  });
-  savetoDB(newUserFav);
-};
-
-const addFriend = (data) => {
-  const newFriend = new Friends({
-    userid: data.userid,
-    friendid: data.friendid,
-  });
-  savetoDB(newFriend);
-};
-
-
-const addCheckIn = (data) => {
-  const newCheckIn = new CheckIns({
-    attendee: data.attendee,
-    eventid: data.eventid,
-    checkedin: data.checkedin,
-  });
-  savetoDB(newCheckIn);
-};
-
 const addEvent = (data) => {
   const newEvent = new Events({
     eventlord: data.eventlord,
@@ -93,15 +64,15 @@ const addEvent = (data) => {
 //   console.log(document.name);
 // });
 
-const retrieveEventByHash = (hash) => {
-  return Events.findOne({ linkHash: hash })
+const retrieveEventByHash = hash => (
+  Events.findOne({ linkHash: hash })
     .then((doc) => {
       if (!doc) {
         return null;
       }
       return doc;
-    });
-};
+    })
+);
 
 const retrieveEvents = (data) => {
   const hash = data.params[0];
@@ -148,7 +119,7 @@ const updateEventAttendees = (data) => {
 };
 
 const retrieveYelpData = (lat, lng) => (
-  new Promise(function(resolve, reject) {
+  new Promise((resolve, reject) => {
     const yelp = new Yelp(apikeys);
     const cll = `${lat},${lng}`;
     // console.log(cll);
@@ -198,10 +169,10 @@ const calculateVoteScore = (data, vote) => {
   data.intensity = Math.abs(newScore / (votes + 1));
 };
 
-const handleClientVotes = (hash, vote) => {
+const handleClientVotes = (hash, vote) => (
   // console.log('DATABASE: received vote from client');
   // console.log(vote);
-  return retrieveEventByHash(hash)
+  retrieveEventByHash(hash)
     .then((doc) => {
       const data = JSON.parse(doc.data);
       const indexVotedItem = JSON.parse(doc.data).reduce((accum, item, index) => {
@@ -229,14 +200,15 @@ const handleClientVotes = (hash, vote) => {
         preference: selectedData.preference,
       };
       return sendToSockets;
-    });
-};
+    })
+);
+
+const getUserEvents = user => (
+  EventGoers.find({ userId: user })
+);
 
 module.exports = {
   addUser,
-  addFriend,
-  addUserFavorites,
-  addCheckIn,
   addEvent,
   findUser,
   getAllUsers,
@@ -247,4 +219,5 @@ module.exports = {
   retrieveYelpData,
   retrieveEventByHash,
   handleClientVotes,
+  getUserEvents,
 };

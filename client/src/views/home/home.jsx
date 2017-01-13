@@ -5,7 +5,7 @@ import { Page }         from 'react-onsenui';
 import { connect }      from 'react-redux';
 import { load }         from '../../redux/actions';
 // Utils
-import { getStore }     from '../../utils/utils';
+import { getStore, getUpcomingEvents } from '../../utils/utils';
 // Styles
 // import { }              from '../../styles/styles';
 // Global Components
@@ -31,10 +31,13 @@ class Home extends Component {
   }
 
   componentWillMount() {
-    // TODO: query database for events of user and store in upcomingEvents state
     if (!this.props.loaded) {
       this.props.load(getStore());
     }
+  }
+
+  componentDidMount() {
+    this.setState({ upcomingEvents: getUpcomingEvents(this.props.user.id).data });
   }
 
   routeToLatlon() {
@@ -47,7 +50,7 @@ class Home extends Component {
 
   render() {
     return (
-      <Page renderToolbar={TopBar({ title: 'Home', handleBack: this.handleBack })}>
+      <Page renderToolbar={TopBar.bind(this, ({ title: 'Home', handleBack: this.handleBack }))}>
         <div style={listStyle}>
           <Events events={this.state.upcomingEvents}/>
         </div>
@@ -66,6 +69,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   loaded: state.loaded,
+  user: state.user,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

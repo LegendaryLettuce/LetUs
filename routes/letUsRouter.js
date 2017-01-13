@@ -38,6 +38,12 @@ const sockets = require('./../sockets');
 //     letUsController.deleteOne(req, res);
 //   });
 
+const handleError = (next) => {
+  const err = new Error('Internal Server Error');
+  err.status = 500;
+  next(err);
+};
+
 letUsRouter.route('/login')
   .post((req, res, next) => {
     const user = req.body;
@@ -54,24 +60,21 @@ letUsRouter.route('/login')
               if (newData) {
                 req.session.id = user.id;
                 res.end('logged in');
-              } else {
-                const err = new Error('Internal Server Error');
-                err.status = 500;
-                next(err);
-              }
+              } else handleError.bind(this, next);
             })
-            .catch((error) => {
-              const err = new Error('Internal Server Error');
-              err.status = 500;
-              next(err);
-            });
+            .catch(handleError.bind(this, next));
         }
       })
-      .catch((error) => {
-        const err = new Error('Internal Server Error');
-        err.status = 500;
-        next(err);
-      });
+      .catch(handleError.bind(this, next));
+  });
+
+letUsRouter.route('/user/events/:userId')
+  .get((req, res, next) => {
+    letUsController.getUserEvents(req.params.userId)
+      .then((data) => {
+        res.send(JSON.stringify(data));
+      })
+      .catch(handleError.bind(this, next));
   });
 
 letUsRouter.route('/test')
