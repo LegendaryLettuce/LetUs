@@ -2,7 +2,7 @@ const client = {};
 
 // Emitters
 const emitLiveData = (liveData) => {
-  console.log('CLIENT SOCKETS:', client);
+  // console.log('CLIENT SOCKETS:', client);
   console.log('CLIENT.SOCKET: emitting data:', liveData);
   client.socket.emit('submit livedata', liveData);
 };
@@ -14,23 +14,16 @@ const listenerController = (nsp, update, state) => {
   });
   nsp.on('update livedata', (liveData) => {
     console.log('CLIENT.SOCKET: received data:', liveData);
-    // if (!state.liveData.length) {
-    //   console.log('LOADING LIVE DATA WITH YELP:', state.yelpData);
-    //   console.log('UPDATERS:', update);
-    //   update.liveData(state.yelpData);
-    // }
-    console.log('CLIENT: yelpdata state:', state.yelpData);
-    console.log('CLIENT: livedata state:', state.liveData);
     const indexOfData = state.liveData.reduce((accum, item, index) => {
       if (item.displayTitle === liveData.displayTitle) {
         return index;
       }
       return accum;
     }, -1);
-    console.log('CLIENT: index of livedata selected:', indexOfData);
+    // console.log('CLIENT: index of livedata selected:', indexOfData);
     const newData = state.liveData.slice();
     const selectedData = newData[indexOfData];
-    console.log('CLIENT: selected data: selectedData', newData);
+    // console.log('CLIENT: selected data: selectedData', newData);
     selectedData.preference = liveData.preference;
     selectedData.votes = liveData.votes;
     selectedData.intensity = liveData.intensity;

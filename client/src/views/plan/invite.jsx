@@ -52,7 +52,7 @@ class Invite extends Component {
         talliedVotes: this.props.updateTalliedVotes,
         liveData: this.props.updateLiveData,
       };
-      console.log('liveData', this.props.liveData);
+      // console.log('liveData', this.props.liveData);
       const eventOwnerStates = {
         liveData: this.props.liveData,
         talliedVotes: this.props.talliedVotes,

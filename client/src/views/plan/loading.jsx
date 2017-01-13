@@ -30,13 +30,13 @@ class Loading extends Component {
           this.props.updateLiveData(eventData);
         })
         .then(() => {
-          console.log('After AJAX', this.props.yelpData);
+          // console.log('After AJAX', this.props.yelpData);
           const eventPeerUpdaters = {
             connectedPeers: this.props.updateConnectedPeers,
             talliedVotes: this.props.updateTalliedVotes,
             liveData: this.props.updateLiveData,
           };
-          console.log('liveData when get link:', this.props.liveData);
+          // console.log('liveData when get link:', this.props.liveData);
           const eventPeerStates = {
             liveData: this.props.liveData,
             talliedVotes: this.props.talliedVotes,

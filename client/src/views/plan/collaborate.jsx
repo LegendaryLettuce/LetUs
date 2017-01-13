@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Page, Carousel, CarouselItem, Icon } from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
-// import { addLiveData }  from '../../redux/actions';
+import { addLiveData }  from '../../redux/actions';
 // Sockets
 import { emitLiveData } from '../../sockets/sockets';
 // Styles
@@ -116,6 +116,7 @@ class Collaborate extends Component {
         if (this.index < this.props.yelpData.length - 1) {
           this.index++;
         } else {
+          console.log('ATTEMPT TO PUSH ROUTER TO LIVE');
           this.props.router.push('/live');
         }
         this.setState({
@@ -359,9 +360,9 @@ class Collaborate extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  // addLiveData: (liveData) => {
-  //   dispatch(addLiveData(liveData));
-  // },
+  addLiveData: (liveData) => {
+    dispatch(addLiveData(liveData));
+  },
 });
 
 const mapStateToProps = state => ({
