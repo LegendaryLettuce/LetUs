@@ -76,10 +76,10 @@ export const reducer = (state = {
         ...state,
         coords: action.coords,
       };
-    case 'UPDATE_COORDS':
+    case 'UPDATE_EDP':
       return {
         ...state,
-        coords: action.coords,
+        coords: action.edp,
       };
     default:
       return state;

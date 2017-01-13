@@ -12,6 +12,7 @@ export const getStore = () => ({
   element: JSON.parse(sessionStorage.getItem('element')) || '',
   user: JSON.parse(sessionStorage.getItem('user')) || null,
   loaded: true,
+  edp: JSON.parse(sessionStorage.getItem('user')) || {},
 });
 
 // export const post = data => (

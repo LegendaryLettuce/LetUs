@@ -16,3 +16,5 @@ export const updateConnectedPeers = connectedPeers => ({ type: 'UPDATED_CONNECTE
 export const updateTalliedVotes = talliedVotes => ({ type: 'UPDATED_TALLIED_VOTES', talliedVotes });
 
 export const updateCoords = coords => ({ type: 'UPDATE_COORDS', coords });
+
+export const updateEDP = coords => ({ type: 'UPDATE_EDP', edp });
