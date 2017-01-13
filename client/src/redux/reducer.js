@@ -10,6 +10,7 @@ export const reducer = (state = {
   loaded: false,
   fbLoaded: false,
   coords: [],
+  edp: {},
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
@@ -78,10 +79,10 @@ export const reducer = (state = {
         ...state,
         coords: action.coords,
       };
-    case 'UPDATE_COORDS':
+    case 'UPDATE_EDP':
       return {
         ...state,
-        coords: action.coords,
+        coords: action.edp,
       };
     default:
       return state;
