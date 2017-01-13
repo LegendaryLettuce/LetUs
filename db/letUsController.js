@@ -143,38 +143,42 @@ const updateEventAttendees = (data) => {
     });
 };
 
-const retrieveYelpData = (lat, lng) => {
-  // console.log('Line 148: ',lat, lng);
-  const yelp = new Yelp(apikeys);
-  const cll = `${lat},${lng}`;
-  // console.log(cll);
-  // See http://www.yelp.com/developers/documentation/v2/search_api
-  const queries = [{
-    term: 'food',
-    ll: cll,
-  }, {
-    term: 'nightlife',
-    ll: cll,
-  }, {
-    term: 'active',
-    ll: cll,
-  }];
-  // TODO: check for wrong lat and long in request
-  const terms = ['eat', 'drink', 'play'];
-  const request = {};
-  queries.forEach((searchTerm, i) => {
-    yelp.search(searchTerm)
-      .then((data) => {
-        request[terms[i]] = data;
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .then(() => {
-        return request;
-      });
-  });
-};
+const retrieveYelpData = (lat, lng) => (
+  new Promise(function(resolve, reject) {
+    const yelp = new Yelp(apikeys);
+    const cll = `${lat},${lng}`;
+    // console.log(cll);
+    // See http://www.yelp.com/developers/documentation/v2/search_api
+    const queries = [{
+      term: 'food',
+      ll: cll,
+    }, {
+      term: 'nightlife',
+      ll: cll,
+    }, {
+      term: 'active',
+      ll: cll,
+    }];
+    // TODO: check for wrong lat and long in request
+    const terms = ['eat', 'drink', 'play'];
+    const dataObj = {};
+    let c = 0;
+    queries.forEach((searchTerm, i) => {
+      yelp
+        .search(searchTerm)
+        .then((data) => {
+          dataObj[terms[i]] = data;
+          c++;
+          if (c >= queries.length) {
+            resolve(dataObj);
+          }
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  })
+);
 
 module.exports = {
   addUser,

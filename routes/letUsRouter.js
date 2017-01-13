@@ -110,8 +110,11 @@ letUsRouter.route('/events/*')
 
 letUsRouter.route('/eventdata/:lat/:lng')
   .get((req, res, next) => {
+    console.log('123');
+    console.log(letUsController.retrieveYelpData(req.params.lat, req.params.lng));
     letUsController.retrieveYelpData(req.params.lat, req.params.lng)
       .then((data) => {
+        console.log(data);
         res.send(data);
       });
   });
