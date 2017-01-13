@@ -51,8 +51,11 @@ From directory
 $ docker-compose up --build -d
 ```
  - Access Database 
-  - Display all containers: docker ps
-  - Run Mongo: 
+  - Display all containers 
+```  
+$ docker ps
+```
+  - Use Mongo in Docker database container
 ```
 From directory
 $ docker exec -it letus_database_1 bash
