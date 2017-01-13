@@ -44,10 +44,18 @@ npm run start
 
 ### Docker Instructions
  - Download [Docker](https://docs.docker.com/engine/installation/)
- - Compose Docker containers. This will run the server/webpack/database: docker-compose up --build -d
+  - Open Kitematic (GUI interface from the top bar)
+ - Compose Docker containers. This will run the server/webpack/database: 
+``` 
+$ docker-compose up --build -d
+```
  - Access Database 
   - Display all containers: docker ps
-  - Run Mongo: docker exec -it letus_database_1 bash
+  - Run Mongo: 
+```
+$ docker exec -it letus_database_1 bash
+$ mongo
+```
 
 ### Roadmap
 
