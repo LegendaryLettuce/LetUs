@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const mongoUri = 'mongodb://localhost/letus';
+const mongoUri = process.env.NODE_ENV === 'production' ? 'mongodb://database/docker' : 'mongodb://localhost/letus';
+
+
 mongoose.connect(mongoUri);
 
 // Connect Mongoose to our local MongoDB via URI specified above and export it below
