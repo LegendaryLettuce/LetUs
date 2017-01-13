@@ -52,7 +52,7 @@ render(
         <Route path='create' component={Create} />
         <Route path='search' component={LatLonModule} />
         <Route path='collaborate' component={Collaborate} />
-        <Route path='c/*' component={Loading} />
+        <Route path='events/*' component={Loading} />
         <Route path='live' component={LiveList} />
         <Route path='event' component={Event} />
         <Route path='profile' component={Profile} />
