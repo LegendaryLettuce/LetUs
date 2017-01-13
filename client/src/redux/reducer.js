@@ -4,7 +4,7 @@ export const reducer = (state = {
   yelpData: [],
   liveData: [],
   eventHash: '',
-  user: null,
+  user: {},
   connectedPeers: 0,
   talliedVotes: 0,
   loaded: false,

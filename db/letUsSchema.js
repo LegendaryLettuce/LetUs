@@ -18,12 +18,17 @@ const Users = new Schema({
 const Events = new Schema({
   creator: { type: String, required: true },
   data: { type: String, required: true },
-  attendees: [{ type: String, ref: 'Users' }], // change String back to ObjectId
-  checkIns: [{ type: Boolean, ref: 'Users' }],
+  attendees: [{ type: String }], // change String back to ObjectId
+  checkIns: [{ type: Boolean }],
   linkHash: { type: String, required: true },
+});
+
+const EventGoers = new Schema({
+  userId: { type: String, required: true },
+  event: { type: ObjectId, ref: 'Events', required: true },
 });
 
 // add models to db
 module.exports.Users = mongoose.model('Users', Users);
 module.exports.Events = mongoose.model('Events', Events);
-
+module.exports.EventGoers = mongoose.model('EventGoers', EventGoers);
