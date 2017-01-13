@@ -84,11 +84,12 @@ class Create extends Component {
   constructor(props) {
     super(props);
     this.props.updateYelpData(createData);
+    console.log('edp',this.props.edp);
     // this.props.yelpData; use this to pull from redux
     this.state = {
       selectedView: 'Create',
       selectedIndex: 0,
-      data: [createData, this.props.eat, this.props.drink, this.props.play],
+      data: [createData, this.props.edp.eat, this.props.edp.drink, this.props.edp.play],
     };
     this.decideTogether = this.decideTogether.bind(this);
     this.handleTouch = this.handleTouch.bind(this);

@@ -59,7 +59,6 @@ class LatLonModule extends Component {
         geocodeResults: null,
       });
     };
-
     this.componentDidMount = () => {
       const target = document.getElementsByTagName('body')[0];
       const config = { childList: true };
@@ -89,6 +88,7 @@ class LatLonModule extends Component {
     this.componentWillUnmount = () => {
       // click handling for google drop down
       this.observer.disconnect();
+      // TODO: remove google script from being added
     };
     this.componentWillMount = () => {
       const script = document.createElement('script');
@@ -100,8 +100,7 @@ class LatLonModule extends Component {
 
   request(lat, lng) {
     axios.get(`/eventdata/${lat}/${lng}`)
-      .then((response) => {
-        console.log(response);
+      .then( (response) => {
         if (response) {
           this.props.updateEDP(response.data);
           // push to next page
@@ -109,7 +108,7 @@ class LatLonModule extends Component {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log('An error occured when access data');
       });
   }
 
@@ -127,13 +126,12 @@ class LatLonModule extends Component {
                     place.geometry.location.lat(),
                     place.geometry.location.lng(),
                   ]);
-                  console.log(place.geometry.location.lat(), place.geometry.location.lng());
                   this.request(this.props.coords[0],this.props.coords[1]);
                 }}
                 types={['geocode']}
                 componentRestrictions={{ country: 'us' }}
               />
-              <Button onClick={console.log(this.state.input)}>Submit</Button>
+              {/* <Button onClick={console.log(this.state.input)}>Submit</Button> */}
             </div> :
             <div/> // TODO: add loading bar
         }
