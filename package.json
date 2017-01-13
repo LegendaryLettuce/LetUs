@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon app.js",
+    "docker": "NODE_ENV='production' nodemon app.js",
     "dev": "webpack -d --watch --inline --content-base . --history-api-fallback",
     "build": "NODE_ENV='production' webpack -p --inline --content-base . --history-api-fallback",
     "test": "mocha --reporter nyan",
