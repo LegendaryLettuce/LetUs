@@ -17,4 +17,8 @@ export const updateTalliedVotes = talliedVotes => ({ type: 'UPDATED_TALLIED_VOTE
 
 export const updateCoords = coords => ({ type: 'UPDATE_COORDS', coords });
 
+export const load = state => ({ type: 'LOAD', state });
+
+export const loadFB = loaded => ({ type: 'LOAD_FB', loaded });
+
 export const updateEDP = edp => ({ type: 'UPDATE_EDP', edp });

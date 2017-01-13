@@ -5,6 +5,8 @@ export const postLogin = user => (
   axios.post('/login', user)
 );
 
+// TODO: attempt to load data from server if not in session
+// TODO: lazy refresh data in background to keep up to date with server if necessary
 export const getStore = () => ({
   friends: JSON.parse(sessionStorage.getItem('friends')) || [],
   yelpData: JSON.parse(sessionStorage.getItem('yelpData')) || [],
@@ -15,6 +17,8 @@ export const getStore = () => ({
   edp: JSON.parse(sessionStorage.getItem('user')) || {},
 });
 
+
+// Example format:
 // export const post = data => (
 //   new Promise((resolve, reject) => {
 //     resolve(data);

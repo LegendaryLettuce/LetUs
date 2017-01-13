@@ -1,24 +1,21 @@
 import React, { Component }       from 'react';
-// Redux
-import { connect }      from 'react-redux';
-import { updateLiveData, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes  }  from '../../redux/actions';
-
 // Onsen UI
 import ons              from 'onsenui';
 import { Page, Toolbar, BackButton } from 'react-onsenui';
-
 // Axios for requests
 import axios            from 'axios';
-
+// Redux
+import { connect }      from 'react-redux';
+import { updateLiveData, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes  }  from '../../redux/actions';
 // Styles
 import { }   from '../../styles/styles';
-
-import  Link            from './invite/link.jsx';
+// Components
+import  HashLink        from './invite/link.jsx';
 import  Friends         from './invite/friends.jsx';
-import  Collaborate      from './invite/collaborate.jsx';
-import  BottomNav        from './../../views/_global/bottomNav.jsx';
-// Import Sockets
-import { initSocket } from './../../sockets/sockets';
+import  Collaborate     from './invite/collaborate.jsx';
+import  BottomNav       from './../../views/_global/bottomNav.jsx';
+// Sockets
+import { initSocket }   from './../../sockets/sockets';
 
 class Invite extends Component {
 
@@ -88,7 +85,7 @@ class Invite extends Component {
       <Page renderToolbar={() => this.renderToolbar('Invite')}>
 
         <h1 style={header}>Invite Friends</h1>
-        <Link />
+        <HashLink />
 
         <div style={listStyle}>
 
