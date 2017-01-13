@@ -14,6 +14,8 @@ import '../../styles/mapStyle.css';
 import apikey               from './../../../../config/google-maps-api';
 // import  BottomNav                     from './../../views/_global/bottomNav.jsx';
 
+// TODO: Add api key
+
 const inputField = {
   ...bodyStyle,
 };
@@ -97,7 +99,9 @@ class LatLonModule extends Component {
   request(lat, lng) {
     axios.get(`/eventdata/${lat}/${lng}`)
     .then(function (response) {
-      console.log(response);
+      if (response) {
+        this.props.updateCoords(response);
+      };
     })
     .catch(function (error) {
       console.log(error);
@@ -137,10 +141,14 @@ const mapDispatchToProps = dispatch => ({
   updateCoords: (coords) => {
     dispatch(updateCoords(coords));
   },
+  updateEDP: (edp) => {
+    dispath(updateEDP(epd));
+  }
 });
 
 const mapStateToProps = state => ({
   coords: state.coords,
+  edp: state.edp,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LatLonModule);
