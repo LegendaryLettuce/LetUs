@@ -59,6 +59,6 @@ render(
         <Route path='friends' component={Friends} />
       </Route>
     </Router>
-  </Provider>
+  </Provider>,
   document.getElementById('app'),
 );
