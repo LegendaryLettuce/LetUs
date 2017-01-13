@@ -47,12 +47,14 @@ npm run start
   - Open Kitematic (GUI interface from the top bar)
  - Compose Docker containers. This will run the server/webpack/database: 
 ``` 
+From directory
 $ docker-compose up --build -d
 ```
  - Access Database 
   - Display all containers: docker ps
   - Run Mongo: 
 ```
+From directory
 $ docker exec -it letus_database_1 bash
 $ mongo
 ```
