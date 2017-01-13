@@ -3,16 +3,18 @@ import React, { Component } from 'react';
 import { Page, Button }     from 'react-onsenui';
 // Packages
 import Autocomplete         from 'react-google-autocomplete';
-// import axios                          from 'axios';
+import axios                from 'axios';
 // Redux
 import { connect }          from 'react-redux';
-import { updateCoords }     from '../../redux/actions';
+import { updateCoords, updateEDP }     from '../../redux/actions';
 // Styles
 import { bodyStyle }        from '../../styles/styles';
 import '../../styles/mapStyle.css';
 // API Key
 import apikey               from './../../../../config/google-maps-api';
 // import  BottomNav                     from './../../views/_global/bottomNav.jsx';
+
+// TODO: Add api key
 
 const inputField = {
   ...bodyStyle,
@@ -71,7 +73,7 @@ class LatLonModule extends Component {
           });
         });
       });
-      const observer = new MutationObserver((mutations) => {
+      this.observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           mutation.addedNodes.forEach((node) => {
             if ([...node.classList].indexOf('pac-container') !== -1) {
@@ -80,11 +82,11 @@ class LatLonModule extends Component {
           });
         });
       });
-      observer.observe(target, config);
+      this.observer.observe(target, config);
     };
     this.componentWillUnmount = () => {
       // click handling for google drop down
-      observer.disconnect();
+      this.observer.disconnect();
     };
     this.componentWillMount = () => {
       const script = document.createElement('script');
@@ -94,13 +96,24 @@ class LatLonModule extends Component {
     }
   }
 
+  request(lat, lng) {
+    axios.get(`/eventdata/${lat}/${lng}`)
+    .then((response) => {
+      console.log(response);
+      if (response) {
+        this.props.updateEDP(response.data);
+        // push to next page
+        this.props.router.push('/create');
+      };
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   render() {
     return (
       <Page>
-        {/* <script
-          type="text/javascript"
-          src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded"
-        /> */}
         <p style={title}>Where to?</p>
         {
           this.state.loaded ?
@@ -113,6 +126,7 @@ class LatLonModule extends Component {
                     place.geometry.location.lng(),
                   ]);
                   console.log(place.geometry.location.lat(), place.geometry.location.lng());
+                  this.request(this.props.coords[0],this.props.coords[1]);
                 }}
                 types={['geocode']}
                 componentRestrictions={{ country: 'us' }}
@@ -130,10 +144,14 @@ const mapDispatchToProps = dispatch => ({
   updateCoords: (coords) => {
     dispatch(updateCoords(coords));
   },
+  updateEDP: (edp) => {
+    dispatch(updateEDP(edp));
+  }
 });
 
 const mapStateToProps = state => ({
   coords: state.coords,
+  edp: state.edp,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LatLonModule);
