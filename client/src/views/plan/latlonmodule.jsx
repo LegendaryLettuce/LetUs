@@ -6,7 +6,7 @@ import Autocomplete         from 'react-google-autocomplete';
 import axios                from 'axios';
 // Redux
 import { connect }          from 'react-redux';
-import { updateCoords }     from '../../redux/actions';
+import { updateCoords, updateEDP }     from '../../redux/actions';
 // Styles
 import { bodyStyle }        from '../../styles/styles';
 import '../../styles/mapStyle.css';
@@ -101,6 +101,8 @@ class LatLonModule extends Component {
     .then(function (response) {
       if (response) {
         this.props.updateCoords(response);
+        // push to next page
+        this.props.router.push('/create');
       };
     })
     .catch(function (error) {
