@@ -100,7 +100,7 @@ class Collaborate extends Component {
 
       emitLiveData(socketVote);
 
-      this.props.addLiveData(liveData);
+      // this.props.addLiveData(liveData);
 //       console.log(
 // `DATA:
 // type      - ${this.props.yelpData[this.index].displayTitle}
@@ -116,6 +116,7 @@ class Collaborate extends Component {
         if (this.index < this.props.yelpData.length - 1) {
           this.index++;
         } else {
+          console.log('ATTEMPT TO PUSH ROUTER TO LIVE');
           this.props.router.push('/live');
         }
         this.setState({

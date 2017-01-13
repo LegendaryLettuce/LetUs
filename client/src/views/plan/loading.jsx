@@ -1,7 +1,7 @@
 import React, { Component }       from 'react';
 // Redux
 import { connect }      from 'react-redux';
-import { updateInviteFriends, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes,   }  from '../../redux/actions';
+import { updateLiveData, updateInviteFriends, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes,   }  from '../../redux/actions';
 
 
 // Axios for requests
@@ -24,21 +24,28 @@ class Loading extends Component {
     this.props.updateEventHash(hash);
     axios.get(`/events/${hash}`)
         .then((data) => {
+          const eventData = JSON.parse(data.data.data);
           this.props.updateInviteFriends(data.data.attendees);
-          this.props.updateYelpData(JSON.parse(data.data.data));
+          this.props.updateYelpData(eventData);
+          this.props.updateLiveData(eventData);
         })
         .then(() => {
-          console.log('After AJAX', this.props.yelpData);
+          // console.log('After AJAX', this.props.yelpData);
           const eventPeerUpdaters = {
             connectedPeers: this.props.updateConnectedPeers,
             talliedVotes: this.props.updateTalliedVotes,
             liveData: this.props.updateLiveData,
           };
-          socket.initSocket(hash, eventPeerUpdaters);
+          // console.log('liveData when get link:', this.props.liveData);
+          const eventPeerStates = {
+            liveData: this.props.liveData,
+            talliedVotes: this.props.talliedVotes,
+            yelpData: this.props.yelpData,
+          };
+          socket.initSocket(hash, eventPeerUpdaters, eventPeerStates);
           this.props.router.push('/collaborate');
         });
   }
-
 
   render() {
     return (
@@ -63,11 +70,16 @@ const mapDispatchToProps = dispatch => ({
   updateTalliedVotes: (talliedVotes) => {
     dispatch(updateTalliedVotes(talliedVotes));
   },
+  updateLiveData: (liveData) => {
+    dispatch(updateLiveData(liveData));
+  },
 });
 
 const mapStateToProps = state => ({
   yelpData: state.yelpData,
   eventHash: state.eventHash,
+  liveData: state.liveData,
+  talliedVotes: state.talliedVotes,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Loading);

@@ -93,15 +93,19 @@ const addEvent = (data) => {
 //   console.log(document.name);
 // });
 
+const retrieveEventByHash = (hash) => {
+  return Events.findOne({ linkHash: hash })
+    .then((doc) => {
+      if (!doc) {
+        return null;
+      }
+      return doc;
+    });
+};
+
 const retrieveEvents = (data) => {
   const hash = data.params[0];
-  return Events.findOne({ linkHash: hash })
-      .then((doc) => {
-        if (!doc) {
-          return null;
-        }
-        return doc;
-      });
+  return retrieveEventByHash(hash);
 };
 
 const createNewHash = (data) => {
@@ -180,6 +184,54 @@ const retrieveYelpData = (lat, lng) => (
   })
 );
 
+const calculateVoteScore = (data, vote) => {
+  // console.log('DATABASE: calculating new vote scores');
+  const votes = data.votes;
+  const score = data.preference * data.intensity * votes;
+  const voteScore = vote.preference * vote.intensity;
+  const newScore = score + voteScore;
+  if (newScore > 0) {
+    data.preference = 1;
+  } else {
+    data.preference = -1;
+  }
+  data.intensity = Math.abs(newScore / (votes + 1));
+};
+
+const handleClientVotes = (hash, vote) => {
+  // console.log('DATABASE: received vote from client');
+  // console.log(vote);
+  return retrieveEventByHash(hash)
+    .then((doc) => {
+      const data = JSON.parse(doc.data);
+      const indexVotedItem = JSON.parse(doc.data).reduce((accum, item, index) => {
+        if (item.displayTitle === vote.displayTitle) {
+          return index;
+        }
+        return accum;
+      }, -1);
+      const selectedData = data[indexVotedItem];
+      // console.log(`DATABASE: index of voted item: ${indexVotedItem}`);
+      if (!selectedData.votes) {
+        selectedData.preference = vote.preference;
+        selectedData.intensity = vote.intensity;
+      } else {
+        // Mutates input data
+        calculateVoteScore(selectedData, vote);
+      }
+      selectedData.votes++;
+      doc.data = JSON.stringify(data);
+      savetoDB(doc);
+      const sendToSockets = {
+        displayTitle: selectedData.displayTitle,
+        votes: selectedData.votes,
+        intensity: selectedData.intensity,
+        preference: selectedData.preference,
+      };
+      return sendToSockets;
+    });
+};
+
 module.exports = {
   addUser,
   addFriend,
@@ -193,4 +245,6 @@ module.exports = {
   createEvent,
   updateEventAttendees,
   retrieveYelpData,
+  retrieveEventByHash,
+  handleClientVotes,
 };

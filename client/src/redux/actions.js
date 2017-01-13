@@ -3,9 +3,15 @@ export const updateInviteFriends = friends => ({ type: 'UPDATE_INVITE_FRIENDS', 
 
 export const updateYelpData = yelpData => ({ type: 'UPDATE_YELP_DATA', yelpData });
 
-export const addLiveData = element => ({ type: 'ADD_LIVE_DATA', element });
+// export const addLiveData = element => ({ type: 'ADD_LIVE_DATA', element });
 
-export const updateLiveData = liveData => ({ type: 'UPDATE_LIVE_DATA', liveData });
+export const updateLiveData = (liveData) => {
+  const newLiveData = [
+    ...liveData,
+  ].sort((a, b) => ((b.preference * b.intensity) - (a.preference * a.intensity)));
+  sessionStorage.setItem('liveData', JSON.stringify(newLiveData));
+  return { type: 'UPDATE_LIVE_DATA', newLiveData };
+};
 
 export const updateUser = user => ({ type: 'UPDATE_USER', user });
 

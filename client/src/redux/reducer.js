@@ -31,20 +31,26 @@ export const reducer = (state = {
         ...state,
         yelpData: action.yelpData,
       };
-    case 'ADD_LIVE_DATA':
-      const data = [
-        ...state.liveData,
-        action.element,
-      ].sort((a, b) => ((b.preference * b.intensity) - (a.preference * a.intensity)));
-      sessionStorage.setItem('liveData', JSON.stringify(data));
-      return {
-        ...state,
-        liveData: data,
-      };
+    // case 'ADD_LIVE_DATA':
+    //   const data = [
+    //     ...state.liveData,
+    //     action.element,
+    //   ].sort((a, b) => ((b.preference * b.intensity) - (a.preference * a.intensity)));
+    //   sessionStorage.setItem('liveData', JSON.stringify(data));
+    //   return {
+    //     ...state,
+    //     liveData: data,
+    //   };
     case 'UPDATE_LIVE_DATA':
+      // console.log('UPDATING LIVE DATA: action livedata:', action.liveData);
+      // const newLiveData = [
+      //   ...action.liveData,
+      // ].sort((a, b) => ((b.preference * b.intensity) - (a.preference * a.intensity)));
+      // sessionStorage.setItem('liveData', JSON.stringify(newLiveData));
+      // console.log('NEW LIVE DATA:', newLiveData);
       return {
         ...state,
-        liveData: action.liveData,
+        liveData: action.newLiveData,
       };
     case 'UPDATED_CONNECTED_PEERS':
       return {
