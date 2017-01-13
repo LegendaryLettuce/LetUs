@@ -10,6 +10,7 @@ export const reducer = (state = {
   loaded: false,
   fbLoaded: false,
   coords: [],
+  edp: {},
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
