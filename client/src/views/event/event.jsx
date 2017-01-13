@@ -139,7 +139,7 @@ class Event extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.liveData[0],
+  data: state.eventPageData,
 });
 
 export default connect(mapStateToProps)(Event);

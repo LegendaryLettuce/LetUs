@@ -4,7 +4,7 @@ import ons              from 'onsenui';
 import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
-import { updateYelpData } from '../../redux/actions';
+import { updateYelpData, updateEventPage } from '../../redux/actions';
 // Subcomponents
 import GenericList from './../_global/genericList.jsx';
 import VotesProgress from './collaborate/progressBar.jsx';
@@ -40,7 +40,7 @@ class LiveList extends Component {
   }
 
   goEvent() {
-    // need to send redux the first item in liveData
+    this.props.updateEventPage(this.props.liveData[0]);
     this.props.router.push('/event');
   }
 
@@ -84,6 +84,9 @@ const mapDispatchToProps = dispatch => ({
   updateYelpData: (yelpData) => {
     dispatch(updateYelpData(yelpData));
   },
+  updateEventPage: (eventPageData) => {
+    dispatch(updateEventPage(eventPageData));
+  },
 });
 
 const mapStateToProps = state => ({
@@ -91,6 +94,7 @@ const mapStateToProps = state => ({
   friends: state.friends,
   connectedPeers: state.connectedPeers,
   talliedVotes: state.talliedVotes,
+  eventPageData: state.eventPageData,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LiveList);
