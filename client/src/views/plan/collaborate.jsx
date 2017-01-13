@@ -116,7 +116,6 @@ class Collaborate extends Component {
         if (this.index < this.props.yelpData.length - 1) {
           this.index++;
         } else {
-          console.log('ATTEMPT TO PUSH ROUTER TO LIVE');
           this.props.router.push('/live');
         }
         this.setState({
