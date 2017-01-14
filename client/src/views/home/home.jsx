@@ -6,8 +6,6 @@ import { connect }      from 'react-redux';
 import { load }         from '../../redux/actions';
 // Utils
 import { getStore, getUpcomingEvents } from '../../utils/utils';
-// Styles
-// import { }              from '../../styles/styles';
 // Global Components
 import  TopBar          from './../../views/_global/topBar.jsx';
 import  BottomNav       from './../../views/_global/bottomNav.jsx';
