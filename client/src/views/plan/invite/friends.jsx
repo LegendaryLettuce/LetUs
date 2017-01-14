@@ -21,8 +21,16 @@ class Friends extends Component {
     super(props);
     this.state = {
       inviteFriends: [],
+      friends: [],
     };
     this.inviteFriends = this.inviteFriends.bind(this);
+  }
+
+  componentWillMount() {
+    const friendNames = this.props.userFriends.reduce((memo, value) => [...memo, value.name], []);
+    this.setState({
+      friends: friendNames,
+    });
   }
 
   inviteFriends(friend) {
@@ -32,7 +40,6 @@ class Friends extends Component {
     } else if (friendIndex !== -1) {
       this.state.inviteFriends.splice(friendIndex, 1);
     }
-    // console.log(this.state.inviteFriends);
     this.props.updateInviteFriends(this.state.inviteFriends);
   }
 
@@ -40,9 +47,9 @@ class Friends extends Component {
     return (
       <div>
         <List
-          dataSource={this.props.friends}
+          dataSource={this.state.friends}
           renderRow={(row, idx) => (
-            <ListItem key={idx} modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
+            <ListItem key={idx} modifier={idx === this.state.friends.length - 1 ? 'longdivider' : null}>
               <div className="left">
                 <Icon icon="md-face" className="list__item__icon" />
               </div>
@@ -70,7 +77,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  hello: state.hello,
+  userFriends: state.user.friends,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

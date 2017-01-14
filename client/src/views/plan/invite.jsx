@@ -32,13 +32,6 @@ class Invite extends Component {
     this.props.updateLiveData(this.props.yelpData);
   }
 
-  componentDidMount() {
-    // query database for friends of user
-    this.setState({
-      friends: this.props.friends,
-    });
-  }
-
   routeToCollaborate() {
     axios.put('/events/', {
       attendees: this.props.friends,
@@ -64,7 +57,6 @@ class Invite extends Component {
     .catch((error) => {
       console.log('Inviting friends error', error);
     });
-    // console.log(this.props.friends);
   }
 
   handleBack() {
@@ -98,7 +90,7 @@ class Invite extends Component {
 
         <div style={listStyle}>
 
-          <Friends friends={this.state.friends}/>
+          <Friends />
 
         </div>
 
