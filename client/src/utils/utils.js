@@ -57,7 +57,6 @@ export const getStore = () => ({
   // talliedVotes: JSON.parse(sessionStorage.getItem('talliedVotes')) || 0,
   coords: JSON.parse(sessionStorage.getItem('coords')) || {},
   edp: JSON.parse(sessionStorage.getItem('edp')) || {},
-  loadGoogleMaps: JSON.parse(sessionStorage.getItem('loadGoogleMaps')) || false,
   loaded: true,
 });
 
