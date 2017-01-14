@@ -35,7 +35,7 @@ class Invite extends Component {
   componentDidMount() {
     // query database for friends of user
     this.setState({
-      friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Marc', 'Rebecca', 'Fiona'],
+      friends: this.props.friends,
     });
   }
 
