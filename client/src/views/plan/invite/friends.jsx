@@ -22,14 +22,17 @@ class Friends extends Component {
     this.state = {
       inviteFriends: [],
       friends: [],
+      facebookIds: [],
     };
     this.inviteFriends = this.inviteFriends.bind(this);
   }
 
   componentWillMount() {
-    const friendNames = this.props.userFriends.reduce((memo, value) => [...memo, value.name], []);
+    const friendNames = this.props.friends.reduce((memo, value) => [...memo, value.name], []);
+    const facebookId = this.props.friends.reduce((memo, value) => [...memo, value.id], []);
     this.setState({
       friends: friendNames,
+      facebookIds: facebookId,
     });
   }
 
@@ -77,7 +80,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  userFriends: state.user.friends,
+  friends: state.user.friends,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Friends);

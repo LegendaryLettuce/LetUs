@@ -18,7 +18,7 @@ const Users = new Schema({
 const Events = new Schema({
   creator: { type: String, required: true },
   data: { type: String, required: true },
-  attendees: [{ type: String }], // change String back to ObjectId
+  attendees: { type: String }, // change String back to ObjectId
   checkIns: [{ type: Boolean }],
   linkHash: { type: String, required: true },
 });

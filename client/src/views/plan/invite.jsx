@@ -34,7 +34,7 @@ class Invite extends Component {
 
   routeToCollaborate() {
     axios.put('/events/', {
-      attendees: this.props.friends,
+      attendees: JSON.stringify(this.props.friends),
       linkHash: this.props.eventHash,
     })
     .then((res) => {
@@ -58,6 +58,10 @@ class Invite extends Component {
       console.log('Inviting friends error', error);
     });
   }
+
+  // facebookNotification() {
+    // axios.post(`/${user_id}/notifications`)
+  // }
 
   handleBack() {
     this.props.router.push('/create');
@@ -121,7 +125,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  friends: state.friends,
+  facebook: state.user,
+  friends: state.user.friends,
   yelpData: state.yelpData,
   eventHash: state.eventHash,
   liveData: state.liveData,
