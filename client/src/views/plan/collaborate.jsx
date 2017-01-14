@@ -8,13 +8,9 @@ import { addLiveData }  from '../../redux/actions';
 import { getUrl, ratingToArray } from '../../utils/utils';
 // Sockets
 import { emitLiveData } from '../../sockets/sockets';
-// Styles
-// import styles           from '../../styles/styles';
 
 const [RED, GREEN, BLUE] = [0, 1, 2];
-// TODO: Make width-percent into state and adjust when width is smaller than height
 const SIZE_PERCENT = 66;
-const SIZE_PERCENT_DEC = SIZE_PERCENT / 100;
 const RGB_MIN = 30;
 const RGB_MAX = 200;
 const RGB = [RGB_MAX, RGB_MAX, RGB_MAX];
@@ -206,12 +202,10 @@ class Collaborate extends Component {
    * @param {number} [percentage=100] - the percentage of the screen size
    * @return {number} A pixel value for use in styling
    */
-  // @param {boolean} widthOrHeight - true for width, false for height
-  percentToPixel(/* widthOrHeight, */percentage = 100) {
+  percentToPixel(percentage = 100) {
     const woh = this.state.windowHeight > this.state.windowWidth ?
       this.state.windowWidth :
       this.state.windowHeight;
-    // const woh = widthOrHeight ? 'Width' : 'Height';
     const per = percentage / 100;
     return Math.floor(woh * per);
   }
