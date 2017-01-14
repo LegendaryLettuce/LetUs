@@ -13,7 +13,8 @@ export const reducer = (state = {
   edp: {},
   eventPageData: {},
   parentPage: '/',
-  selectedView: ['Create', 0],
+  selectedView: 'Create',
+  selectedViewIndex: 0,
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
@@ -107,6 +108,11 @@ export const reducer = (state = {
       return {
         ...state,
         selectedView: action.selectedView,
+      };
+    case 'UPDATE_SELECTED_INDEX':
+      return {
+        ...state,
+        selectedViewIndex: action.selectedViewIndex,
       };
     default:
       return state;
