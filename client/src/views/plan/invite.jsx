@@ -26,6 +26,7 @@ class Invite extends Component {
     };
     this.routeToCollaborate = this.routeToCollaborate.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    console.log(this.props.friends);
   }
 
   componentWillMount() {
@@ -35,7 +36,7 @@ class Invite extends Component {
   componentDidMount() {
     // query database for friends of user
     this.setState({
-      friends: ['Wilson', 'Autumn', 'Joe', 'David', 'Marc', 'Rebecca', 'Fiona'],
+      friends: this.props.friends,
     });
   }
 
