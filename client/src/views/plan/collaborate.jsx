@@ -218,10 +218,10 @@ class Collaborate extends Component {
     return `${Math.floor((this.state.windowWidth / 2) - (this.percentToPixel(SIZE_PERCENT) / 2))}px`;
   }
 
+
   // !TODO: configure autoscroll to scroll more easily at edges
   // TODO: add a loading bar to the bottom of the card showing how intense it is
   //       OR make the border a loading bar
-
 
   // TODO: place x and o icons on left and right hidden until revealed by card
   // TODO: make icon colors more saturated if more intense
