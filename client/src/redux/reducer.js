@@ -15,6 +15,7 @@ export const reducer = (state = {
   parentPage: '/',
   selectedView: 'Create',
   selectedViewIndex: 0,
+  loadGoogleMaps: false,
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
@@ -113,6 +114,10 @@ export const reducer = (state = {
       return {
         ...state,
         selectedViewIndex: action.selectedViewIndex,
+    case 'UPDATE_GOOGLEMAPS':
+      return {
+        ...state,
+        loadGoogleMaps: action.loadGoogleMaps,
       };
     default:
       return state;

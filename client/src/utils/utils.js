@@ -35,6 +35,7 @@ export const getStore = () => ({
   user: JSON.parse(sessionStorage.getItem('user')) || null,
   loaded: true,
   edp: JSON.parse(sessionStorage.getItem('user')) || {},
+  loadGoogleMaps: JSON.parse(sessionStorage.getItem('loadGoogleMaps')) || false,
 });
 
 

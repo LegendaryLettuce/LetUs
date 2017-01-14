@@ -36,3 +36,5 @@ export const updateParentPage = parentPage => ({ type: 'UPDATE_PARENT_PAGE', par
 export const updateSelectedView = selectedView => ({ type: 'UPDATE_SELECTED_VIEW', selectedView });
 
 export const updateSelectedViewIndex = selectedViewIndex => ({ type: 'UPDATE_SELECTED_INDEX', selectedViewIndex });
+
+export const updateGoogleMaps = loadGoogleMaps => ({ type: 'UPDATE_GOOGLEMAPS', loadGoogleMaps });
