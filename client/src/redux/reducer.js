@@ -95,7 +95,6 @@ export const reducer = (state = {
         ...state,
         edp: action.edp,
       };
-<<<<<<< HEAD
     case 'UPDATE_EVENT_PAGE':
       return {
         ...state,
@@ -115,12 +114,10 @@ export const reducer = (state = {
       return {
         ...state,
         selectedViewIndex: action.selectedViewIndex,
-=======
     case 'UPDATE_GOOGLEMAPS':
       return {
         ...state,
         loadGoogleMaps: action.loadGoogleMaps,
->>>>>>> fixed bug with search box
       };
     default:
       return state;
