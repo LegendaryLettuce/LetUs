@@ -8,11 +8,11 @@ import { buttonStyle }  from '../../styles/styles';
  * Creates a button used for routing that is placed above the bottomNav
  * @param {Object} props - React props
  * @param {string} props.title - Text to be displayed
- * @param {requestCallback} props.routeHandler - Callback to route to the next page
+ * @param {requestCallback} props.route - Callback to route to the next page
  * @extends {React.Component}
  */
-const BottomButton = ({ title, routeHandler }) => (
-  <Button style={buttonStyle} modifier='large' onClick={routeHandler}>{title}</Button>
+const BottomButton = ({ title, route }) => (
+  <Button style={buttonStyle} modifier='large' onClick={route}>{title}</Button>
 );
 
 export default BottomButton;
