@@ -12,6 +12,7 @@ export const reducer = (state = {
   coords: [],
   edp: {},
   eventPageData: {},
+  parentPage: '/',
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
@@ -95,6 +96,11 @@ export const reducer = (state = {
       return {
         ...state,
         eventPageData: action.eventPageData,
+      };
+    case 'UPDATE_PARENT_PAGE':
+      return {
+        ...state,
+        parentPage: action.parentPage,
       };
     default:
       return state;

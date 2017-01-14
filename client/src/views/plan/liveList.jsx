@@ -4,7 +4,7 @@ import ons              from 'onsenui';
 import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
-import { updateYelpData, updateEventPage } from '../../redux/actions';
+import { updateYelpData, updateEventPage, updateParentPage } from '../../redux/actions';
 // Subcomponents
 import GenericList from './../_global/genericList.jsx';
 import VotesProgress from './collaborate/progressBar.jsx';
@@ -26,6 +26,7 @@ class LiveList extends Component {
         talliedVotes: this.props.talliedVotes,
       },
     };
+    this.props.updateParentPage('/live');
     this.handleBack = this.handleBack.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
     this.goEvent = this.goEvent.bind(this);
@@ -35,8 +36,9 @@ class LiveList extends Component {
     console.log('HANDLING BACK');
   }
 
-  handleTouch() {
-    console.log('HANDLING TOUCH');
+  handleTouch(selected) {
+    this.props.updateEventPage(selected);
+    this.props.router.push('/event');
   }
 
   goEvent() {
@@ -86,6 +88,9 @@ const mapDispatchToProps = dispatch => ({
   },
   updateEventPage: (eventPageData) => {
     dispatch(updateEventPage(eventPageData));
+  },
+  updateParentPage: (parentPage) => {
+    dispatch(updateParentPage(parentPage));
   },
 });
 

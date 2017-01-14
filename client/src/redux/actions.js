@@ -30,3 +30,5 @@ export const loadFB = loaded => ({ type: 'LOAD_FB', loaded });
 export const updateEDP = edp => ({ type: 'UPDATE_EDP', edp });
 
 export const updateEventPage = eventPageData => ({ type: 'UPDATE_EVENT_PAGE', eventPageData });
+
+export const updateParentPage = parentPage => ({ type: 'UPDATE_PARENT_PAGE', parentPage });
