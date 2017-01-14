@@ -82,6 +82,7 @@ export const reducer = (state = {
       return {
         ...state,
         selectedViewIndex: action.selectedViewIndex,
+      };
     case 'UPDATE_GOOGLEMAPS':
       return {
         ...state,
