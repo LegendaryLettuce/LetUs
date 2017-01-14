@@ -44,33 +44,7 @@ class LatLonModule extends Component {
         loaded: true,
       });
     };
-    this.getInput = (e) => {
-      this.setState({ input: e.target.value });
-    };
-    this.handleSelect = (address) => {
-      this.setState({
-        address,
-        loading: true,
-      });
-    };
-    this.handleChange = (address) => {
-      this.setState({
-        address,
-        geocodeResults: null,
-      });
-    };
-    this.componentWillMount = () => {
-      if (!this.props.loadGoogleMaps) {
-        const script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
-        script.async = true;
-        document.body.appendChild(script);
-        this.props.updateGoogleMaps(true);
-      } else {
-        this.setState({ loaded: true });
-      }
-    };
-    this.componentDidMount = () => {
+    this.addClickClass = () => {
       const target = document.getElementsByTagName('body')[0];
       const config = { childList: true };
       // eslint-disable-next-line
@@ -96,11 +70,42 @@ class LatLonModule extends Component {
       });
       this.observer.observe(target, config);
     };
+    this.getInput = (e) => {
+      this.setState({ input: e.target.value });
+    };
+    this.handleSelect = (address) => {
+      this.setState({
+        address,
+        loading: true,
+      });
+    };
+    this.handleChange = (address) => {
+      this.setState({
+        address,
+        geocodeResults: null,
+      });
+    };
+    this.componentWillMount = () => {
+      if (!this.props.loadGoogleMaps) {
+        const script = document.createElement('script');
+        script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
+        script.async = true;
+        document.body.appendChild(script);
+        this.props.updateGoogleMaps(true);
+      } else {
+        this.setState({ loaded: true });
+      }
+      this.addClickClass();
+    };
+    this.componentDidMount = () => {
+      this.addClickClass();
+    };
     this.componentWillUnmount = () => {
       // click handling for google drop down
       this.observer.disconnect();
     };
   }
+
 
   request(lat, lng) {
     axios.get(`/eventdata/${lat}/${lng}`)
