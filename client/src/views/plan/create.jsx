@@ -83,7 +83,9 @@ class Create extends Component {
 
   constructor(props) {
     super(props);
-    this.props.updateYelpData(createData);
+    if (this.props.selectedView === 'Create') {
+      this.props.updateYelpData(createData);
+    }
     this.state = {
       data: [createData, this.props.edp.eat, this.props.edp.drink, this.props.edp.play],
     };
