@@ -53,7 +53,7 @@ class Home extends Component {
           <Events events={this.state.upcomingEvents}/>
         </div>
         <BottomButton title={'Create an Event'} route={this.routeToLatlon}/>
-        <BottomNav/>
+        <BottomNav router={this.props.router}/>
       </Page>
     );
   }

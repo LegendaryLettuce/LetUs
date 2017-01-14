@@ -50,7 +50,7 @@ class Friends extends Component {
         </Row>
       </ListItem>
     </List>
-    <BottomNav></BottomNav>
+    <BottomNav router={this.props.router}/>
     </Page>
     );
   }
