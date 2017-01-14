@@ -55,6 +55,11 @@ export const updateSelectedView = selectedView => ({ type: 'UPDATE_SELECTED_VIEW
 
 export const updateSelectedViewIndex = selectedViewIndex => ({ type: 'UPDATE_SELECTED_INDEX', selectedViewIndex });
 
+export const updateGoogleMaps = loadGoogleMaps => {
+  sessionStorage.setItem('loadGoogleMaps', JSON.stringify(loadGoogleMaps));
+  return { type: 'UPDATE_GOOGLEMAPS', loadGoogleMaps };
+};
+
 
 // DO NOT STORE IN SESSION
 export const load = state => ({ type: 'LOAD', state });

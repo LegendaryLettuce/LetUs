@@ -1,25 +1,24 @@
-import React, { Component }        from 'react';
+import React, { Component }                          from 'react';
 // Onsen UI
-import { Page, Button }            from 'react-onsenui';
+import { Page }                                      from 'react-onsenui';
 // Packages
-import Autocomplete                from 'react-google-autocomplete';
-import axios                       from 'axios';
+import Autocomplete                                  from 'react-google-autocomplete';
+import axios                                         from 'axios';
 // Redux
-import { connect }                 from 'react-redux';
-import { updateCoords, updateEDP } from '../../redux/actions';
+import { connect }                                   from 'react-redux';
+import { updateCoords, updateEDP, updateGoogleMaps } from '../../redux/actions';
 // Styles
-import { bodyStyle }               from '../../styles/styles';
+import { bodyStyle }                                 from '../../styles/styles';
 import '../../styles/mapStyle.css';
 // API Key
-import apikey                      from './../../../../config/google-maps-api';
-// import  BottomNav                     from './../../views/_global/bottomNav.jsx';
+import apikey                                        from './../../../../config/google-maps-api';
+// import  BottomNav               from './../../views/_global/bottomNav.jsx';
 
 // TODO: Add api key
 
 const inputField = {
   ...bodyStyle,
 };
-
 const title = {
   ...bodyStyle,
   fontSize: 'xx-large',
@@ -41,6 +40,7 @@ class LatLonModule extends Component {
     };
     window.googleLoaded = () => {
       this.setState({
+        // this.props.updateGoogleMaps(true);
         loaded: true,
       });
     };
@@ -58,6 +58,17 @@ class LatLonModule extends Component {
         address,
         geocodeResults: null,
       });
+    };
+    this.componentWillMount = () => {
+      if (!this.props.loadGoogleMaps) {
+        const script = document.createElement('script');
+        script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
+        script.async = true;
+        document.body.appendChild(script);
+        this.props.updateGoogleMaps(true);
+      } else {
+        this.setState({ loaded: true });
+      }
     };
     this.componentDidMount = () => {
       const target = document.getElementsByTagName('body')[0];
@@ -88,26 +99,19 @@ class LatLonModule extends Component {
     this.componentWillUnmount = () => {
       // click handling for google drop down
       this.observer.disconnect();
-      // TODO: remove google script from being added
-    };
-    this.componentWillMount = () => {
-      const script = document.createElement('script');
-      script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
-      script.async = true;
-      document.body.appendChild(script);
     };
   }
 
   request(lat, lng) {
     axios.get(`/eventdata/${lat}/${lng}`)
-      .then( (response) => {
+      .then((response) => {
         if (response) {
           this.props.updateEDP(response.data);
           // push to next page
           this.props.router.push('/create');
         }
       })
-      .catch((error) => {
+      .catch(() => {
         console.log('An error occured when access data');
       });
   }
@@ -126,14 +130,14 @@ class LatLonModule extends Component {
                     place.geometry.location.lat(),
                     place.geometry.location.lng(),
                   ]);
-                  this.request(this.props.coords[0],this.props.coords[1]);
+                  this.request(this.props.coords[0], this.props.coords[1]);
                 }}
                 types={['geocode']}
                 componentRestrictions={{ country: 'us' }}
               />
-              {/* <Button onClick={console.log(this.state.input)}>Submit</Button> */}
             </div> :
-            <div/> // TODO: add loading bar
+            <div/>
+            // TODO: add loading bar
         }
       </Page>
     );
@@ -147,11 +151,15 @@ const mapDispatchToProps = dispatch => ({
   updateEDP: (edp) => {
     dispatch(updateEDP(edp));
   },
+  updateGoogleMaps: (loadGoogleMaps) => {
+    dispatch(updateGoogleMaps(loadGoogleMaps));
+  },
 });
 
 const mapStateToProps = state => ({
   coords: state.coords,
   edp: state.edp,
+  loadGoogleMaps: state.loadGoogleMaps,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LatLonModule);
