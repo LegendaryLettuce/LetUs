@@ -26,7 +26,6 @@ class Invite extends Component {
     };
     this.routeToCollaborate = this.routeToCollaborate.bind(this);
     this.handleBack = this.handleBack.bind(this);
-    console.log(this.props.friends);
   }
 
   componentWillMount() {
