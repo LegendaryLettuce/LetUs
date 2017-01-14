@@ -158,6 +158,7 @@ class LatLonModule extends Component {
             <div/>
             // TODO: add loading bar
         }
+      <BottomNav router={this.props.router}/>
       </Page>
     );
   }
