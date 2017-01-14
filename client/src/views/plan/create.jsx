@@ -6,7 +6,7 @@ import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui
 import axios            from 'axios';
 // Redux
 import { connect }      from 'react-redux';
-import { updateYelpData, updateEventHash, updateParentPage, updateEventPage } from '../../redux/actions';
+import { updateYelpData, updateEventHash, updateParentPage, updateEventPage, updateSelectedView, updateSelectedViewIndex } from '../../redux/actions';
 // Styles
 import styles           from '../../styles/styles';
 // Subcomponents
@@ -83,12 +83,12 @@ class Create extends Component {
 
   constructor(props) {
     super(props);
-    this.props.updateYelpData(createData);
-    console.log('edp',this.props.edp);
+    if (this.props.selectedView === 'Create') {
+      this.props.updateYelpData(createData);
+    }
+    console.log('edp', this.props.edp);
     // this.props.yelpData; use this to pull from redux
     this.state = {
-      selectedView: 'Create',
-      selectedIndex: 0,
       data: [createData, this.props.edp.eat, this.props.edp.drink, this.props.edp.play],
     };
     this.decideTogether = this.decideTogether.bind(this);
@@ -101,23 +101,16 @@ class Create extends Component {
   }
 
   handleTouch(item) {
-    if (this.state.selectedView === 'Create') {
+    if (this.props.selectedView === 'Create') {
       const indexSelected = createData.indexOf(item) + 1;
-
-      this.setState({
-        selectedView: `${categoryLabels[indexSelected]} Categories`,
-        selectedIndex: indexSelected,
-      }, () => {
-        this.props.updateYelpData(this.parseUniqueCategories(this.state.data[indexSelected]));
-      });
-    } else if (this.state.selectedView.split(' ')[1] === 'Categories') {
-      this.setState({
-        selectedView: item.displayTitle,
-      }, () => {
-        this.props.updateYelpData(
-          this.parseBizByCategory(this.state.data[this.state.selectedIndex]),
-        );
-      });
+      this.props.updateSelectedView(`${categoryLabels[indexSelected]} Categories`);
+      this.props.updateSelectedViewIndex(indexSelected);
+      this.props.updateYelpData(this.parseUniqueCategories(this.state.data[indexSelected]));
+    } else if (this.props.selectedView.split(' ')[1] === 'Categories') {
+      this.props.updateSelectedView(item.displayTitle);
+      this.props.updateYelpData(
+        this.parseBizByCategory(this.state.data[this.props.selectedViewIndex], item.displayTitle),
+      );
     } else {
       this.props.updateEventPage(item);
       this.props.router.push('/event');
@@ -125,23 +118,16 @@ class Create extends Component {
   }
 
   handleBack() {
-    const selected = this.state.selectedView;
-    if (selected !== 'Create') {
-      if (selected.split(' ')[1] === 'Categories') {
-        this.setState({
-          selectedView: 'Create',
-          selectedIndex: 0,
-        }, () => {
-          this.props.updateYelpData(this.state.data[this.state.selectedIndex]);
-        });
+    if (this.props.selectedView !== 'Create') {
+      if (this.props.selectedView.split(' ')[1] === 'Categories') {
+        this.props.updateSelectedView('Create');
+        this.props.updateSelectedViewIndex(0);
+        this.props.updateYelpData(this.state.data[0]);
       } else {
-        this.setState({
-          selectedView: `${categoryLabels[this.state.selectedIndex]} Categories`,
-        }, () => {
-          this.props.updateYelpData(
-            this.parseUniqueCategories(this.state.data[this.state.selectedIndex]),
-          );
-        });
+        this.props.updateSelectedView(`${categoryLabels[this.props.selectedViewIndex]} Categories`);
+        this.props.updateYelpData(
+          this.parseUniqueCategories(this.state.data[this.props.selectedViewIndex]),
+        );
       }
     }
   }
@@ -162,10 +148,10 @@ class Create extends Component {
     }, []);
   }
 
-  parseBizByCategory(dataSet) {
+  parseBizByCategory(dataSet, selectedCategory) {
     return dataSet.businesses.reduce((accum, business) => {
       const validBiz = business.categories.reduce((accum2, category) => {
-        if (category[0] === this.state.selectedView) {
+        if (category[0] === selectedCategory) {
           return true;
         }
         return accum2;
@@ -242,7 +228,7 @@ class Create extends Component {
       height: '79px',
     };
 
-    if (this.state.selectedView.split(' ')[1] === 'Categories' || this.state.selectedView === 'Create') {
+    if (this.props.selectedView.split(' ')[1] === 'Categories' || this.props.selectedView === 'Create') {
       buttonStyle.display = 'none';
     } else {
       buttonStyle.display = '';
@@ -251,13 +237,13 @@ class Create extends Component {
     return (
       <div>
         <Page
-          renderToolbar={() => this.renderToolbar(this.state.selectedView)}
+          renderToolbar={() => this.renderToolbar(this.props.selectedView)}
           style={{ background: 'rgba(51,51,51,1)' }}
         >
           <GenericList
             data={this.props.yelpData}
             handleTouch={this.handleTouch}
-            selectedView={this.state.selectedView}
+            selectedView={this.props.selectedView}
           />
           <div style={padStyle}/>
         </Page>
@@ -286,6 +272,12 @@ const mapDispatchToProps = dispatch => ({
   updateEventPage: (eventPageData) => {
     dispatch(updateEventPage(eventPageData));
   },
+  updateSelectedView: (selectedView) => {
+    dispatch(updateSelectedView(selectedView));
+  },
+  updateSelectedViewIndex: (selectedViewIndex) => {
+    dispatch(updateSelectedViewIndex(selectedViewIndex));
+  },
 });
 
 const mapStateToProps = state => ({
@@ -293,6 +285,8 @@ const mapStateToProps = state => ({
   eventHash: state.eventHash,
   user: state.user,
   edp: state.edp,
+  selectedView: state.selectedView,
+  selectedViewIndex: state.selectedViewIndex,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);
