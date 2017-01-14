@@ -1,7 +1,7 @@
 import React, { Component }     from 'react';
 // Redux
 import { connect }              from 'react-redux';
-import { Page, List, ListItem, Icon, Toolbar } from 'react-onsenui';
+import { Page, List, ListItem, Icon, Toolbar, BackButton } from 'react-onsenui';
 // Styles
 import { bodyStyle }            from '../../styles/styles';
 // Pages
@@ -74,12 +74,25 @@ class Event extends Component {
       }
       return a;
     };
-    this.renderToolbar = toolbarTitle => (
+    
+    this.getUrl = url => (url.replace('ms.jpg', 'l.jpg'));
+    this.handleBack = this.handleBack.bind(this);
+    this.renderToolbar = this.renderToolbar.bind(this);
+  }
+
+  handleBack() {
+    this.props.router.push(this.props.parentPage);
+  }
+
+  renderToolbar(toolbarTitle) {
+    return (
       <Toolbar>
+        <div className="left">
+          <BackButton onClick={this.handleBack}></BackButton>
+        </div>
         <div className='center' style={{ fontWeight: 'bolder' }}>{toolbarTitle}</div>
       </Toolbar>
     );
-    this.getUrl = url => (url.replace('ms.jpg', 'l.jpg'));
   }
 
   // router
@@ -139,7 +152,8 @@ class Event extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.liveData[0],
+  data: state.eventPageData,
+  parentPage: state.parentPage,
 });
 
 export default connect(mapStateToProps)(Event);

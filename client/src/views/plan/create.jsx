@@ -6,7 +6,7 @@ import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui
 import axios            from 'axios';
 // Redux
 import { connect }      from 'react-redux';
-import { updateYelpData, updateEventHash } from '../../redux/actions';
+import { updateYelpData, updateEventHash, updateParentPage, updateEventPage } from '../../redux/actions';
 // Styles
 import styles           from '../../styles/styles';
 // Subcomponents
@@ -97,6 +97,7 @@ class Create extends Component {
     this.parseUniqueCategories = this.parseUniqueCategories.bind(this);
     this.parseBizByCategory = this.parseBizByCategory.bind(this);
     this.createEventHash = this.createEventHash.bind(this);
+    this.props.updateParentPage('/create');
   }
 
   handleTouch(item) {
@@ -117,6 +118,9 @@ class Create extends Component {
           this.parseBizByCategory(this.state.data[this.state.selectedIndex]),
         );
       });
+    } else {
+      this.props.updateEventPage(item);
+      this.props.router.push('/event');
     }
   }
 
@@ -275,6 +279,12 @@ const mapDispatchToProps = dispatch => ({
   },
   updateEventHash: (eventHash) => {
     dispatch(updateEventHash(eventHash));
+  },
+  updateParentPage: (parentPage) => {
+    dispatch(updateParentPage(parentPage));
+  },
+  updateEventPage: (eventPageData) => {
+    dispatch(updateEventPage(eventPageData));
   },
 });
 

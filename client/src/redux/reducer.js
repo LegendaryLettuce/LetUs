@@ -11,6 +11,9 @@ export const reducer = (state = {
   fbLoaded: false,
   coords: [],
   edp: {},
+  eventPageData: {},
+  parentPage: '/',
+  selectedView: ['Create', 0],
 }, action) => {
   switch (action.type) {
     case 'UPDATE_INVITE_FRIENDS':
@@ -89,6 +92,21 @@ export const reducer = (state = {
       return {
         ...state,
         edp: action.edp,
+      };
+    case 'UPDATE_EVENT_PAGE':
+      return {
+        ...state,
+        eventPageData: action.eventPageData,
+      };
+    case 'UPDATE_PARENT_PAGE':
+      return {
+        ...state,
+        parentPage: action.parentPage,
+      };
+    case 'UPDATE_SELECTED_VIEW':
+      return {
+        ...state,
+        selectedView: action.selectedView,
       };
     default:
       return state;
