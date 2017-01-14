@@ -125,7 +125,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  facebook: state.user,
   friends: state.user.friends,
   yelpData: state.yelpData,
   eventHash: state.eventHash,
