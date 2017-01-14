@@ -83,11 +83,7 @@ class Create extends Component {
 
   constructor(props) {
     super(props);
-    if (this.props.selectedView === 'Create') {
-      this.props.updateYelpData(createData);
-    }
-    console.log('edp', this.props.edp);
-    // this.props.yelpData; use this to pull from redux
+    this.props.updateYelpData(createData);
     this.state = {
       data: [createData, this.props.edp.eat, this.props.edp.drink, this.props.edp.play],
     };
@@ -129,6 +125,8 @@ class Create extends Component {
           this.parseUniqueCategories(this.state.data[this.props.selectedViewIndex]),
         );
       }
+    } else {
+      this.props.router.push('/search');
     }
   }
 
