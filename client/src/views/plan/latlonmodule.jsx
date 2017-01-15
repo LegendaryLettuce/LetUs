@@ -1,6 +1,6 @@
 import React, { Component }                          from 'react';
 // Onsen UI
-import { Page }                                      from 'react-onsenui';
+import { Page, Button, Icon }                        from 'react-onsenui';
 // Packages
 import Autocomplete                                  from 'react-google-autocomplete';
 import axios                                         from 'axios';
@@ -11,7 +11,7 @@ import { updateCoords, updateEDP, updateGoogleMaps } from '../../redux/actions';
 import  TopBar                                       from './../../views/_global/topBar.jsx';
 import  BottomNav                                    from './../../views/_global/bottomNav.jsx';
 // Styles
-import { bodyStyle }                                 from '../../styles/styles';
+import { bodyStyle, buttonStyle }                               from '../../styles/styles';
 import '../../styles/mapStyle.css';
 // API Key
 import apikey                                        from './../../../../config/google-maps-api';
@@ -34,6 +34,7 @@ const searchForm = {
   justifyContent: 'space-around',
 };
 
+
 class LatLonModule extends Component {
   constructor(props) {
     super(props);
@@ -41,6 +42,7 @@ class LatLonModule extends Component {
     this.state = {
       input: '',
       loaded: false,
+      userCoords: false,
     };
     window.googleLoaded = () => {
       this.setState({
@@ -106,10 +108,12 @@ class LatLonModule extends Component {
       this.setState({ loaded: true });
     }
     this.addClickClass();
+    this.geoLocation(this.handlePosition);
   }
 
   componentDidMount() {
     this.addClickClass();
+    this.geoLocation();
   }
 
   componentWillUnmount() {
@@ -135,6 +139,23 @@ class LatLonModule extends Component {
     this.props.router.push('/home');
   }
 
+  // handlePosition(userCoords) {
+  //   console.log(userCoords)
+  //   this.setState({ userCoords: true });
+  //   return userCoords;
+  // }
+
+  geoLocation() {
+    //eslint-disable-next-line
+    if (navigator.geolocation ) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          this.setState({ userCoords: [pos.coords.latitude, pos.coords.longitude] });
+        },
+      );
+    }
+  }
+
   render() {
     return (
       <Page renderToolbar={TopBar.bind(this, ({ title: 'Location', handleBack: this.handleBack }))}>
@@ -157,6 +178,15 @@ class LatLonModule extends Component {
             </div> :
             <div/>
             // TODO: add loading bar
+        }
+        {
+          this.state.userCoords !== false ?
+            <Button style={buttonStyle} onClick={() => (
+              this.request(this.state.userCoords[0], this.state.userCoords[1]))
+            }>
+              <Icon icon='fa-compass'/> Use Current Location
+            </Button> :
+            <Button style={buttonStyle} disabled={true}>Location Not Avaliable</Button>
         }
       <BottomNav router={this.props.router}/>
       </Page>
