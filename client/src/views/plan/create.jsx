@@ -178,7 +178,7 @@ class Create extends Component {
 
   createEventHash() {
     axios.post('/events/', {
-      creator: this.props.user.name,
+      creator: JSON.stringify({ name: this.props.user.name, id: this.props.user.id }),
       data: JSON.stringify(this.props.yelpData),
       checkIns: [true],
       linkHash: '',

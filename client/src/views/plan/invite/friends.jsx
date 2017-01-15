@@ -44,6 +44,7 @@ class Friends extends Component {
       this.state.inviteFriends.splice(friendIndex, 1);
     }
     this.props.updateInviteFriends(this.state.inviteFriends);
+    console.log(this.state.inviteFriends);
   }
 
   render() {
