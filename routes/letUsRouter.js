@@ -120,4 +120,10 @@ letUsRouter.route('/eventdata/:lat/:lng')
       });
   });
 
+letUsRouter.route('/checkEventHash')
+  .get((req, res, next) => {
+    console.log('RECEIVED REQUEST TO CHECK HASH');
+    res.send(req.session.eventHash);
+  });
+
 module.exports = letUsRouter;

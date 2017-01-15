@@ -11,7 +11,7 @@ const letUsSchema   = require('./db/letUsSchema');
 const letUsRouter   = require('./routes/letUsRouter');
 const fb            = require('./config/facebook-secret');
 
-// const index = require('./routes/index');
+// const index =  require('./routes/index');
 // const users = require('./routes/users');
 
 const app = express();
@@ -27,14 +27,26 @@ app.use(session({
   secret: fb,
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 2628000000 },
+  cookie: {
+    maxAge: 2628000000,
+    httpOnly: true,
+  },
 }));
 
 app.use(serveStatic(path.join(__dirname, 'client/dist'), {
   index: 'index.html',
 }));
 
+
 app.use('/', letUsRouter);
+
+app.use('/c/:eventHash', (req, res, next) => {
+  if (req.session && !req.session.userId) {
+    // eslint-disable-next-line no-param-reassign
+    req.session.eventHash = req.params.eventHash;
+  }
+  next();
+});
 
 app.use('*', (req, res, next) => {
   if (req.session && req.session.userId) next();
