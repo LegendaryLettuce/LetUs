@@ -7,6 +7,9 @@ import axios                                         from 'axios';
 // Redux
 import { connect }                                   from 'react-redux';
 import { updateCoords, updateEDP, updateGoogleMaps } from '../../redux/actions';
+// Global Components
+import  TopBar                                       from './../../views/_global/topBar.jsx';
+import  BottomNav                                    from './../../views/_global/bottomNav.jsx';
 // Styles
 import { bodyStyle }                                 from '../../styles/styles';
 import '../../styles/mapStyle.css';
@@ -34,6 +37,7 @@ const searchForm = {
 class LatLonModule extends Component {
   constructor(props) {
     super(props);
+    this.handleBack = this.handleBack.bind(this);
     this.state = {
       input: '',
       loaded: false,
@@ -44,68 +48,74 @@ class LatLonModule extends Component {
         loaded: true,
       });
     };
-    this.addClickClass = () => {
-      const target = document.getElementsByTagName('body')[0];
-      const config = { childList: true };
-      // eslint-disable-next-line
-      const childObserver = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          mutation.addedNodes.forEach((node) => {
-            node.classList.add('needsclick');
-            node.childNodes.forEach((child) => {
-              child.classList.add('needsclick');
-            });
-          });
-        });
-      });
-      // eslint-disable-next-line
-      this.observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          mutation.addedNodes.forEach((node) => {
-            if ([...node.classList].indexOf('pac-container') !== -1) {
-              childObserver.observe(node, config);
-            }
-          });
-        });
-      });
-      this.observer.observe(target, config);
-    };
-    this.getInput = (e) => {
-      this.setState({ input: e.target.value });
-    };
-    this.handleSelect = (address) => {
-      this.setState({
-        address,
-        loading: true,
-      });
-    };
-    this.handleChange = (address) => {
-      this.setState({
-        address,
-        geocodeResults: null,
-      });
-    };
-    this.componentWillMount = () => {
-      if (!this.props.loadGoogleMaps) {
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${apikey.api_key}&libraries=places&callback=googleLoaded`;
-        script.async = true;
-        document.body.appendChild(script);
-        this.props.updateGoogleMaps(true);
-      } else {
-        this.setState({ loaded: true });
-      }
-      this.addClickClass();
-    };
-    this.componentDidMount = () => {
-      this.addClickClass();
-    };
-    this.componentWillUnmount = () => {
-      // click handling for google drop down
-      this.observer.disconnect();
-    };
   }
 
+  addClickClass() {
+    const target = document.getElementsByTagName('body')[0];
+    const config = { childList: true };
+    // eslint-disable-next-line
+    const childObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          node.classList.add('needsclick');
+          node.childNodes.forEach((child) => {
+            child.classList.add('needsclick');
+          });
+        });
+      });
+    });
+    // eslint-disable-next-line
+    this.observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if ([...node.classList].indexOf('pac-container') !== -1) {
+            childObserver.observe(node, config);
+          }
+        });
+      });
+    });
+    this.observer.observe(target, config);
+  }
+
+  getInput(e) {
+    this.setState({ input: e.target.value });
+  }
+
+  handleSelect(address) {
+    this.setState({
+      address,
+      loading: true,
+    });
+  }
+
+  handleChange(address) {
+    this.setState({
+      address,
+      geocodeResults: null,
+    });
+  }
+
+  componentWillMount() {
+    if (!this.props.loadGoogleMaps) {
+      const script = document.createElement('script');
+      script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
+      script.async = true;
+      document.body.appendChild(script);
+      this.props.updateGoogleMaps(true);
+    } else {
+      this.setState({ loaded: true });
+    }
+    this.addClickClass();
+  }
+
+  componentDidMount() {
+    this.addClickClass();
+  }
+
+  componentWillUnmount() {
+    // click handling for google drop down
+    this.observer.disconnect();
+  }
 
   request(lat, lng) {
     axios.get(`/eventdata/${lat}/${lng}`)
@@ -121,9 +131,13 @@ class LatLonModule extends Component {
       });
   }
 
+  handleBack() {
+    this.props.router.push('/home');
+  }
+
   render() {
     return (
-      <Page>
+      <Page renderToolbar={TopBar.bind(this, ({ title: 'Location', handleBack: this.handleBack }))}>
         <p style={title}>Where to?</p>
         {
           this.state.loaded ?
@@ -144,6 +158,7 @@ class LatLonModule extends Component {
             <div/>
             // TODO: add loading bar
         }
+      <BottomNav router={this.props.router}/>
       </Page>
     );
   }

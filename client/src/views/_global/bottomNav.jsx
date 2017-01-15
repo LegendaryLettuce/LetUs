@@ -11,20 +11,30 @@ class BottomNav extends Component {
 
   constructor(props) {
     super(props);
+    this.routeToHome = this.routeToHome.bind(this);
+    this.routeToFriends = this.routeToFriends.bind(this);
   }
 
-  render(){
+  routeToHome() {
+    this.props.router.push('/home');
+  }
+
+  routeToFriends() {
+    this.props.router.push('/friends');
+  }
+
+  render() {
     return (
       <BottomToolbar style = { bottomNavStyle } >
         <div className="left">
           <ToolbarButton>
-            <Icon icon="fa-user"/>
             {/* Home */}
+            <Icon icon="fa-home" onClick={this.routeToHome}/>
           </ToolbarButton>
         </div>
         <div className="center">
           <ToolbarButton>
-            <Icon icon="fa-users"/>
+            <Icon icon="fa-users" onClick={this.routeToFriends}/>
           </ToolbarButton>
         </div>
         <div className="right">

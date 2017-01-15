@@ -74,7 +74,7 @@ class Event extends Component {
       }
       return a;
     };
-    
+
     this.getUrl = url => (url.replace('ms.jpg', 'l.jpg'));
     this.handleBack = this.handleBack.bind(this);
     this.renderToolbar = this.renderToolbar.bind(this);
@@ -145,7 +145,7 @@ class Event extends Component {
             </a>
           </List>
           <div style={spacingDiv}></div>
-          <BottomNav></BottomNav>
+          <BottomNav router={this.props.router}/>
         </Page>
     );
   }

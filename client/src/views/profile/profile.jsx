@@ -51,7 +51,7 @@ class Profile extends Component {
         <ListItem modifier="chevron" tappable>Past Events</ListItem>
         <ListItem modifier="chevron" tappable>Hosted Events</ListItem>
       </List>
-      <BottomNav></BottomNav>
+      <BottomNav router={this.props.router}/>
       </Page>
     );
   }
