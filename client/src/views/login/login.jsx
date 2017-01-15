@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 // Onsen UI
 import TextCarousel         from 'react-text-carousel';
 import { Page, Icon, Button, BottomToolbar }             from 'react-onsenui';
+// Axios for requests
+import axios            from 'axios';
 // Redux
 import { connect }          from 'react-redux';
-import { updateUser, load, loadFB } from '../../redux/actions';
+import { updateUser, load, loadFB, updateEventHash } from '../../redux/actions';
 // Utils
 import { postLogin, getStore } from '../../utils/utils';
 // Styles
@@ -34,6 +36,13 @@ class LoginView extends Component {
     this.state = {
       fbLoad: false,
     };
+  }
+
+  componentWillMount() {
+    axios.get('/checkEventHash')
+      .then((res) => {
+        this.props.updateEventHash(res.data);
+      });
   }
 
   loadFacebook() {
@@ -88,7 +97,11 @@ class LoginView extends Component {
                     postLogin(result)
                       .then(() => {
                         this.props.updateUser(result);
-                        this.props.router.push('/home');
+                        if (this.props.eventHash.length === 6) {
+                          this.props.router.push(`/c/${this.props.eventHash}`);
+                        } else {
+                          this.props.router.push('/home');
+                        }
                       });
                   }
                 },
@@ -138,11 +151,15 @@ const mapDispatchToProps = dispatch => ({
   loadFB: (loaded) => {
     dispatch(loadFB(loaded));
   },
+  updateEventHash: (eventHash) => {
+    dispatch(updateEventHash(eventHash));
+  },
 });
 
 const mapStateToProps = state => ({
   loaded: state.loaded,
   fbLoaded: state.fbLoaded,
+  eventHash: state.eventHash,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginView);
