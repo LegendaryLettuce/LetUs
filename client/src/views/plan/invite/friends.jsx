@@ -28,11 +28,11 @@ class Friends extends Component {
   }
 
   componentWillMount() {
-    const friendNames = this.props.friends.reduce((memo, value) => [...memo, value.name], []);
-    const facebookId = this.props.friends.reduce((memo, value) => [...memo, value.id], []);
+    // const friendNames = this.props.friends.reduce((memo, value) => [...memo, value.name], []);
+    // const facebookId = this.props.friends.reduce((memo, value) => [...memo, value.id], []);
     this.setState({
-      friends: friendNames,
-      facebookIds: facebookId,
+      friends: this.props.friends,
+      // facebookIds: facebookId,
     });
   }
 
@@ -58,7 +58,7 @@ class Friends extends Component {
                 <Icon icon="md-face" className="list__item__icon" />
               </div>
               <div className="center">
-                <span className="list__item__title">{row}</span>
+                <span className="list__item__title">{row.name}</span>
                 <span className="list__item__subtitle">Ready to party</span>
               </div>
               <label className="right">
