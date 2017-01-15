@@ -22,6 +22,7 @@
     "import/prefer-default-export": "off",
     "no-plusplus": "off",
     "no-multi-spaces": "off",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "no-underscore-dangle": "off"
   }
 }

@@ -21,19 +21,8 @@ class Friends extends Component {
     super(props);
     this.state = {
       inviteFriends: [],
-      friends: [],
-      facebookIds: [],
     };
     this.inviteFriends = this.inviteFriends.bind(this);
-  }
-
-  componentWillMount() {
-    const friendNames = this.props.friends.reduce((memo, value) => [...memo, value.name], []);
-    const facebookId = this.props.friends.reduce((memo, value) => [...memo, value.id], []);
-    this.setState({
-      friends: friendNames,
-      facebookIds: facebookId,
-    });
   }
 
   inviteFriends(friend) {
@@ -44,20 +33,21 @@ class Friends extends Component {
       this.state.inviteFriends.splice(friendIndex, 1);
     }
     this.props.updateInviteFriends(this.state.inviteFriends);
+    // console.log(this.state.inviteFriends);
   }
 
   render() {
     return (
       <div>
         <List
-          dataSource={this.state.friends}
+          dataSource={this.props.friends}
           renderRow={(row, idx) => (
-            <ListItem key={idx} modifier={idx === this.state.friends.length - 1 ? 'longdivider' : null}>
+            <ListItem key={idx} modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
               <div className="left">
                 <Icon icon="md-face" className="list__item__icon" />
               </div>
               <div className="center">
-                <span className="list__item__title">{row}</span>
+                <span className="list__item__title">{row.name}</span>
                 <span className="list__item__subtitle">Ready to party</span>
               </div>
               <label className="right">
