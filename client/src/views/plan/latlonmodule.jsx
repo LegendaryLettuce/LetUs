@@ -88,7 +88,7 @@ class LatLonModule extends Component {
     this.componentWillMount = () => {
       if (!this.props.loadGoogleMaps) {
         const script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apikey.api_key}&libraries=places&callback=googleLoaded`;
         script.async = true;
         document.body.appendChild(script);
         this.props.updateGoogleMaps(true);
