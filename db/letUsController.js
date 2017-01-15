@@ -109,12 +109,26 @@ const createEvent = (data) => {
   return savetoDB(newEvents);
 };
 
+const addEventGoer = (user, eventId) => {
+  const newEventGoers = new EventGoers({
+    userId: user,
+    event: eventId,
+  });
+  return savetoDB(newEventGoers);
+};
+
 const updateEventAttendees = (data) => {
   const hash = data.body.linkHash;
   return Events.findOne({ linkHash: hash })
     .then((doc) => {
       doc.attendees = data.body.attendees;
       return savetoDB(doc);
+    })
+    .then((event) => {
+      addEventGoer(JSON.parse(event.creator).id, event._id);
+      JSON.parse(event.attendees).forEach((attendee) => {
+        addEventGoer(attendee.id, event._id);
+      });
     });
 };
 
@@ -203,9 +217,34 @@ const handleClientVotes = (hash, vote) => (
     })
 );
 
-const getUserEvents = user => (
-  EventGoers.find({ userId: user })
-);
+const getUserEvents = (user) => {
+  const events = [];
+  return new Promise((resolve, reject) => {
+    console.log(user);
+    EventGoers.find({ userId: user })
+      .then((data) => {
+        let c = 0;
+        console.log('blahhhhhhhh', data);
+        data.forEach((eventData) => {
+          console.log('hellllllooooooooo', eventData.event);
+          Events.findOne({ _id: eventData.event })
+            .then((event) => {
+              if (event === null) {
+                resolve([]);
+                return;
+              }
+              events.push(event);
+              c++;
+              console.log('event', event);
+              console.log('events', events);
+              if (c >= data.length) {
+                resolve(events);
+              }
+            });
+        });
+      });
+  });
+};
 
 module.exports = {
   addUser,
