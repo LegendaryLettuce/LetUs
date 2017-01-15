@@ -35,11 +35,10 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const up = getUpcomingEvents(this.props.user.id);
-    console.log(up);
-    up.then((res) => {
-      this.setState({ upcomingEvents: res.data });
-    });
+    getUpcomingEvents(this.props.user.id)
+      .then((res) => {
+        this.setState({ upcomingEvents: res.data });
+      });
   }
 
   routeToLatlon() {
