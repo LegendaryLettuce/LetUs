@@ -122,7 +122,7 @@ class LoginView extends Component {
               Let Us
               <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} />
             </div>
-            <div style={tagline}>Collaborative event planning with friends.</div>
+            <div style={tagline}>Collaborative event planning <br /> with friends.</div>
             {
               this.state.fbLoad ?
               <BottomToolbar style={fbLogin}>
