@@ -25,7 +25,7 @@ class Loading extends Component {
     axios.get(`/events/${hash}`)
         .then((data) => {
           const eventData = JSON.parse(data.data.data);
-          this.props.updateInviteFriends(data.data.attendees);
+          this.props.updateInviteFriends(JSON.parse(data.data.attendees));
           this.props.updateYelpData(eventData);
           this.props.updateLiveData(eventData);
         })

@@ -115,7 +115,7 @@ letUsRouter.route('/eventdata/:lat/:lng')
   .get((req, res, next) => {
     letUsController.retrieveYelpData(req.params.lat, req.params.lng)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         res.send(data);
       });
   });
@@ -123,7 +123,9 @@ letUsRouter.route('/eventdata/:lat/:lng')
 letUsRouter.route('/checkEventHash')
   .get((req, res, next) => {
     console.log('RECEIVED REQUEST TO CHECK HASH');
-    res.send(req.session.eventHash);
+    const hash = req.session.eventHash;
+    delete req.session.eventHash;
+    res.send(hash);
   });
 
 module.exports = letUsRouter;
