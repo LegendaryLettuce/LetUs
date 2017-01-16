@@ -6,6 +6,13 @@ const updateClientsCount = (socket, count) => {
   socket.emit('update connection', count);
 };
 
+const checkInvite = (socket, nsp) => {
+  socket.on('check invite', (userData) => {
+    console.log('USER DATA FROM CHECK INVITE');
+    console.log(userData);
+  });
+};
+
 const updateData = (socket, nsp, liveData) => {
   if (!letUsController) {
     console.log('Loaded DB Controller');
@@ -46,6 +53,7 @@ const add = (hash) => {
     console.log(`SOCKET: user connected to: /event/${hash} || ${connectionsCounter}`);
     updateClientsCount(nsp, connectionsCounter);
     handleLiveData(socket, nsp);
+    checkInvite(socket, nsp);
     socket.on('disconnect', () => {
       connectionsCounter--;
       console.log(`SOCKET: user disconnected from: /event/${hash} || ${connectionsCounter}`);

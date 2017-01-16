@@ -2,9 +2,22 @@ const client = {};
 
 // Emitters
 const emitLiveData = (liveData) => {
-  // console.log('CLIENT SOCKETS:', client);
   console.log('CLIENT.SOCKET: emitting data:', liveData);
   client.socket.emit('submit livedata', liveData);
+};
+
+// Used immediately on connection
+const emitIsInvited = (userData) => {
+  console.log('CLIENT: userData', userData);
+
+  console.log('check client socket:', client);
+
+  const user = {
+    id: userData.id,
+    name: userData.name,
+  };
+
+  client.socket.emit('check invite', user);
 };
 
 const listenerController = (nsp, update, state) => {
@@ -12,6 +25,7 @@ const listenerController = (nsp, update, state) => {
     console.log('CLIENT: connections to event:', numOfConnections);
     update.connectedPeers(numOfConnections);
   });
+
   nsp.on('update livedata', (liveData) => {
     console.log('CLIENT.SOCKET: received data:', liveData);
     const indexOfData = state.liveData.reduce((accum, item, index) => {
@@ -34,6 +48,10 @@ const listenerController = (nsp, update, state) => {
     }, 0);
     update.talliedVotes(totalVotes);
   });
+
+  nsp.on('update peerlist', (peerList) => {
+    update.inviteFriends(peerList);
+  });
 };
 
 // Add Socket
@@ -43,6 +61,11 @@ const initSocket = (hash, reduxUpdater, reduxStates) => {
   console.log(`CLIENT: Connected to: ${path}`);
   client.socket = socket;
   listenerController(socket, reduxUpdater, reduxStates);
+
+  // Does not check event owner
+  if (reduxStates.user) {
+    emitIsInvited(reduxStates.user);
+  }
 };
 
 module.exports = {

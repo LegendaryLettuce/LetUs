@@ -6,7 +6,7 @@ import { Page, Toolbar, BackButton } from 'react-onsenui';
 import axios            from 'axios';
 // Redux
 import { connect }      from 'react-redux';
-import { updateLiveData, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes  }  from '../../redux/actions';
+import { updateInviteFriends, updateLiveData, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes  }  from '../../redux/actions';
 // Styles
 import { }   from '../../styles/styles';
 // Components
@@ -44,6 +44,7 @@ class Invite extends Component {
         connectedPeers: this.props.updateConnectedPeers,
         talliedVotes: this.props.updateTalliedVotes,
         liveData: this.props.updateLiveData,
+        inviteFriends: this.props.updateInviteFriends,
       };
       // console.log('liveData', this.props.liveData);
       const eventOwnerStates = {
@@ -121,6 +122,9 @@ const mapDispatchToProps = dispatch => ({
   },
   updateLiveData: (liveData) => {
     dispatch(updateLiveData(liveData));
+  },
+  updateInviteFriends: (friends) => {
+    dispatch(updateInviteFriends(friends));
   },
 });
 
