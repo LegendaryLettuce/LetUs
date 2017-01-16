@@ -11,14 +11,11 @@ const Events = ({ events }) => (
       (event, idx) => (
         <ListItem key={idx} modifier={idx === events.length - 1 ? 'longdivider' : null}>
           <div className="left">
-            <Icon // TODO: Replace with image of destination
-              icon="md-face"
-              className="list__item__icon"
-            />
+            <img className="list__item__image" src={(JSON.parse(event.data)[idx]).imageUrl} />
           </div>
           <div className="center">
-            <span className="list__item__title">{(JSON.parse(event.data)).displayTitle}</span>
-            <span className="list__item__subtitle">{(JSON.parse(event.data)).snippetText}</span>
+            <span className="list__item__title">{(JSON.parse(event.data)[idx]).displayTitle}</span>
+            <span className="list__item__subtitle">{(JSON.parse(event.data)[idx]).snippetText}</span>
           </div>
         </ListItem>
       )
