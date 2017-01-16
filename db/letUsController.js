@@ -224,9 +224,7 @@ const getUserEvents = (user) => {
     EventGoers.find({ userId: user })
       .then((data) => {
         let c = 0;
-        console.log('blahhhhhhhh', data);
         data.forEach((eventData) => {
-          console.log('hellllllooooooooo', eventData.event);
           Events.findOne({ _id: eventData.event })
             .then((event) => {
               if (event === null) {
