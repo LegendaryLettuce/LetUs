@@ -1,24 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component }                          from 'react';
 // Onsen UI
-import TextCarousel         from 'react-text-carousel';
-import { Page, Icon, Button, BottomToolbar }             from 'react-onsenui';
+import TextCarousel                                  from 'react-text-carousel';
+import { Page, Icon, Button, BottomToolbar }         from 'react-onsenui';
 // Axios for requests
-import axios            from 'axios';
+import axios                                         from 'axios';
 // Redux
-import { connect }          from 'react-redux';
+import { connect }                                   from 'react-redux';
 import { updateUser, load, loadFB, updateEventHash } from '../../redux/actions';
 // Utils
-import { postLogin, getStore } from '../../utils/utils';
+import { postLogin, getStore }                       from '../../utils/utils';
 // Styles
 import { login, splashText, fbLogin, tint, tagline } from '../../styles/styles';
-
-// const images = ["http://68.media.tumblr.com/233a17b2322253404dfc6ce97501613b/tumblr_oh350r0AtK1u9ooogo1_540.gif", ]
-
-// const timedBackground = () => {
-//   setTimeout(() => {
-//     console.log(x);
-//   });
-// };
 
 const button = {
   fontSize: 'x-large',
@@ -121,8 +113,8 @@ class LoginView extends Component {
             <div style={splashText}>
               Let Us
               <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} />
+              <div style={tagline}>Collaborative event planning with friends.</div>
             </div>
-            <div style={tagline}>Collaborative event planning <br /> with friends.</div>
             {
               this.state.fbLoad ?
               <BottomToolbar style={fbLogin}>

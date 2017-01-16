@@ -32,14 +32,20 @@ export const fbLogin = {
 };
 
 export const splashText = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  flexDirection: 'column',
   color: 'white',
-  marginTop: '40%',
-  marginBottom: '10%',
-  fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
+  paddingBottom: '240px',
+  position: 'absolute',
+  bottom: '0',
+  left: '0',
+  right: '0',
+  fontFamily: 'HelveticaNeue-Light, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
   fontWeight: '300',
   fontSize: '90px',
   textAlign: 'center',
-  textShadow: '0px 0px 3px #000',
+  textShadow: 'rgb(0, 0, 0) 0px 0px 3px',
 };
 
 export const tint = {
@@ -56,6 +62,7 @@ export const tint = {
 };
 
 export const tagline = {
+  paddingTop: '10px',
   textAlign: 'center',
   fontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
   fontWeight: '300',
