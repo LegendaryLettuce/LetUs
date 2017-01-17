@@ -27,7 +27,6 @@ class LoginView extends Component {
     super(props);
     this.state = {
       fbLoad: false,
-      textCarousel: true,
     };
   }
 
@@ -36,7 +35,6 @@ class LoginView extends Component {
       .then((res) => {
         this.props.updateEventHash(res.data);
       });
-    this.setState({ textCarousel: true });
   }
 
   loadFacebook() {
@@ -69,10 +67,6 @@ class LoginView extends Component {
     } else {
       this.setState({ fbLoad: true });
     }
-  }
-
-  componentWillUnmount() {
-    this.setState({ textCarousel: false });
   }
 
   fbLogin() {
@@ -118,11 +112,7 @@ class LoginView extends Component {
           <div style={tint}>
             <div style={splashText}>
               Let Us
-              {
-                this.state.textCarousel ?
-                <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} /> :
-                null
-              }
+                <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} /> 
               <div style={tagline}>Collaborative event planning with friends.</div>
             </div>
             {
