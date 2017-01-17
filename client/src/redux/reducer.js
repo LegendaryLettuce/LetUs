@@ -9,6 +9,7 @@ export const reducer = (state = {
   talliedVotes: 0,
   coords: [],
   edp: {},
+  homeEventPageData: {},
   eventPageData: {},
   parentPage: '/',
   selectedView: 'Create',
@@ -62,6 +63,11 @@ export const reducer = (state = {
       return {
         ...state,
         edp: action.edp,
+      };
+    case 'UPDATE_HOME_EVENT_PAGE':
+      return {
+        ...state,
+        homeEventPageData: action.homeEventPageData,
       };
     case 'UPDATE_EVENT_PAGE':
       return {

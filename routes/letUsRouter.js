@@ -79,8 +79,6 @@ letUsRouter.route('/user/events/:userId')
 
 letUsRouter.route('/home/')
   .put((req, res, next) => {
-    console.log('FUCKK --------------------------------');
-
     letUsController.updateTopEvent(req, res)
       .then((data) => {
         res.send(JSON.stringify(data));

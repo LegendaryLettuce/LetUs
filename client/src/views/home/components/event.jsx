@@ -3,9 +3,9 @@ import React, { Component }     from 'react';
 import { connect }              from 'react-redux';
 import { Page, List, ListItem, Icon, Toolbar, BackButton } from 'react-onsenui';
 // Styles
-import { bodyStyle }            from '../../styles/styles';
+import { bodyStyle }            from '../../../styles/styles';
 // Pages
-import  BottomNav        from './../../views/_global/bottomNav.jsx';
+import  BottomNav        from '../../../views/_global/bottomNav.jsx';
 
 const iconPadding = {
   marginRight: '10px',
@@ -64,7 +64,7 @@ const spacingDiv = {
 //   return location.display_address.join(',');
 // }
 
-class Event extends Component {
+class HomeEvent extends Component {
   constructor(props) {
     super(props);
     this.starRating = (rating) => {
@@ -78,6 +78,11 @@ class Event extends Component {
     this.getUrl = url => (url.replace('ms.jpg', 'l.jpg'));
     this.handleBack = this.handleBack.bind(this);
     this.renderToolbar = this.renderToolbar.bind(this);
+  }
+
+  componentDidMount() {
+    console.log(this.props.data);
+    console.log(this.props.data.imageUrl);
   }
 
   handleBack() {
@@ -94,11 +99,6 @@ class Event extends Component {
       </Toolbar>
     );
   }
-
-  // router
-  // decideCreate() {
-  //   this.props.router.push('/create');
-  // }
 
   render() {
     return (
@@ -152,8 +152,9 @@ class Event extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.eventPageData,
+  data: JSON.parse(state.homeEventPageData.topEvent)[0],
   parentPage: state.parentPage,
 });
 
-export default connect(mapStateToProps)(Event);
+export default connect(mapStateToProps)(HomeEvent);
+

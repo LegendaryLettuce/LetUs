@@ -12,6 +12,7 @@ import '../../node_modules/onsenui/css/onsen-css-components-dark-theme.css';
 import './styles/mapStyle.css';
 // Views
 import Home             from './views/home/home.jsx';
+import HomeEvent        from './views/home/components/event.jsx';
 import Create           from './views/plan/create.jsx';
 import Collaborate      from './views/plan/collaborate.jsx';
 import Loading          from './views/plan/loading.jsx';
@@ -33,6 +34,7 @@ render(
       </Route>
       <Route>
         <Route path='home'   component={Home} />
+        <Route path='homeevent' component={HomeEvent} />
         <Route path='invite' component={Invite} />
         <Route path='create' component={Create} />
         <Route path='search' component={LatLonModule} />
