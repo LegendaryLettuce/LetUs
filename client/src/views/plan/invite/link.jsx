@@ -2,7 +2,7 @@ import React, { Component }       from 'react';
 // Redux
 import { connect }      from 'react-redux';
 // Onsen UI
-import ons              from 'onsenui';
+// import ons              from 'onsenui';
 import { Icon } from 'react-onsenui';
 // Styles
 import { }   from '../../../styles/styles';
