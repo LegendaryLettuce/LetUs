@@ -14,7 +14,7 @@ import  BottomButton    from './../../views/_global/bottomButton.jsx';
 import  Events          from './components/events.jsx';
 
 const listStyle = {
-  height: '50%',
+  height: '80%',
   overflowY: 'scroll',
 };
 
@@ -38,7 +38,7 @@ class Home extends Component {
     getUpcomingEvents(this.props.user.id)
       .then((res) => {
         this.setState({ upcomingEvents: res.data });
-        console.log(res.data);
+        console.log('HOME!-', res.data);
       });
   }
 
@@ -52,6 +52,7 @@ class Home extends Component {
 
   render() {
     return (
+
       <Page renderToolbar={TopBar.bind(this, ({ title: 'Home', handleBack: this.handleBack }))}>
         <div style={listStyle}>
           <Events events={this.state.upcomingEvents}/>

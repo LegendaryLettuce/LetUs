@@ -21,6 +21,7 @@ const Events = new Schema({
   attendees: { type: String }, // change String back to ObjectId
   checkIns: [{ type: Boolean }],
   linkHash: { type: String, required: true },
+  topEvent: { type: String },
 });
 
 const EventGoers = new Schema({
