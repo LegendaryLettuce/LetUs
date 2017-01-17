@@ -15,6 +15,12 @@ const RGB_MIN = 30;
 const RGB_MAX = 200;
 const RGB = [RGB_MAX, RGB_MAX, RGB_MAX];
 
+const backStyle = {
+  height: '100%',
+  width: '100%',
+  position: 'fixed',
+};
+
 class Collaborate extends Component {
   constructor(props) {
     super(props);
@@ -133,9 +139,12 @@ class Collaborate extends Component {
     } else if (this.loaded) this.setState({ rgb: RGB });
   }
 
+  // TODO: remove RGB
+
   move(prevPos = this.getPos()) {
     const pos = this.getPos();
-    const per = this.percentToPixel(25);
+    const per = this.percentToPixel((this.percentToPixel(SIZE_PERCENT) /
+      this.state.windowWidth) * 50);
     const intendedColor = (new Array(3)).fill(this.otherRGB);
     if (pos >= per) {
       this.updateRGB(GREEN, 2);
@@ -170,7 +179,7 @@ class Collaborate extends Component {
   }
 
   onHold() {
-    this.move();
+    // this.move();
     if (this.otherRGB > RGB_MIN + 1) this.otherRGB -= 2;
     if (this.state.intensity < 100) this.setState({ intensity: this.state.intensity + 1.5 });
     else if (this.state.intensity > 100) this.setState({ intensity: 100 });
@@ -251,71 +260,59 @@ class Collaborate extends Component {
     return Math.floor(this.percentToPixel(78 - SIZE_PERCENT) / div);
   }
 
-
-  // !TODO: configure autoscroll to scroll more easily at edges
-  // TODO: add a loading bar to the bottom of the card showing how intense it is
-  //       OR make the border a loading bar
-
-  // TODO: place x and o icons on left and right hidden until revealed by card
-  // TODO: make icon colors more saturated if more intense
-  // TODO: replace background change with loading bar
-  // OR
-  // TODO: attach circle to window and make x or check appear on swipe
-
-  // TODO: display colored shadow from sides when past position required to send card
-
   render() {
     return (
       <Page>
         <div style={{
-          height: '100%',
-          width: '100%',
-          position: 'fixed',
+          ...backStyle,
           background: 'rgb(200,200,200)',
         }}/>
         <div style={{
-          bottom: '0',
+          ...backStyle,
           height: `${(this.state.windowHeight - (this.marginTop() + this.percentToPixel(SIZE_PERCENT + 8))) + this.percentToPixel((((SIZE_PERCENT + 13) * this.state.intensity) / 100))}px`,
-          width: '100%',
-          position: 'fixed',
-          display: `${this.state.neutral}`,
-          background: `rgba(232, 163, 32, ${this.state.intensity / 100})`,
-        }}/>
+        }}>
+          <div style={{
+            ...backStyle,
+            bottom: '0',
+            display: `${this.state.neutral}`,
+            background: `rgba(232, 163, 32, ${this.state.intensity / 100})`,
+          }}/>
+          <div style={{
+            ...backStyle,
+            bottom: '0',
+            display: `${this.state.like}`,
+            background: `rgba(46, 209, 65, ${this.state.intensity / 100})`,
+          }}/>
+          <div style={{
+            ...backStyle,
+            bottom: '0',
+            display: `${this.state.dislike}`,
+            background: `rgba(204, 60, 54, ${this.state.intensity / 100})`,
+          }}/>
+        </div>
         <div style={{
-          bottom: '0',
-          height: `${(this.state.windowHeight - (this.marginTop() + this.percentToPixel(SIZE_PERCENT + 8))) + this.percentToPixel((((SIZE_PERCENT + 13) * this.state.intensity) / 100))}px`,
-          width: '100%',
-          position: 'fixed',
-          display: `${this.state.like}`,
-          background: `rgba(46, 209, 65, ${this.state.intensity / 100})`,
-        }}/>
-        <div style={{
-          bottom: '0',
-          height: `${(this.state.windowHeight - (this.marginTop() + this.percentToPixel(SIZE_PERCENT + 8))) + this.percentToPixel((((SIZE_PERCENT + 13) * this.state.intensity) / 100))}px`,
-          width: '100%',
-          position: 'fixed',
-          display: `${this.state.dislike}`,
-          background: `rgba(204, 60, 54, ${this.state.intensity / 100})`,
-        }}/>
-        <Icon icon="fa-times-circle-o" style={{
-          color: '#333',
+          ...backStyle,
           fontSize: `${this.icons()}px`,
-          position: 'fixed',
-          marginTop: `${Math.floor(this.state.windowHeight / 2) - this.icons(2)}px`,
-          marginLeft: `${this.marginLeft() - this.percentToPixel(4) - this.icons()}px`,
-        }}/>
-        <Icon icon="fa-check-circle-o" style={{
-          color: '#333',
-          fontSize: `${this.icons()}px`,
-          position: 'fixed',
-          marginTop: `${Math.floor(this.state.windowHeight / 2) - this.icons(2)}px`,
-          marginRight: `${this.marginLeft() - this.percentToPixel(4) - this.icons()}px`,
-          right: '0',
-        }}/>
+        }}>
+          <Icon icon="fa-times-circle-o" style={{
+            position: 'fixed',
+            color: '#333',
+            marginTop: `${Math.floor(this.state.windowHeight / 2) - this.icons(2)}px`,
+            marginLeft: `${this.marginLeft() - this.percentToPixel(4) - this.icons()}px`,
+          }}/>
+          <Icon icon="fa-check-circle-o" style={{
+            position: 'fixed',
+            color: '#333',
+            marginTop: `${Math.floor(this.state.windowHeight / 2) - this.icons(2)}px`,
+            marginRight: `${this.marginLeft() - this.percentToPixel(4) - this.icons()}px`,
+            right: '0',
+          }}/>
+        </div>
         <Carousel
           fullscreen
           swipeable
           autoScroll
+          autoScrollRatio={(this.percentToPixel(SIZE_PERCENT) / this.state.windowWidth) * 0.5}
           overscrollable
           index={this.state.carouselPosition}
           onPostChange={this.onFlick.bind(this)}
