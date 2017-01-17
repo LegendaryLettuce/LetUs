@@ -22,11 +22,6 @@ class LiveList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      votes: {
-        expectedVotes: ((this.props.friends.length + 1) * this.props.liveData.length),
-        connectedPeers: (this.props.connectedPeers * this.props.liveData.length),
-        talliedVotes: this.props.talliedVotes,
-      },
       topEvent: [],
     };
     this.props.updateParentPage('/live');

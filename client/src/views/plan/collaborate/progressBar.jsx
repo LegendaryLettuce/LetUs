@@ -17,10 +17,9 @@ class VotesProgress extends Component {
     
     return (
       <section style={{
-        padding: '4%',
-        backgroundColor: '#888',
-        borderBottom: '1px solid #ccc',
-        boxShadow: '0px -1em 0.8em -1em #333 inset',
+        padding: '12px',
+        backgroundColor: 'rgb(200,200,200)',
+        boxShadow: '0 -1em 0.8em -1.1em #333 inset, 0 1em 0.8em -1.1em #333 inset',
       }}>
         <ProgressBar
           value={talliedPercent}
