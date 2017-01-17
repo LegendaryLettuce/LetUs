@@ -25,23 +25,6 @@ import LatLonModule     from './views/plan/latlonmodule.jsx';
 
 const store = createStore(reducer);
 
-// const routes = {
-//   path: '/',
-//   component: Create,
-//   childRoutes: [
-//     { path: '/plan/create',       component: Create },
-//     { path: '/plan/collaborate',  component: Collaborate },
-//     { path: '/plan/invite',       component: Invite },
-//   //   { path: '/about', component: About },
-//   //   {
-//   //       path: '/posts',
-//   //       component: Posts,
-//   //       childRoutes: [ { path: '/post/:nr', component: Post } ]
-//   //   },
-//     // { path: '*', component: NoMatch}
-//   ],
-// };
-
 render(
   <Provider store={store}>
     <Router history={browserHistory}>

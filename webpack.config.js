@@ -23,9 +23,6 @@ const standardPlugins = [
 const config = {
   devtool: process.env.WEBPACK_DEVTOOL || 'eval-source-map',
   entry: [
-    // 'webpack-dev-server/client?http://localhost:3000',
-    // 'webpack/hot/only-dev-server',
-    // 'react-hot-loader/patch',
     `${APP_DIR}/app.jsx`,
   ],
   output: {
@@ -45,15 +42,7 @@ const config = {
     }),
   ] : [
     ...standardPlugins,
-    new webpack.HotModuleReplacementPlugin(),
   ],
-  devServer: {
-    colors: true,
-    historyApiFallback: true,
-    inline: false,
-    port: 3000,
-    hot: true,
-  },
   module: {
     loaders: [
       {
@@ -61,7 +50,6 @@ const config = {
         loader: 'babel-loader',
         query: {
           presets: ['es2015', 'react', 'stage-2'],
-          // plugins: ['react-hot-loader/babel'],
         },
         exclude: [MODULES_DIR],
       },
