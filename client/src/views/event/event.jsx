@@ -102,7 +102,7 @@ class Event extends Component {
 
   render() {
     return (
-        <Page clasName="scroller" modifier='shop-details' renderToolbar={() => this.renderToolbar('Event Details')}
+        <Page className="scroller" modifier='shop-details' renderToolbar={() => this.renderToolbar('Event Details')}
         style={{ background: 'rgba(51,51,51,1)' }}>
           <div style={{
             ...imageDiv,
