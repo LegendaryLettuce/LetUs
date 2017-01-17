@@ -65,6 +65,10 @@ const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyl
 
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
 
+const padStyle = {
+  height: '86px',
+};
+
 class Create extends Component {
 
   constructor(props) {
@@ -74,8 +78,8 @@ class Create extends Component {
     }
     this.state = {
       data: [createData, this.props.edp.eat, this.props.edp.drink, this.props.edp.play],
+      buttonDisplay: this.props.selectedView === 'Create' ? 'none' : 'block',
     };
-    this.decideTogether = this.decideTogether.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.parseUniqueCategories = this.parseUniqueCategories.bind(this);
@@ -90,11 +94,17 @@ class Create extends Component {
       this.props.updateSelectedView(`${categoryLabels[indexSelected]} Categories`);
       this.props.updateSelectedViewIndex(indexSelected);
       this.props.updateYelpData(this.parseUniqueCategories(this.state.data[indexSelected]));
+      this.setState({
+        buttonDisplay: 'none',
+      });
     } else if (this.props.selectedView.split(' ')[1] === 'Categories') {
       this.props.updateSelectedView(item.displayTitle);
       this.props.updateYelpData(
         this.parseBizByCategory(this.state.data[this.props.selectedViewIndex], item.displayTitle),
       );
+      this.setState({
+        buttonDisplay: 'block',
+      });
     } else {
       this.props.updateEventPage(item);
       this.props.router.push('/event');
@@ -112,6 +122,9 @@ class Create extends Component {
         this.props.updateYelpData(
           this.parseUniqueCategories(this.state.data[this.props.selectedViewIndex]),
         );
+        this.setState({
+          buttonDisplay: 'none',
+        });
       }
     } else {
       this.props.router.push('/search');
@@ -192,16 +205,6 @@ class Create extends Component {
   }
 
   render() {
-    const padStyle = {
-      height: '86px',
-    };
-
-    if (this.props.selectedView.split(' ')[1] === 'Categories' || this.props.selectedView === 'Create') {
-      buttonStyle.display = 'none';
-    } else {
-      buttonStyle.display = '';
-    }
-
     return (
       <div>
         <Page
@@ -216,7 +219,10 @@ class Create extends Component {
           <div style={padStyle}/>
         </Page>
         <Button
-          style={buttonStyle}
+          style={{
+            ...buttonStyle,
+            display: this.state.buttonDisplay,
+          }}
           modifier='large'
           onClick={this.createEventHash}
         >Decide Together</Button>
