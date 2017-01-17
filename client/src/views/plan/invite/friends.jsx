@@ -4,7 +4,7 @@ import React, { Component }       from 'react';
 import { browserHistory, Link } from 'react-router';
 
 // Onsen UI
-import ons              from 'onsenui';
+// import ons              from 'onsenui';
 import { ListItem, List, Switch, Icon, Input } from 'react-onsenui';
 
 // Redux

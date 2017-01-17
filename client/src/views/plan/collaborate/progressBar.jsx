@@ -1,6 +1,6 @@
 import React, { Component }       from 'react';
 // Onsen UI
-import ons              from 'onsenui';
+// import ons              from 'onsenui';
 import { ProgressBar } from 'react-onsenui';
 
 

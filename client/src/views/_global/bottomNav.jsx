@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // Redux
 import { connect }          from 'react-redux';
 // Onsen UI
-import ons                  from 'onsenui';
+// import ons                  from 'onsenui';
 import { BottomToolbar, Icon, BackButton, ToolbarButton } from 'react-onsenui';
 // Styles
 import { bottomNavStyle }   from '../../styles/styles';

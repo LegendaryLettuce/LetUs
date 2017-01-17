@@ -1,6 +1,6 @@
 import React, { Component }       from 'react';
 // Onsen UI
-import ons              from 'onsenui';
+import ons              from 'onsenui/js/onsenui.min';
 import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
 // Axios for requests
 import axios            from 'axios';
