@@ -133,8 +133,8 @@ class LatLonModule extends Component {
           this.props.router.push('/create');
         }
       })
-      .catch(() => {
-        console.log('An error occured when access data');
+      .catch((e) => {
+        console.log('An error occured when accessing data:', e);
       });
   }
 
