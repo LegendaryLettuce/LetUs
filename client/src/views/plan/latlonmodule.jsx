@@ -15,12 +15,14 @@ import { bodyStyle, buttonStyle }                               from '../../styl
 import '../../styles/mapStyle.css';
 // API Key
 import apikey                                        from './../../../../config/google-maps-api';
-// import  BottomNav               from './../../views/_global/bottomNav.jsx';
 
 // TODO: Add api key
 
 const inputField = {
   ...bodyStyle,
+  width: '90%',
+  display: 'block',
+  margin: '0 auto',
 };
 const title = {
   ...bodyStyle,
@@ -29,7 +31,7 @@ const title = {
 };
 
 const searchForm = {
-  display: 'flex',
+  // display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
 };
