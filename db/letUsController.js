@@ -132,6 +132,35 @@ const updateEventAttendees = (data) => {
     });
 };
 
+const handleNewEventAttendees = (user) => {
+  const hash = user.linkHash;
+  delete user.linkHash;
+  let isNewUser = true;
+  return Events.findOne({ linkHash: hash })
+    .then((doc) => {
+      const attendees = JSON.parse(doc.attendees);
+      attendees.forEach((item) => {
+        if (item.id === user.id) {
+          isNewUser = false;
+        }
+      });
+      if (isNewUser) {
+        attendees.push(user);
+      }
+      doc.attendees = JSON.stringify(attendees);
+      // console.log('DATABASE: doc attendees');
+      // console.log(doc.attendees);
+      return savetoDB(doc);
+    })
+    .then((event) => {
+      if (isNewUser) {
+        addEventGoer(user.id, event._id);
+        return JSON.parse(event.attendees);
+      }
+      return null;
+    });
+};
+
 const retrieveYelpData = (lat, lng) => (
   new Promise((resolve, reject) => {
     const yelp = new Yelp(apikeys);
@@ -220,7 +249,7 @@ const handleClientVotes = (hash, vote) => (
 const getUserEvents = (user) => {
   const events = [];
   return new Promise((resolve, reject) => {
-    console.log(user);
+    // console.log(user);
     EventGoers.find({ userId: user })
       .then((data) => {
         let c = 0;
@@ -233,8 +262,8 @@ const getUserEvents = (user) => {
               }
               events.push(event);
               c++;
-              console.log('event', event);
-              console.log('events', events);
+              // console.log('event', event);
+              // console.log('events', events);
               if (c >= data.length) {
                 resolve(events);
               }
@@ -257,4 +286,5 @@ module.exports = {
   retrieveEventByHash,
   handleClientVotes,
   getUserEvents,
+  handleNewEventAttendees,
 };

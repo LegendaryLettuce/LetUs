@@ -6,6 +6,28 @@ const updateClientsCount = (socket, count) => {
   socket.emit('update connection', count);
 };
 
+const checkInvite = (socket, nsp) => {
+  if (!letUsController) {
+    console.log('Loaded DB Controller');
+    letUsController = require('./db/letUsController');
+  }
+  const hash = socket.nsp.name.split('/')[2];
+  socket.on('check invite', (userData) => {
+    const user = {
+      id: userData.id,
+      name: userData.name,
+      linkHash: hash,
+    };
+    letUsController.handleNewEventAttendees(user)
+      .then((updatedAttendees) => {
+        // console.log('SOCKET: sending client updated attendees list:', updatedAttendees);
+        if (updatedAttendees) {
+          nsp.emit('update peerlist', updatedAttendees);
+        }
+      });
+  });
+};
+
 const updateData = (socket, nsp, liveData) => {
   if (!letUsController) {
     console.log('Loaded DB Controller');
@@ -46,6 +68,7 @@ const add = (hash) => {
     console.log(`SOCKET: user connected to: /event/${hash} || ${connectionsCounter}`);
     updateClientsCount(nsp, connectionsCounter);
     handleLiveData(socket, nsp);
+    checkInvite(socket, nsp);
     socket.on('disconnect', () => {
       connectionsCounter--;
       console.log(`SOCKET: user disconnected from: /event/${hash} || ${connectionsCounter}`);
