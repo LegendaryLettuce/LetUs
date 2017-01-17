@@ -19,7 +19,6 @@ class Events extends Component {
           (event, idx) => (
             <ListItem key={idx} modifier={idx === this.props.events.length - 1 ? 'longdivider' : null} onClick={() => {
               this.props.handleTouch(event);
-              console.log(event);
             }}>
               <div className="left">
                 <img className="list__item__image" src={JSON.parse(event.topEvent)[0].imageUrl} />

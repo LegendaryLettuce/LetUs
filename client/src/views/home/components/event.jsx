@@ -80,11 +80,6 @@ class HomeEvent extends Component {
     this.renderToolbar = this.renderToolbar.bind(this);
   }
 
-  componentDidMount() {
-    console.log(this.props.data);
-    console.log(this.props.data.imageUrl);
-  }
-
   handleBack() {
     this.props.router.push(this.props.parentPage);
   }
