@@ -112,7 +112,7 @@ class LoginView extends Component {
           <div style={tint}>
             <div style={splashText}>
               Let Us
-              <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} />
+                <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} /> 
               <div style={tagline}>Collaborative event planning with friends.</div>
             </div>
             {
