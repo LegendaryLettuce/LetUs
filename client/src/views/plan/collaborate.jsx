@@ -20,29 +20,36 @@ class Collaborate extends Component {
     super(props);
     this.index = 0;
     this.otherRGB = RGB_MAX;
-    this.x = window.innerWidth / 2;
-    this.y = window.innerHeight / 2;
-    this.diffx = 0;
     this.new = true;
     this.loaded = false;
     this.holding = false;
-    this.stationary = false;
+    this.stationary = true;
+    this.carousel = null;
     this.state = {
+      intensity: 0,
+      neutral: 'block',
+      like: 'none',
+      dislike: 'none',
       cardName: this.props.yelpData[0].displayTitle,
       carouselPosition: 1,
       carouselAnimation: {},
       rgb: RGB,
       windowWidth: 0,
       windowHeight: 0,
+      widthDiff: 0,
+      marginDiff: 0,
     };
   }
+
   componentDidMount() {
     this.loaded = true;
+    this.carousel = document.getElementsByTagName('ons-carousel-item')[1];
     this.setState({
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
     }, () => window.addEventListener('resize', this.updateWindowSize.bind(this)));
   }
+
   componentWillUnmount() {
     this.loaded = false;
     window.removeEventListener('resize', this.updateWindowSize.bind(this));
@@ -90,6 +97,7 @@ class Collaborate extends Component {
           this.props.router.push('/live');
         }
         this.setState({
+          intensity: 0,
           cardName: this.props.yelpData[this.index].displayTitle,
           rgb: RGB,
         }, () => {
@@ -100,15 +108,6 @@ class Collaborate extends Component {
         });
       });
     }
-  }
-
-  getDistFromMid() {
-    return (
-      Math.floor((
-        ((this.x - this.diffx) - (this.state.windowWidth / 2))
-        / (this.state.windowWidth / 2)
-      ) * 100 * 2)
-    );
   }
 
   makeRGB(color, thisColor, speed) {
@@ -131,35 +130,64 @@ class Collaborate extends Component {
           this.makeRGB(color, BLUE, speed),
         ],
       });
-    } else if (this.loaded && this.new) this.setState({ rgb: RGB });
+    } else if (this.loaded) this.setState({ rgb: RGB });
   }
 
-  move(px = this.x, py = this.y) {
-    const distFromMid = this.getDistFromMid();
-    if (distFromMid >= 50) this.updateRGB(GREEN, 2);
-    else if (distFromMid <= -50) this.updateRGB(RED, 2);
-    else this.updateRGB(BLUE, 2);
+  move(prevPos = this.getPos()) {
+    const pos = this.getPos();
+    const per = this.percentToPixel(25);
+    const intendedColor = (new Array(3)).fill(this.otherRGB);
+    if (pos >= per) {
+      this.updateRGB(GREEN, 2);
+      this.setState({
+        neutral: 'none',
+        like: 'block',
+        dislike: 'none',
+      });
+      intendedColor[GREEN] = RGB_MAX;
+    } else if (pos <= -per) {
+      this.updateRGB(RED, 2);
+      this.setState({
+        neutral: 'none',
+        like: 'none',
+        dislike: 'block',
+      });
+      intendedColor[RED] = RGB_MAX;
+    } else {
+      this.updateRGB(BLUE, 2);
+      this.setState({
+        neutral: 'block',
+        like: 'none',
+        dislike: 'none',
+      });
+      intendedColor[BLUE] = RGB_MAX;
+    }
     if (this.loaded && this.new) this.setState({ rgb: RGB });
-    if (this.loaded && !this.new && px === this.x && py === this.y && this.holding) {
-      setTimeout(this.move.bind(this, px, py), 1000 / 60);
+    else if (this.loaded && !this.stationary && prevPos === pos && this.holding &&
+        JSON.stringify(this.state.rgb) !== JSON.stringify(intendedColor)) {
+      setTimeout(this.move.bind(this, pos), 1000 / 60);
     }
   }
 
   onHold() {
-    this.diffx = this.x - (this.state.windowWidth / 2);
+    this.move();
     if (this.otherRGB > RGB_MIN + 1) this.otherRGB -= 2;
+    if (this.state.intensity < 100) this.setState({ intensity: this.state.intensity + 1.5 });
+    else if (this.state.intensity > 100) this.setState({ intensity: 100 });
     this.updateRGB(BLUE, 2);
     if (this.loaded && this.new) this.setState({ rgb: RGB });
-    if (this.loaded && !this.new && this.stationary && this.holding) {
+    else if (this.loaded && this.stationary && this.holding) {
       setTimeout(this.onHold.bind(this), 1000 / 60);
     }
   }
 
   onHoldDone() {
     if (this.otherRGB < RGB_MAX) this.otherRGB++;
+    if (this.state.intensity > 0) this.setState({ intensity: this.state.intensity - 1 });
+    else if (this.state.intensity < 0) this.setState({ intensity: 0 });
     this.updateRGB(BLUE);
     if (this.loaded && this.new) this.setState({ rgb: RGB });
-    if (this.loaded && !this.new && !this.holding &&
+    else if (this.loaded && !this.holding &&
         JSON.stringify(this.state.rgb) !== JSON.stringify(RGB)) {
       setTimeout(this.onHoldDone.bind(this), 1000 / 60);
     }
@@ -167,7 +195,6 @@ class Collaborate extends Component {
 
   onHoldStart(e) {
     e.preventDefault();
-    this.diffx = this.x - (this.state.windowWidth / 2);
     this.new = false;
     this.holding = true;
     this.stationary = true;
@@ -176,25 +203,27 @@ class Collaborate extends Component {
 
   onHoldEnd() {
     this.holding = false;
+    this.stationary = true;
     this.onHoldDone();
   }
 
-  moveBoth() {
-    const distFromMid = this.getDistFromMid();
-    if (Math.abs(distFromMid) > 9) { // TODO: define by pixels
+  onMove() {
+    if (Math.abs(this.getPos()) > 9) {
       this.stationary = false;
+      this.move();
+    } else if (this.stationary === false) {
       this.move();
     }
   }
 
-  moveMouse(e) {
-    [this.x, this.y] = [e.nativeEvent.clientX, e.nativeEvent.clientY];
-    this.moveBoth();
-  }
-
-  moveTouch(e) {
-    [this.x, this.y] = [e.nativeEvent.touches[0].clientX, e.nativeEvent.touches[0].clientY];
-    this.moveBoth();
+  /**
+   * Get the position of the carousel
+   * @return {number} pixel values from negative to the left to positive in the right
+   */
+  getPos() {
+    let pos = Number(/\(\s*([^p]+?)\s*p/.exec(this.carousel.style.transform)[1]);
+    pos += Math.floor(this.state.windowWidth);
+    return pos;
   }
 
   /**
@@ -211,11 +240,15 @@ class Collaborate extends Component {
   }
 
   marginTop() {
-    return `${Math.floor((this.state.windowHeight / 2) - (this.percentToPixel(SIZE_PERCENT) / 2))}px`;
+    return Math.floor((this.state.windowHeight / 2) - (this.percentToPixel(SIZE_PERCENT) / 2));
   }
 
   marginLeft() {
-    return `${Math.floor((this.state.windowWidth / 2) - (this.percentToPixel(SIZE_PERCENT) / 2))}px`;
+    return Math.floor((this.state.windowWidth / 2) - (this.percentToPixel(SIZE_PERCENT) / 2));
+  }
+
+  icons(div = 1) {
+    return Math.floor(this.percentToPixel(78 - SIZE_PERCENT) / div);
   }
 
 
@@ -233,10 +266,52 @@ class Collaborate extends Component {
 
   render() {
     return (
-      <Page
-        onMouseMove={this.moveMouse.bind(this)}
-        onTouchMove={this.moveTouch.bind(this)}
-      >
+      <Page>
+        <div style={{
+          height: '100%',
+          width: '100%',
+          position: 'fixed',
+          background: 'rgb(200,200,200)',
+        }}/>
+        <div style={{
+          bottom: '0',
+          height: `${(this.state.windowHeight - (this.marginTop() + this.percentToPixel(SIZE_PERCENT + 8))) + this.percentToPixel((((SIZE_PERCENT + 13) * this.state.intensity) / 100))}px`,
+          width: '100%',
+          position: 'fixed',
+          display: `${this.state.neutral}`,
+          background: `rgba(232, 163, 32, ${this.state.intensity / 100})`,
+        }}/>
+        <div style={{
+          bottom: '0',
+          height: `${(this.state.windowHeight - (this.marginTop() + this.percentToPixel(SIZE_PERCENT + 8))) + this.percentToPixel((((SIZE_PERCENT + 13) * this.state.intensity) / 100))}px`,
+          width: '100%',
+          position: 'fixed',
+          display: `${this.state.like}`,
+          background: `rgba(46, 209, 65, ${this.state.intensity / 100})`,
+        }}/>
+        <div style={{
+          bottom: '0',
+          height: `${(this.state.windowHeight - (this.marginTop() + this.percentToPixel(SIZE_PERCENT + 8))) + this.percentToPixel((((SIZE_PERCENT + 13) * this.state.intensity) / 100))}px`,
+          width: '100%',
+          position: 'fixed',
+          display: `${this.state.dislike}`,
+          background: `rgba(204, 60, 54, ${this.state.intensity / 100})`,
+        }}/>
+        <Icon icon="fa-times-circle-o" style={{
+          color: '#333',
+          fontSize: `${this.icons()}px`,
+          position: 'fixed',
+          marginTop: `${Math.floor(this.state.windowHeight / 2) - this.icons(2)}px`,
+          marginLeft: `${this.marginLeft() - this.percentToPixel(4) - this.icons()}px`,
+        }}/>
+        <Icon icon="fa-check-circle-o" style={{
+          color: '#333',
+          fontSize: `${this.icons()}px`,
+          position: 'fixed',
+          marginTop: `${Math.floor(this.state.windowHeight / 2) - this.icons(2)}px`,
+          marginRight: `${this.marginLeft() - this.percentToPixel(4) - this.icons()}px`,
+          right: '0',
+        }}/>
         <Carousel
           fullscreen
           swipeable
@@ -246,34 +321,35 @@ class Collaborate extends Component {
           onPostChange={this.onFlick.bind(this)}
           animationOptions={this.state.carouselAnimation}
           onTouchStart={this.onHoldStart.bind(this)}
+          onTouchMove={this.onMove.bind(this)}
           onTouchEnd={this.onHoldEnd.bind(this)}
           onMouseDown={this.onHoldStart.bind(this)}
+          onMouseMove={this.onMove.bind(this)}
           onMouseUp={this.onHoldEnd.bind(this)}
-          style={{
-            zIndex: '3',
-          }}
+          style={{ zIndex: '3' }}
         >
           <CarouselItem/>
           <CarouselItem>
-            <div style={{ height: this.marginTop() }}/>
+            <div style={{ height: `${this.marginTop() - this.percentToPixel(5)}px` }}/>
             <div style={{
-              height: `${this.percentToPixel(SIZE_PERCENT + 3)}px`,
-              width: `${this.percentToPixel(SIZE_PERCENT)}px`,
-              marginLeft: this.marginLeft(),
-              boxShadow: `0 0 0 2px rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]}), 0 0 0 10000em rgb(60, 64, 65)`,
+              height: `${this.percentToPixel(SIZE_PERCENT + 13)}px`,
+              width: `${this.percentToPixel(SIZE_PERCENT + 10) + this.state.widthDiff}px`,
+              marginLeft: `${(this.marginLeft() + this.state.marginDiff) - this.percentToPixel(5)}px`,
+              boxShadow: '0 0 0 10000em rgb(60, 64, 65)', // 0 0 0 2px rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]}), // rgba(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]}, 0.4)`, // 60, 64, 65)`,
               overflow: 'hidden',
             }}>
               <div style={{
                 height: '100%',
                 width: '100%',
+                borderRadius: `${this.percentToPixel(12)}px`,
                 background: 'rgba(0,0,0,0)',
-                boxShadow: '0 0 2em 0 #333 inset',
+                boxShadow: '0 0 2em 0 #333 inset, 0 0 0 10em rgb(60, 64, 65)',
               }}/>
             </div>
           </CarouselItem>
           <CarouselItem/>
         </Carousel>
-        <div style={{ height: this.marginTop() }}/>
+        <div style={{ height: `${this.marginTop()}px` }}/>
         <div style={{
           fontSize: `${this.percentToPixel(5.5)}px`,
           textAlign: 'center',
@@ -281,63 +357,68 @@ class Collaborate extends Component {
           position: 'fixed',
           height: `${this.percentToPixel(SIZE_PERCENT + 3)}px`,
           width: `${this.percentToPixel(SIZE_PERCENT)}px`,
-          marginLeft: this.marginLeft(),
+          marginLeft: `${this.marginLeft()}px`,
           zIndex: '2',
-          boxShadow: '0 0 0 2px rgb(38, 39, 40), 0 0 0 10000em #ccc',
-          background: '#888',
+          // boxShadow: '0 0 0 2px rgb(38, 39, 40)', // , 0 0 0 10000em #ccc',
+          // background: '#888',
         }}>
           <div style={{
-            height: `${this.percentToPixel(SIZE_PERCENT - 10)}px`,
-            width: `${this.percentToPixel(SIZE_PERCENT)}px`,
-            backgroundImage: `url("${getUrl(this.props.yelpData[this.index].imageUrl)}")`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center center',
-            backgroundSize: 'cover',
+            height: '100%',
+            width: '100%',
+            borderRadius: `${this.percentToPixel(10)}px`,
+            boxShadow: '0 0 0 2px rgb(38, 39, 40)', // , 0 0 0 10em #ccc',
             overflow: 'hidden',
-            boxShadow: '0 0 0 2px rgb(38, 39, 40)',
-          }}/>
-          {
-            this.props.yelpData[this.index].rating ?
-              <div
-                className="rating"
-                style={{
-                  fontSize: `${this.percentToPixel(8)}px`,
-                  position: 'absolute',
-                  marginLeft: `${this.percentToPixel(8)}px`,
-                  height: `${this.percentToPixel(10)}px`,
-                  width: `${this.percentToPixel(50)}px`,
-                  top: `${this.percentToPixel(SIZE_PERCENT - 20)}px`,
-                  background: 'rgba(60, 64, 65, 0.71)',
-                  // borderTopRightRadius: `${this.percentToPixel(1)}px`,
-                  // borderTopLeftRadius: `${this.percentToPixel(1)}px`,
-                  boxShadow: '0 0 0 2px rgb(38, 39, 40)',
-                  color: '#ccc',
-                }}
-              >
-                {ratingToArray(this.props.yelpData[this.index].rating).map((e, i) => (
-                  <Icon
-                    icon={`fa-star${e ? '-half' : ''}`}
-                    fixed-width="false"
-                    // size={this.percentToPixel(8)}
-                    key={i}
-                    style={{
-                      position: 'relative',
-                      paddingTop: `${this.percentToPixel(1)}px`,
-                      // height: `${this.percentToPixel(8)}px`,
-                      // width: `${this.percentToPixel(8)}px`,
-                      paddingLeft: `${this.percentToPixel(1)}px`,
-                      paddingRight: `${this.percentToPixel(1)}px`,
-                      left: `${e ? `-${this.percentToPixel(1.5)}px` : '0'}`,
-                      zIndex: `${e ? 7 : 8}`,
-                      textShadow: '0 0 .2em #333',
-                    }}
-                  />
-                ))}
-              </div> :
-              <div/>
-          }
-          <div style={{ padding: `${this.percentToPixel(1)}px` }}>
-            {this.state.cardName}
+            background: '#888',
+          }}>
+            <div style={{
+              height: `${this.percentToPixel(SIZE_PERCENT - 10)}px`,
+              width: `${this.percentToPixel(SIZE_PERCENT)}px`,
+              backgroundImage: `url("${getUrl(this.props.yelpData[this.index].imageUrl)}")`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover',
+              overflow: 'hidden',
+              boxShadow: '0 0 0 2px rgb(38, 39, 40)',
+            }}/>
+            {
+              this.props.yelpData[this.index].rating ?
+                <div
+                  className="rating"
+                  style={{
+                    fontSize: `${this.percentToPixel(8)}px`,
+                    position: 'absolute',
+                    marginLeft: `${this.percentToPixel(8)}px`,
+                    height: `${this.percentToPixel(10)}px`,
+                    width: `${this.percentToPixel(50)}px`,
+                    top: `${this.percentToPixel(SIZE_PERCENT - 20)}px`,
+                    background: 'rgba(60, 64, 65, 0.71)',
+                    borderTopRightRadius: `${this.percentToPixel(1)}px`,
+                    borderTopLeftRadius: `${this.percentToPixel(1)}px`,
+                    boxShadow: '0 0 0 2px rgb(38, 39, 40)',
+                    color: '#ccc',
+                  }}
+                >
+                  {ratingToArray(this.props.yelpData[this.index].rating).map((e, i) => (
+                    <Icon
+                      icon={`fa-star${e ? '-half' : ''}`}
+                      fixed-width="false"
+                      key={i}
+                      style={{
+                        position: 'relative',
+                        paddingTop: `${this.percentToPixel(1)}px`,
+                        paddingLeft: `${this.percentToPixel(1)}px`,
+                        paddingRight: `${this.percentToPixel(1)}px`,
+                        zIndex: `${e ? 7 : 8}`,
+                        textShadow: '0 0 .2em #333',
+                      }}
+                    />
+                  ))}
+                </div> :
+                <div/>
+            }
+            <div style={{ padding: `${this.percentToPixel(1)}px` }}>
+              {this.state.cardName}
+            </div>
           </div>
         </div>
       </Page>
