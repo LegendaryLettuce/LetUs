@@ -11,7 +11,7 @@ import { updateCoords, updateEDP, updateGoogleMaps } from '../../redux/actions';
 import  TopBar                                       from './../../views/_global/topBar.jsx';
 import  BottomNav                                    from './../../views/_global/bottomNav.jsx';
 // Styles
-import { bodyStyle, buttonStyle }                               from '../../styles/styles';
+import { bodyStyle, buttonStyle }                    from '../../styles/styles';
 import '../../styles/mapStyle.css';
 // API Key
 import apikey                                        from './../../../../config/google-maps-api';
@@ -102,7 +102,8 @@ class LatLonModule extends Component {
   componentWillMount() {
     if (!this.props.loadGoogleMaps) {
       const script = document.createElement('script');
-      script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apikey.api_key}&libraries=places&callback=googleLoaded`;
+      // script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
       script.async = true;
       document.body.appendChild(script);
       this.props.updateGoogleMaps(true);
