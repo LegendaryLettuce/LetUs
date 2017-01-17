@@ -21,11 +21,16 @@ class Friends extends Component {
     super(props);
     this.state = {
       inviteFriends: [],
+      checked: [],
     };
+    const checkBoxes = [];
+    this.props.friends.forEach((friend) => {
+      checkBoxes.push(false);
+    });
     this.inviteFriends = this.inviteFriends.bind(this);
   }
 
-  inviteFriends(friend) {
+  inviteFriends(friend, key) {
     const friendIndex = this.state.inviteFriends.indexOf(friend);
     if (friendIndex === -1) {
       this.state.inviteFriends.push(friend);
@@ -33,7 +38,11 @@ class Friends extends Component {
       this.state.inviteFriends.splice(friendIndex, 1);
     }
     this.props.updateInviteFriends(this.state.inviteFriends);
-    // console.log(this.state.inviteFriends);
+    const checkState = this.state.checked;
+    checkState[key] = !this.state.checked[key];
+    this.setState({
+      checked: checkState,
+    });
   }
 
   render() {
@@ -42,7 +51,9 @@ class Friends extends Component {
         <List
           dataSource={this.props.friends}
           renderRow={(row, idx) => (
-            <ListItem key={idx} modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
+            <ListItem key={idx} modifier='tappable' onClick={() =>
+              this.inviteFriends({ row }.row, idx)
+            }>
               <div className="left">
                 <Icon icon="md-face" className="list__item__icon" />
               </div>
@@ -51,9 +62,7 @@ class Friends extends Component {
                 <span className="list__item__subtitle">Ready to party</span>
               </div>
               <label className="right">
-          <Input inputId={`checkbow-${row}`} type='checkbox' onClick={() =>
-          this.inviteFriends({ row }.row)
-          } />
+                <Input inputId={`checkbow-${row}`} type='checkbox' checked={this.state.checked[idx]}/>
               </label>
             </ListItem>
           )}
