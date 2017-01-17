@@ -54,24 +54,14 @@ const textStyleCreate = {
   fontSize: '400%',
 };
 
-const eatContainer = {
+const edpContainer = {
   paddingTop: containerPadding,
   paddingBottom: containerPadding,
 };
 
-const drinkContainer = {
-  paddingTop: containerPadding,
-  paddingBottom: containerPadding,
-};
-
-const playContainer = {
-  paddingTop: containerPadding,
-  paddingBottom: containerPadding,
-};
-
-const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyleCreate, containerStyle: eatContainer },
-                    { displayTitle: 'Drink', useIcon: drinkIcon, textStyle: textStyleCreate, containerStyle: drinkContainer },
-                    { displayTitle: 'Play', useIcon: playIcon, textStyle: textStyleCreate, containerStyle: playContainer }];
+const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyleCreate, containerStyle: edpContainer },
+                    { displayTitle: 'Drink', useIcon: drinkIcon, textStyle: textStyleCreate, containerStyle: edpContainer },
+                    { displayTitle: 'Play', useIcon: playIcon, textStyle: textStyleCreate, containerStyle: edpContainer }];
 
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
 
