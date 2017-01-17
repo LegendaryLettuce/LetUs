@@ -77,9 +77,14 @@ letUsRouter.route('/user/events/:userId')
       .catch(handleError.bind(this, next));
   });
 
-letUsRouter.route('/test')
-  .get((req, res, next) => {
-    letUsController.retrieveEvents(req, res);
+letUsRouter.route('/home/')
+  .put((req, res, next) => {
+    console.log('FUCKK --------------------------------');
+
+    letUsController.updateTopEvent(req, res)
+      .then((data) => {
+        res.send(JSON.stringify(data));
+      });
   });
 
 letUsRouter.route('/events/*')

@@ -117,6 +117,17 @@ const addEventGoer = (user, eventId) => {
   return savetoDB(newEventGoers);
 };
 
+const updateTopEvent = (data) => {
+  console.log('CONTROLLER--', data.body);
+  const hash = data.body.linkHash;
+  return Events.findOne({ linkHash: hash })
+    .then((doc) => {
+      doc.topEvent = data.body.topEvent;
+      console.log(doc);
+      return savetoDB(doc);
+    });
+};
+
 const updateEventAttendees = (data) => {
   const hash = data.body.linkHash;
   return Events.findOne({ linkHash: hash })
@@ -282,6 +293,7 @@ module.exports = {
   retrieveEvents,
   createEvent,
   updateEventAttendees,
+  updateTopEvent,
   retrieveYelpData,
   retrieveEventByHash,
   handleClientVotes,
