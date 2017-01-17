@@ -8,7 +8,7 @@ import axios            from 'axios';
 import { connect }      from 'react-redux';
 import { updateYelpData, updateEventHash, updateParentPage, updateEventPage, updateSelectedView, updateSelectedViewIndex } from '../../redux/actions';
 // Styles
-// import styles           from '../../styles/styles';
+import { buttonStyle }   from './../../styles/styles';
 // Subcomponents
 import GenericList from './../../views/_global/genericList.jsx';
 import BottomNav from './../../views/_global/bottomNav.jsx';
@@ -207,21 +207,8 @@ class Create extends Component {
   }
 
   render() {
-    const buttonStyle = {
-      padding: '0px 20px 0px 20px',
-      position: 'fixed',
-      bottom: '0',
-      height: '35px',
-      marginBottom: '44px',
-      zIndex: '5',
-      marginLeft: '0',
-      width: '100%',
-      textAlign: 'center',
-      fontWeight: 'bold',
-    };
-
     const padStyle = {
-      height: '79px',
+      height: '86px',
     };
 
     if (this.props.selectedView.split(' ')[1] === 'Categories' || this.props.selectedView === 'Create') {
@@ -244,8 +231,8 @@ class Create extends Component {
           <div style={padStyle}/>
         </Page>
         <Button
-          className='center'
           style={buttonStyle}
+          modifier='large'
           onClick={this.createEventHash}
         >Decide Together</Button>
         <BottomNav></BottomNav>
