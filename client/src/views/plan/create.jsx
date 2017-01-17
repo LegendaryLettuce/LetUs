@@ -8,13 +8,9 @@ import axios            from 'axios';
 import { connect }      from 'react-redux';
 import { updateYelpData, updateEventHash, updateParentPage, updateEventPage, updateSelectedView, updateSelectedViewIndex } from '../../redux/actions';
 // Styles
-import styles           from '../../styles/styles';
+// import styles           from '../../styles/styles';
 // Subcomponents
 import GenericList from './../../views/_global/genericList.jsx';
-// Import sampleData
-import eatData from './create/sampleData/eatData';
-import drinkData from './create/sampleData/drinkData';
-import playData from './create/sampleData/playData';
 import BottomNav from './../../views/_global/bottomNav.jsx';
 
 const osCheck = !ons.platform.isAndroid();
