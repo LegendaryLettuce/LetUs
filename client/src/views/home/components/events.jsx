@@ -10,13 +10,17 @@ const Events = ({ events }) => (
     renderRow={
       (event, idx) => (
         <ListItem key={idx} modifier={idx === events.length - 1 ? 'longdivider' : null}>
+        <div>
+          {console.log(JSON.parse(event.topEvent))}
+        </div>
           <div className="left">
-            <img className="list__item__image" src={(JSON.parse(event.data)[idx]).imageUrl} />
+            <img className="list__item__image" src={JSON.parse(event.topEvent)[0].imageUrl} />
           </div>
           <div className="center">
-            <span className="list__item__title">{(JSON.parse(event.data)[idx]).displayTitle}</span>
-            <span className="list__item__subtitle">{(JSON.parse(event.data)[idx]).snippetText}</span>
+            <span className="list__item__title">{JSON.parse(event.topEvent)[0].displayTitle}</span>
+            <span className="list__item__subtitle">{JSON.parse(event.topEvent)[0].snippetText}</span>
           </div>
+
         </ListItem>
       )
     }
@@ -24,3 +28,5 @@ const Events = ({ events }) => (
 );
 
 export default Events;
+
+            // console.log(JSON.parse(event.topEvent)[idx].imageUrl)

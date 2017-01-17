@@ -2,6 +2,8 @@ import React, { Component }       from 'react';
 // Onsen UI
 import ons              from 'onsenui';
 import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
+// Axios
+import axios            from 'axios';
 // Redux
 import { connect }      from 'react-redux';
 import { updateYelpData, updateEventPage, updateParentPage } from '../../redux/actions';
@@ -25,11 +27,31 @@ class LiveList extends Component {
         connectedPeers: (this.props.connectedPeers * this.props.liveData.length),
         talliedVotes: this.props.talliedVotes,
       },
+      topEvent: [],
     };
     this.props.updateParentPage('/live');
     this.handleBack = this.handleBack.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
     this.goEvent = this.goEvent.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // console.log('hELLO RECEIVE PROPS');
+
+    this.setState({
+      topEvent: JSON.stringify([this.props.liveData[0]]),
+    });
+    // console.log(this.state.topEvent);
+    axios.put('/home/', {
+      topEvent: this.state.topEvent,
+      linkHash: this.props.eventHash,
+    })
+      .then((res) => {
+        console.log('Saved top event', res);
+      })
+      .catch((error) => {
+        console.log('Saving top events error', error);
+      });
   }
 
   handleBack() {
@@ -95,6 +117,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
+  eventHash: state.eventHash,
   liveData: state.liveData,
   friends: state.friends,
   connectedPeers: state.connectedPeers,
