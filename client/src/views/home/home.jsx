@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Page }         from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
-import { load }         from '../../redux/actions';
+import { load, updateHomeEventPage, updateParentPage }         from '../../redux/actions';
 // Utils
 import { getStore, getUpcomingEvents } from '../../utils/utils';
 // Global Components
@@ -26,6 +26,9 @@ class Home extends Component {
     this.state = {
       upcomingEvents: [],
     };
+    this.props.updateParentPage('/home');
+    this.handleTouch = this.handleTouch.bind(this);
+    this.handleBack = this.handleBack.bind(this);
   }
 
   componentWillMount() {
@@ -50,12 +53,17 @@ class Home extends Component {
     this.props.router.push('/');
   }
 
+  handleTouch(selected) {
+    this.props.updateHomeEventPage(selected);
+    this.props.router.push('/homeevent');
+  }
+
   render() {
     return (
 
       <Page renderToolbar={TopBar.bind(this, ({ title: 'Home', handleBack: this.handleBack }))}>
         <div style={listStyle}>
-          <Events events={this.state.upcomingEvents}/>
+          <Events events={this.state.upcomingEvents} handleTouch={this.handleTouch}/>
         </div>
         <BottomButton title={'Create an Event'} route={this.routeToLatlon}/>
         <BottomNav router={this.props.router}/>
@@ -67,6 +75,12 @@ class Home extends Component {
 const mapDispatchToProps = dispatch => ({
   load: (state) => {
     dispatch(load(state));
+  },
+  updateHomeEventPage: (homeEventPageData) => {
+    dispatch(updateHomeEventPage(homeEventPageData));
+  },
+  updateParentPage: (parentPage) => {
+    dispatch(updateParentPage(parentPage));
   },
 });
 
