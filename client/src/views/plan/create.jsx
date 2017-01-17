@@ -173,16 +173,11 @@ class Create extends Component {
         console.log('Saved invited friends', res);
         this.props.updateEventHash(res.data.linkHash);
         console.log('EVENT HASH', this.props.eventHash);
-        this.decideTogether();
+        this.props.router.push('/invite');
       })
       .catch((error) => {
         console.log('Inviting friends error', error);
       });
-  }
-
-  // On Click Event
-  decideTogether() {
-    this.props.router.push('/invite');
   }
 
   renderToolbar(toolbarTitle) {
