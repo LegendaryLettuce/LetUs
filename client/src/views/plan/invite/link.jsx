@@ -1,6 +1,8 @@
 import React, { Component }       from 'react';
 // Redux
 import { connect }      from 'react-redux';
+// Copy Button
+import CopyToClipboard from 'react-copy-to-clipboard';
 // Onsen UI
 // import ons              from 'onsenui';
 import { Icon } from 'react-onsenui';
@@ -32,9 +34,10 @@ const hostUrl = 'localhost:3000/c/';
 
 const Link = props => (
   <div style={linkStyle}>
-    <div style={{ float: 'left' }}>
-      <p style={link}>{`${hostUrl}${props.eventHash}`}</p>
-    </div>
+    <CopyToClipboard text={`${hostUrl}${props.eventHash}`}>
+      <Icon icon='fa-clone' />
+      <button>Copy to clipboard with button</button>
+    </CopyToClipboard>&nbsp;
   </div>
 
 );
@@ -44,9 +47,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(Link);
-
-
-    // <div style={copyStyle}>
-    //   <Icon icon='fa-clone' />
-    // </div>
-
