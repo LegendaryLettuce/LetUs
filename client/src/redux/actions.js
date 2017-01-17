@@ -47,6 +47,8 @@ export const updateEDP = (edp) => {
   return { type: 'UPDATE_EDP', edp };
 };
 
+export const updateHomeEventPage = homeEventPageData => ({ type: 'UPDATE_HOME_EVENT_PAGE', homeEventPageData });
+
 export const updateEventPage = eventPageData => ({ type: 'UPDATE_EVENT_PAGE', eventPageData });
 
 export const updateParentPage = parentPage => ({ type: 'UPDATE_PARENT_PAGE', parentPage });
