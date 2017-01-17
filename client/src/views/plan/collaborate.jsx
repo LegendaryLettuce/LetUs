@@ -143,8 +143,7 @@ class Collaborate extends Component {
 
   move(prevPos = this.getPos()) {
     const pos = this.getPos();
-    const per = this.percentToPixel((this.percentToPixel(SIZE_PERCENT) /
-      this.state.windowWidth) * 50);
+    const per = this.percentToPixel(SIZE_PERCENT) / 2;
     const intendedColor = (new Array(3)).fill(this.otherRGB);
     if (pos >= per) {
       this.updateRGB(GREEN, 2);
@@ -195,6 +194,11 @@ class Collaborate extends Component {
     if (this.state.intensity > 0) this.setState({ intensity: this.state.intensity - 1 });
     else if (this.state.intensity < 0) this.setState({ intensity: 0 });
     this.updateRGB(BLUE);
+    this.setState({
+      neutral: 'block',
+      like: 'none',
+      dislike: 'none',
+    });
     if (this.loaded && this.new) this.setState({ rgb: RGB });
     else if (this.loaded && !this.holding &&
         JSON.stringify(this.state.rgb) !== JSON.stringify(RGB)) {
@@ -270,22 +274,23 @@ class Collaborate extends Component {
         <div style={{
           ...backStyle,
           height: `${(this.state.windowHeight - (this.marginTop() + this.percentToPixel(SIZE_PERCENT + 8))) + this.percentToPixel((((SIZE_PERCENT + 13) * this.state.intensity) / 100))}px`,
+          bottom: '0',
         }}>
           <div style={{
-            ...backStyle,
-            bottom: '0',
+            height: '100%',
+            width: '100%',
             display: `${this.state.neutral}`,
             background: `rgba(232, 163, 32, ${this.state.intensity / 100})`,
           }}/>
           <div style={{
-            ...backStyle,
-            bottom: '0',
+            height: '100%',
+            width: '100%',
             display: `${this.state.like}`,
             background: `rgba(46, 209, 65, ${this.state.intensity / 100})`,
           }}/>
           <div style={{
-            ...backStyle,
-            bottom: '0',
+            height: '100%',
+            width: '100%',
             display: `${this.state.dislike}`,
             background: `rgba(204, 60, 54, ${this.state.intensity / 100})`,
           }}/>
