@@ -7,9 +7,24 @@ const updateClientsCount = (socket, count) => {
 };
 
 const checkInvite = (socket, nsp) => {
+  if (!letUsController) {
+    console.log('Loaded DB Controller');
+    letUsController = require('./db/letUsController');
+  }
+  const hash = socket.nsp.name.split('/')[2];
   socket.on('check invite', (userData) => {
-    console.log('USER DATA FROM CHECK INVITE');
-    console.log(userData);
+    const user = {
+      id: userData.id,
+      name: userData.name,
+      linkHash: hash,
+    };
+    letUsController.handleNewEventAttendees(user)
+      .then((updatedAttendees) => {
+        // console.log('SOCKET: sending client updated attendees list:', updatedAttendees);
+        if (updatedAttendees) {
+          nsp.emit('update peerlist', updatedAttendees);
+        }
+      });
   });
 };
 

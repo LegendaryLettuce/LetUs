@@ -122,7 +122,7 @@ letUsRouter.route('/eventdata/:lat/:lng')
 
 letUsRouter.route('/checkEventHash')
   .get((req, res, next) => {
-    console.log('RECEIVED REQUEST TO CHECK HASH');
+    // console.log('RECEIVED REQUEST TO CHECK HASH');
     const hash = req.session.eventHash;
     delete req.session.eventHash;
     res.send(hash);
