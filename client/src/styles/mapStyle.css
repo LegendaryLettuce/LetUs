@@ -1,12 +1,22 @@
-.pac-container {
-  width: 94% !important;
-}
-
 input {
-  background-color: #242424;
+  background-color: rgba(0,0,0,0);
   -webkit-user-select: auto;
   user-select: auto;
   color: white;
   border: 0;
   border-bottom: 1px solid white;
+}
+
+.pac-item {
+  background-color: rgba(0,0,0,0);
+}
+
+.pac-container {
+  background-color: rgba(0,0,0,0);
+  box-shadow: 0 0 0 1px #d9d9d9;
+}
+
+.pac-item-query {
+  color: white;
+  background-color: rgba(0,0,0,0);
 }
