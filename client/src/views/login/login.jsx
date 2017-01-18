@@ -8,7 +8,7 @@ import axios                                         from 'axios';
 import { connect }                                   from 'react-redux';
 import { updateUser, load, loadFB, updateEventHash } from '../../redux/actions';
 // Utils
-import { postLogin, getStore }                       from '../../utils/utils';
+import { postLogin, getStore, loadFacebook }         from '../../utils/utils';
 // Styles
 import { login, splashText, fbLogin, tint, tagline } from '../../styles/styles';
 
@@ -23,12 +23,6 @@ const interval = 2000; // The time to wait before rendering the next string
 const typistProps = {}; // Props that are passed to the react-typist component
 
 class LoginView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fbLoad: false,
-    };
-  }
 
   componentWillMount() {
     axios.get('/checkEventHash')
@@ -37,36 +31,12 @@ class LoginView extends Component {
       });
   }
 
-  loadFacebook() {
-    window.fbAsyncInit = () => {
-      FB.init({
-        appId: '1233081016779123',
-        cookie: true,
-        xfbml: true,
-        version: 'v2.8',
-      });
-      FB.AppEvents.logPageView();
-      this.setState({ fbLoad: true });
-    };
-    (((d, s, id) => {
-      const fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      const js = d.createElement(s); js.id = id;
-      js.src = '//connect.facebook.net/en_US/sdk.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, 'script', 'facebook-jssdk'));
-    this.props.loadFB(true);
-  }
   // eslint-disable-next-line class-methods-use-this
   componentDidMount() {
-    if (!this.props.loaded) {
-      this.loadFacebook();
-      this.props.load(getStore());
-    } else if (!this.props.fbLoaded) {
-      this.loadFacebook();
-    } else {
-      this.setState({ fbLoad: true });
-    }
+    // Load cached redux from Session Store
+    if (!this.props.loaded) this.props.load(getStore());
+    // Load Facebook API if not loaded yet
+    if (!this.props.fbLoaded) loadFacebook(this.props.loadFB.bind(this, true));
   }
 
   fbLogin() {
@@ -112,11 +82,11 @@ class LoginView extends Component {
           <div style={tint}>
             <div style={splashText}>
               Let Us
-                <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} /> 
+                <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} />
               <div style={tagline}>Collaborative event planning with friends.</div>
             </div>
             {
-              this.state.fbLoad ?
+              this.props.fbLoaded ?
               <BottomToolbar style={fbLogin}>
                 <Button style={button} onClick={this.fbLogin.bind(this)}>
                   <Icon icon="fa-facebook-square"/> Log In
