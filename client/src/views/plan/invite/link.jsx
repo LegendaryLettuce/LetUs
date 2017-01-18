@@ -30,7 +30,7 @@ const link = {
   display: 'inline',
 };
 
-const hostUrl = '138.197.200.21:3000/c/';
+const hostUrl = `${window.location.href}c/`;
 
 const Link = props => (
   <div style={linkStyle}>
