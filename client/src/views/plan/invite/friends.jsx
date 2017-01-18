@@ -1,19 +1,13 @@
-import React, { Component }       from 'react';
-
+import React, { Component } from 'react';
 // React Router
 import { browserHistory, Link } from 'react-router';
-
 // Onsen UI
-// import ons              from 'onsenui';
 import { ListItem, List, Switch, Icon, Input } from 'react-onsenui';
-
 // Redux
 import { connect }      from 'react-redux';
-import { updateInviteFriends }
-                        from '../../../redux/actions';
-
+import { updateInviteFriends } from '../../../redux/actions';
 // Styles
-import { }   from '../../../styles/styles';
+// import { }   from '../../../styles/styles';
 
 class Friends extends Component {
 

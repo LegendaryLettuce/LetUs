@@ -13,11 +13,11 @@ import {
   updateTalliedVotes,
 }                       from '../../redux/actions';
 // Utils
-import { getStore } from '../../utils/utils';
+import { getStore }     from '../../utils/utils';
 // Styles
-import { }   from '../../styles/styles';
+// import { }              from '../../styles/styles';
 // Sockets
-import socket from './../../sockets/sockets';
+import socket           from './../../sockets/sockets';
 
 class Loading extends Component {
 

@@ -1,4 +1,4 @@
-import React, { Component }       from 'react';
+import React, { Component } from 'react';
 // Onsen UI
 // import ons              from 'onsenui';
 import { Page, Toolbar, BackButton } from 'react-onsenui';
@@ -18,7 +18,7 @@ import {
 // Utils
 import { getStore }     from '../../utils/utils';
 // Styles
-import { }              from '../../styles/styles';
+// import { }              from '../../styles/styles';
 // Components
 import  HashLink        from './invite/link.jsx';
 import  Friends         from './invite/friends.jsx';

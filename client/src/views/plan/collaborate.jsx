@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
 // Onsen UI
-import { Page, Carousel, CarouselItem, Icon } from 'react-onsenui';
+import {
+  Page,
+  Carousel,
+  CarouselItem,
+  Icon,
+}                       from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
 import { addLiveData, load } from '../../redux/actions';
 // Utils
-import { getUrl, ratingToArray, getStore } from '../../utils/utils';
+import {
+  getUrl,
+  ratingToArray,
+  getStore,
+}                       from '../../utils/utils';
 // Sockets
 import { emitLiveData } from '../../sockets/sockets';
 

@@ -1,13 +1,12 @@
-import React, { Component }       from 'react';
+import React            from 'react';
 // Redux
 import { connect }      from 'react-redux';
 // Copy Button
-import CopyToClipboard from 'react-copy-to-clipboard';
+import CopyToClipboard  from 'react-copy-to-clipboard';
 // Onsen UI
-// import ons              from 'onsenui';
-import { Icon } from 'react-onsenui';
+import { Icon }         from 'react-onsenui';
 // Styles
-import { }   from '../../../styles/styles';
+// import { }   from '../../../styles/styles';
 
 const linkStyle = {
   border: '2px solid white',
