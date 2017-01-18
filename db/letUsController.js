@@ -133,6 +133,7 @@ const updateEventAttendees = (data) => {
   return Events.findOne({ linkHash: hash })
     .then((doc) => {
       doc.attendees = data.body.attendees;
+      doc.topEvent = data.body.topEvent;
       return savetoDB(doc);
     })
     .then((event) => {
