@@ -1,17 +1,28 @@
-import React, { Component }       from 'react';
+import React, { Component } from 'react';
 // Onsen UI
 import ons              from 'onsenui/js/onsenui.min';
-import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
+import { Page, Button } from 'react-onsenui';
 // Axios for requests
 import axios            from 'axios';
 // Redux
 import { connect }      from 'react-redux';
-import { updateYelpData, updateEventHash, updateParentPage, updateEventPage, updateSelectedView, updateSelectedViewIndex } from '../../redux/actions';
+import {
+  updateYelpData,
+  updateEventHash,
+  updateParentPage,
+  updateEventPage,
+  updateSelectedView,
+  updateSelectedViewIndex,
+  load,
+}                       from '../../redux/actions';
+// Utils
+import { getStore }     from '../../utils/utils';
 // Styles
-import { buttonStyle }   from './../../styles/styles';
+import { buttonStyle }  from './../../styles/styles';
 // Subcomponents
-import GenericList from './../../views/_global/genericList.jsx';
-import BottomNav from './../../views/_global/bottomNav.jsx';
+import TopBar           from './../../views/_global/topBar.jsx';
+import GenericList      from './../../views/_global/genericList.jsx';
+import BottomNav        from './../../views/_global/bottomNav.jsx';
 
 const osCheck = !ons.platform.isAndroid();
 
@@ -70,7 +81,6 @@ const padStyle = {
 };
 
 class Create extends Component {
-
   constructor(props) {
     super(props);
     if (this.props.selectedView === 'Create') {
@@ -86,6 +96,11 @@ class Create extends Component {
     this.parseBizByCategory = this.parseBizByCategory.bind(this);
     this.createEventHash = this.createEventHash.bind(this);
     this.props.updateParentPage('/create');
+  }
+
+  componentWillMount() {
+    // Load cached redux from Session Store
+    if (!this.props.loaded) this.props.load(getStore());
   }
 
   handleTouch(item) {
@@ -193,22 +208,11 @@ class Create extends Component {
       });
   }
 
-  renderToolbar(toolbarTitle) {
-    return (
-      <Toolbar>
-        <div className="left">
-          <BackButton onClick={this.handleBack}></BackButton>
-        </div>
-        <div className='center' style={{ fontWeight: 'bolder' }}>{toolbarTitle}</div>
-      </Toolbar>
-    );
-  }
-
   render() {
     return (
       <div>
         <Page
-          renderToolbar={() => this.renderToolbar(this.props.selectedView)}
+          renderToolbar={TopBar.bind(this, { title: 'Location', handleBack: this.handleBack })}
           style={{ background: 'rgba(51,51,51,1)' }}
         >
           <GenericList
@@ -234,6 +238,9 @@ class Create extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
+  load: (state) => {
+    dispatch(load(state));
+  },
   updateYelpData: (yelpData) => {
     dispatch(updateYelpData(yelpData));
   },
@@ -255,6 +262,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
+  loaded: state.loaded,
   yelpData: state.yelpData,
   eventHash: state.eventHash,
   user: state.user,
