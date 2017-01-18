@@ -1,11 +1,15 @@
 import React, { Component }     from 'react';
+// Onsen UI
+import { Page, List, ListItem, Icon, Toolbar, BackButton } from 'react-onsenui';
 // Redux
 import { connect }              from 'react-redux';
-import { Page, List, ListItem, Icon, Toolbar, BackButton } from 'react-onsenui';
+import { load }                 from '../../redux/actions';
+// Utils
+import { getStore }             from '../../utils/utils';
 // Styles
 import { bodyStyle }            from '../../styles/styles';
 // Pages
-import  BottomNav        from './../../views/_global/bottomNav.jsx';
+import  BottomNav               from './../../views/_global/bottomNav.jsx';
 
 const iconPadding = {
   marginRight: '10px',
@@ -80,6 +84,11 @@ class Event extends Component {
     this.renderToolbar = this.renderToolbar.bind(this);
   }
 
+  componentWillMount() {
+    // Load cached redux from Session Store
+    if (!this.props.loaded) this.props.load(getStore());
+  }
+
   handleBack() {
     this.props.router.push(this.props.parentPage);
   }
@@ -151,9 +160,16 @@ class Event extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  load: (state) => {
+    dispatch(load(state));
+  },
+});
+
 const mapStateToProps = state => ({
+  loaded: state.loaded,
   data: state.eventPageData,
   parentPage: state.parentPage,
 });
 
-export default connect(mapStateToProps)(Event);
+export default connect(mapStateToProps, mapDispatchToProps)(Event);

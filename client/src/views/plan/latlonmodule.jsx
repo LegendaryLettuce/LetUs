@@ -1,20 +1,28 @@
-import React, { Component }                          from 'react';
+import React, { Component } from 'react';
 // Onsen UI
-import { Page, Button, Icon }                        from 'react-onsenui';
+import { Page, Button, Icon } from 'react-onsenui';
 // Packages
-import Autocomplete                                  from 'react-google-autocomplete';
-import axios                                         from 'axios';
+import Autocomplete     from 'react-google-autocomplete';
+import axios            from 'axios';
 // Redux
-import { connect }                                   from 'react-redux';
-import { updateCoords, updateEDP, updateGoogleMaps } from '../../redux/actions';
-// Global Components
-import  TopBar                                       from './../../views/_global/topBar.jsx';
-import  BottomNav                                    from './../../views/_global/bottomNav.jsx';
+import { connect }      from 'react-redux';
+import {
+  updateCoords,
+  updateEDP,
+  updateGoogleMaps,
+  load,
+}                       from '../../redux/actions';
+import { initSocket }   from './../../sockets/sockets';
+// Utils
+import { getStore }     from '../../utils/utils';
 // Styles
-import { bodyStyle, buttonStyle }                    from '../../styles/styles';
+import { bodyStyle, buttonStyle } from '../../styles/styles';
 import '../../styles/mapStyle.css';
+// Global Components
+import  TopBar          from './../../views/_global/topBar.jsx';
+import  BottomNav       from './../../views/_global/bottomNav.jsx';
 // API Key
-import apikey                                        from './../../../../config/google-maps-api';
+import apikey           from './../../../../config/google-maps-api';
 
 // TODO: Add api key
 
@@ -52,6 +60,23 @@ class LatLonModule extends Component {
         loaded: true,
       });
     };
+  }
+
+  componentWillMount() {
+    // Load cached redux from Session Store
+    if (!this.props.loaded) this.props.load(getStore());
+    if (!this.props.loadGoogleMaps) {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apikey.api_key}&libraries=places&callback=googleLoaded`;
+      // script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
+      script.async = true;
+      document.body.appendChild(script);
+      this.props.updateGoogleMaps(true);
+    } else {
+      this.setState({ loaded: true });
+    }
+    this.addClickClass();
+    this.geoLocation(this.handlePosition);
   }
 
   addClickClass() {
@@ -97,21 +122,6 @@ class LatLonModule extends Component {
       address,
       geocodeResults: null,
     });
-  }
-
-  componentWillMount() {
-    if (!this.props.loadGoogleMaps) {
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apikey.api_key}&libraries=places&callback=googleLoaded`;
-      // script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&callback=googleLoaded';
-      script.async = true;
-      document.body.appendChild(script);
-      this.props.updateGoogleMaps(true);
-    } else {
-      this.setState({ loaded: true });
-    }
-    this.addClickClass();
-    this.geoLocation(this.handlePosition);
   }
 
   componentDidMount() {
@@ -161,7 +171,7 @@ class LatLonModule extends Component {
 
   render() {
     return (
-      <Page renderToolbar={TopBar.bind(this, ({ title: 'Location', handleBack: this.handleBack }))}>
+      <Page renderToolbar={TopBar.bind(this, { title: 'Location', handleBack: this.handleBack })}>
         <p style={title}>Where to?</p>
         {
           this.state.loaded ?
@@ -198,6 +208,9 @@ class LatLonModule extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
+  load: (state) => {
+    dispatch(load(state));
+  },
   updateCoords: (coords) => {
     dispatch(updateCoords(coords));
   },
@@ -210,6 +223,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
+  loaded: state.loaded,
   coords: state.coords,
   edp: state.edp,
   loadGoogleMaps: state.loadGoogleMaps,
