@@ -61,9 +61,22 @@ export const getStore = () => ({
 });
 
 
-// Example format:
-// export const post = data => (
-//   new Promise((resolve, reject) => {
-//     resolve(data);
-//   })
-// );
+export const loadFacebook = (redux) => {
+  window.fbAsyncInit = () => {
+    FB.init({
+      appId: '1233081016779123',
+      cookie: true,
+      xfbml: true,
+      version: 'v2.8',
+    });
+    FB.AppEvents.logPageView();
+    redux();
+  };
+  (((d, s, id) => {
+    const fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    const js = d.createElement(s); js.id = id;
+    js.src = '//connect.facebook.net/en_US/sdk.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, 'script', 'facebook-jssdk'));
+};
