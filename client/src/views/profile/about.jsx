@@ -13,25 +13,34 @@ const team = [{
   name: 'Wilson Ng',
   github: 'https://github.com/wilsonhyng',
   handle: 'wilsonhyng',
+  avatar: 'https://avatars.githubusercontent.com/u/11743852?v=3',
 },
 {
   name: 'Joe Denea',
   github: 'https://github.com/IceFractal',
   handle: 'IceFractal',
+  avatar: 'https://avatars.githubusercontent.com/u/22352825?v=3',
 },
 {
   name: 'David An',
   github: 'https://github.com/davidank',
   handle: 'davidank',
+  avatar: 'https://avatars.githubusercontent.com/u/21187522?v=3',
 },
 {
   name: 'Autumn Smith',
   github: 'https://github.com/sautumn',
   handle: 'sautumn',
+  avatar: 'https://avatars.githubusercontent.com/u/7321716?v=3',
 }];
 
 const link = {
   color: '#000000',
+};
+
+const gitImage = {
+  marginRight: '5px',
+  borderRadius: '50%',
 };
 
 class About extends Component {
@@ -45,30 +54,40 @@ class About extends Component {
 
   render() {
     return (
-      <Page style={bodyStyle} renderToolbar={TopBar.bind(this, { title: 'About', handleBack: this.handleBack })}>
+      <Page renderToolbar={TopBar.bind(this, { title: 'About', handleBack: this.handleBack })}>
         <List>
           <ListHeader>About</ListHeader>
           <ListItem>
-            <span>Made using React, Redux, OnsenUI, MongoDB, Express.</span>
-            <span className='list__item__subtitle'>
-              <Icon className='left list__item__icon' icon='fa-github'/>
-                <a href='https://github.com/LegendaryLettuce/LetUs' target='_blank' className='center' style={{ textDecoration: 'none', color: 'white' }}>
-                Project Repo
-                </a>
-            </span>
+            <div className='left'>
+              <img src='https://pbs.twimg.com/media/CFWi-dUW8AAbwqo.png' alt='LetUsCat'/>
+            </div>
+            <div className='center'>
+              <span>Made using React, Redux, OnsenUI, MongoDB, Express, SocketIO.</span>
+              <span className='list__item__subtitle'>
+                <Icon className='left list__item__icon' icon='fa-github'/>
+                  <a href='https://github.com/LegendaryLettuce/LetUs' target='_blank' className='center' style={{ textDecoration: 'none', color: 'white' }}>
+                  Project Repo
+                  </a>
+              </span>
+            </div>
           </ListItem>
           <ListHeader>Team Members</ListHeader>
           { team.map(member => (
             <ListItem tappable>
-              <span className='list__item__title'>
-                {member.name}
-              </span>
-              <span className='list__item__subtitle'>
-                <Icon className='left list__item__icon' icon='fa-github'/>
-                  <a href={member.github} target='_blank' className='center' style={{ textDecoration: 'none', color: 'white' }}>
-                    @{member.handle}
-                  </a>
-              </span>
+              <div className='left'>
+                <img style={gitImage} className="list__item__thumbnail" src={member.avatar} alt={`${member.github}`}/>
+              </div>
+              <div className='center'>
+                <span className='list__item__title'>
+                  {member.name}
+                </span>
+                <div className='list__item__subtitle'>
+                  <Icon className='list__item__icon' icon='fa-github'/>
+                    <a href={member.github} target='_blank' style={{ textDecoration: 'none', color: 'white' }}>
+                      @{member.handle}
+                    </a>
+                </div>
+            </div>
             </ListItem>
           ))}
         </List>

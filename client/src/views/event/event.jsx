@@ -115,7 +115,7 @@ class Event extends Component {
         style={{ background: 'rgba(51,51,51,1)' }}>
           <div style={{
             ...imageDiv,
-            background: `url(${this.getUrl(this.props.data.imageUrl)}) 100%`,
+            backgroundImage: `url(${this.getUrl(this.props.data.imageUrl)})`,
           }}>
             <div style={imageTint}>
               <div style={titleText}>
