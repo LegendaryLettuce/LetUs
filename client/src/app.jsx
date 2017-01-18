@@ -22,6 +22,7 @@ import LiveList         from './views/plan/liveList.jsx';
 import Event            from './views/event/event.jsx';
 import Profile          from './views/profile/profile.jsx';
 import Friends          from './views/profile/friends.jsx';
+import About            from './views/profile/about.jsx';
 import LatLonModule     from './views/plan/latlonmodule.jsx';
 
 const store = createStore(reducer);
@@ -44,6 +45,7 @@ render(
         <Route path='event' component={Event} />
         <Route path='profile' component={Profile} />
         <Route path='friends' component={Friends} />
+        <Route path='about' component={About} />
       </Route>
     </Router>
   </Provider>,
