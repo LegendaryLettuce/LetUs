@@ -8,7 +8,7 @@ import axios            from 'axios';
 import { connect }      from 'react-redux';
 import { updateYelpData, updateEventHash, updateParentPage, updateEventPage, updateSelectedView, updateSelectedViewIndex } from '../../redux/actions';
 // Styles
-// import styles           from '../../styles/styles';
+import { buttonStyle }   from './../../styles/styles';
 // Subcomponents
 import GenericList from './../../views/_global/genericList.jsx';
 import BottomNav from './../../views/_global/bottomNav.jsx';
@@ -54,26 +54,20 @@ const textStyleCreate = {
   fontSize: '400%',
 };
 
-const eatContainer = {
+const edpContainer = {
   paddingTop: containerPadding,
   paddingBottom: containerPadding,
 };
 
-const drinkContainer = {
-  paddingTop: containerPadding,
-  paddingBottom: containerPadding,
-};
-
-const playContainer = {
-  paddingTop: containerPadding,
-  paddingBottom: containerPadding,
-};
-
-const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyleCreate, containerStyle: eatContainer },
-                    { displayTitle: 'Drink', useIcon: drinkIcon, textStyle: textStyleCreate, containerStyle: drinkContainer },
-                    { displayTitle: 'Play', useIcon: playIcon, textStyle: textStyleCreate, containerStyle: playContainer }];
+const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyleCreate, containerStyle: edpContainer },
+                    { displayTitle: 'Drink', useIcon: drinkIcon, textStyle: textStyleCreate, containerStyle: edpContainer },
+                    { displayTitle: 'Play', useIcon: playIcon, textStyle: textStyleCreate, containerStyle: edpContainer }];
 
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
+
+const padStyle = {
+  height: '86px',
+};
 
 class Create extends Component {
 
@@ -84,8 +78,8 @@ class Create extends Component {
     }
     this.state = {
       data: [createData, this.props.edp.eat, this.props.edp.drink, this.props.edp.play],
+      buttonDisplay: this.props.selectedView === 'Create' ? 'none' : 'block',
     };
-    this.decideTogether = this.decideTogether.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.parseUniqueCategories = this.parseUniqueCategories.bind(this);
@@ -100,11 +94,17 @@ class Create extends Component {
       this.props.updateSelectedView(`${categoryLabels[indexSelected]} Categories`);
       this.props.updateSelectedViewIndex(indexSelected);
       this.props.updateYelpData(this.parseUniqueCategories(this.state.data[indexSelected]));
+      this.setState({
+        buttonDisplay: 'none',
+      });
     } else if (this.props.selectedView.split(' ')[1] === 'Categories') {
       this.props.updateSelectedView(item.displayTitle);
       this.props.updateYelpData(
         this.parseBizByCategory(this.state.data[this.props.selectedViewIndex], item.displayTitle),
       );
+      this.setState({
+        buttonDisplay: 'block',
+      });
     } else {
       this.props.updateEventPage(item);
       this.props.router.push('/event');
@@ -122,6 +122,9 @@ class Create extends Component {
         this.props.updateYelpData(
           this.parseUniqueCategories(this.state.data[this.props.selectedViewIndex]),
         );
+        this.setState({
+          buttonDisplay: 'none',
+        });
       }
     } else {
       this.props.router.push('/search');
@@ -183,16 +186,11 @@ class Create extends Component {
         console.log('Saved invited friends', res);
         this.props.updateEventHash(res.data.linkHash);
         console.log('EVENT HASH', this.props.eventHash);
-        this.decideTogether();
+        this.props.router.push('/invite');
       })
       .catch((error) => {
         console.log('Inviting friends error', error);
       });
-  }
-
-  // On Click Event
-  decideTogether() {
-    this.props.router.push('/invite');
   }
 
   renderToolbar(toolbarTitle) {
@@ -207,29 +205,6 @@ class Create extends Component {
   }
 
   render() {
-    const buttonStyle = {
-      padding: '0px 20px 0px 20px',
-      position: 'fixed',
-      bottom: '0',
-      height: '35px',
-      marginBottom: '44px',
-      zIndex: '5',
-      marginLeft: '0',
-      width: '100%',
-      textAlign: 'center',
-      fontWeight: 'bold',
-    };
-
-    const padStyle = {
-      height: '79px',
-    };
-
-    if (this.props.selectedView.split(' ')[1] === 'Categories' || this.props.selectedView === 'Create') {
-      buttonStyle.display = 'none';
-    } else {
-      buttonStyle.display = '';
-    }
-
     return (
       <div>
         <Page
@@ -244,8 +219,11 @@ class Create extends Component {
           <div style={padStyle}/>
         </Page>
         <Button
-          className='center'
-          style={buttonStyle}
+          style={{
+            ...buttonStyle,
+            display: this.state.buttonDisplay,
+          }}
+          modifier='large'
           onClick={this.createEventHash}
         >Decide Together</Button>
         <BottomNav></BottomNav>
