@@ -13,6 +13,7 @@ class BottomNav extends Component {
     super(props);
     this.routeToHome = this.routeToHome.bind(this);
     this.routeToFriends = this.routeToFriends.bind(this);
+    this.routeToAbout = this.routeToAbout.bind(this);
   }
 
   routeToHome() {
@@ -21,6 +22,10 @@ class BottomNav extends Component {
 
   routeToFriends() {
     this.props.router.push('/friends');
+  }
+
+  routeToAbout() {
+    this.props.router.push('/about');
   }
 
   render() {
@@ -39,7 +44,7 @@ class BottomNav extends Component {
         </div>
         <div className="right">
           <ToolbarButton>
-            <Icon icon="fa-cog"/>
+            <Icon icon="fa-question" onClick={this.routeToAbout}/>
             {/* Create */}
           </ToolbarButton>
         </div>
