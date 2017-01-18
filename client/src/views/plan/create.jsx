@@ -226,8 +226,7 @@ class Create extends Component {
           modifier='large'
           onClick={this.createEventHash}
         >Decide Together</Button>
-        <BottomNav></BottomNav>
-
+        <BottomNav router={this.props.router}/>
       </div>
     );
   }
