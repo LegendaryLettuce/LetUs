@@ -2,6 +2,19 @@ import React, { Component } from 'react';
 // Onsen UI
 import { ListItem, List } from 'react-onsenui';
 
+const circle = {
+  borderRadius: '12px',
+  padding: '2px 6px 2px 6px',
+  textAlign: 'center',
+  background: 'gray',
+  marginRight: '2px',
+  display: 'inline-block',
+};
+
+const divStyle = {
+  display: 'inline-block',
+};
+
 const Events = props => (
       <List
         dataSource={props.events}
@@ -15,13 +28,12 @@ const Events = props => (
               </div>
               <div className="center">
                 <span className="list__item__title">{JSON.parse(event.topEvent)[0].displayTitle}</span>
-                {/* <span className="list__item__subtitle">
-                  <b>Event LORD</b> <br />
-                  {JSON.parse(event.creator).name}
-                </span> */}
                 <span className="list__item__subtitle">
-                  Attendees <br /> {JSON.parse(event.creator).name}
-                  {JSON.parse(event.attendees).reduce((memo, attendee) => `${memo} ${attendee.name}`, '')}
+                  Attendees<br />
+                  <span style={circle}>{JSON.parse(event.creator).name}</span>
+                  <div style={divStyle}>{JSON.parse(event.attendees).map((attendee, i) => (
+                    <span style={circle} key={i}>{attendee.name}</span>
+                  ))}</div>
                 </span>
               </div>
             </ListItem>
@@ -31,3 +43,4 @@ const Events = props => (
     );
 
 export default Events;
+
