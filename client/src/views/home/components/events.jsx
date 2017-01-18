@@ -1,33 +1,27 @@
 import React, { Component } from 'react';
-// Redux
-import { connect }          from 'react-redux';
 // Onsen UI
-import { ListItem, List, Icon } from 'react-onsenui';
-// Styles
-// import { }              from '../../../styles/styles';
+import { ListItem, List } from 'react-onsenui';
 
-class Events extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
+const Events = props => (
       <List
-        dataSource={this.props.events}
+        dataSource={props.events}
         renderRow={
           (event, idx) => (
-            <ListItem key={idx} modifier={idx === this.props.events.length - 1 ? 'longdivider' : null} onClick={() => {
-              this.props.handleTouch(event);
+            <ListItem key={idx} modifier={idx === props.events.length - 1 ? 'longdivider' : null} onClick={() => {
+              props.handleTouch(event);
             }}>
               <div className="left">
-                <img className="list__item__image" src={JSON.parse(event.topEvent)[0].imageUrl} />
+                <img className="list__item__image" alt="Top Event Image" src={JSON.parse(event.topEvent)[0].imageUrl} />
               </div>
               <div className="center">
                 <span className="list__item__title">{JSON.parse(event.topEvent)[0].displayTitle}</span>
-                <span className="list__item__attendees">
-                  Attendees <br />
-                  {JSON.parse(event.attendees).reduce((memo, attendee) => memo + ' ' + attendee.name, '')}
+                {/* <span className="list__item__subtitle">
+                  <b>Event LORD</b> <br />
+                  {JSON.parse(event.creator).name}
+                </span> */}
+                <span className="list__item__subtitle">
+                  Attendees <br /> {JSON.parse(event.creator).name}
+                  {JSON.parse(event.attendees).reduce((memo, attendee) => `${memo} ${attendee.name}`, '')}
                 </span>
               </div>
             </ListItem>
@@ -35,42 +29,5 @@ class Events extends Component {
         }
       />
     );
-  }
-}
 
-const mapStateToProps = state => ({
-
-});
-
-export default connect(mapStateToProps)(Events);
-
-
-// const Events = ({ handleTouch, events }) => (
-//   <List
-//     dataSource={events}
-//     renderRow={
-//       (event, idx) => (
-//         <ListItem key={idx} modifier={idx === events.length - 1 ? 'longdivider' : null} onClick={() => {
-//           handleTouch(event);
-//           console.log(event);
-//         }}>
-//           <div className="left">
-//             <img className="list__item__image" src={JSON.parse(event.topEvent)[0].imageUrl} />
-//           </div>
-//           <div className="center">
-//             <span className="list__item__title">{JSON.parse(event.topEvent)[0].displayTitle}</span>
-//             <span className="list__item__attendees">
-//               Attendees <br />
-//               {JSON.parse(event.attendees).reduce((memo, attendee) => memo + ' ' + attendee.name, '')}
-//             </span>
-//           </div>
-//         </ListItem>
-//       )
-//     }
-//   />
-// );
-
-// export default Events;
-
-            // <span className="list__item__subtitle">{JSON.parse(event.topEvent)[0].snippetText}</span>
-            // {JSON.parse(event.attendees)[0].name}
+export default Events;
