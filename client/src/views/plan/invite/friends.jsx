@@ -18,7 +18,7 @@ class Friends extends Component {
       checked: [],
     };
     const checkBoxes = [];
-    this.props.friends.forEach((friend) => {
+    this.props.friends.forEach(() => {
       checkBoxes.push(false);
     });
     this.inviteFriends = this.inviteFriends.bind(this);
