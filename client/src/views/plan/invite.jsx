@@ -6,9 +6,19 @@ import { Page, Toolbar, BackButton } from 'react-onsenui';
 import axios            from 'axios';
 // Redux
 import { connect }      from 'react-redux';
-import { updateInviteFriends, updateLiveData, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes  }  from '../../redux/actions';
+import {
+  updateInviteFriends,
+  updateLiveData,
+  updateYelpData,
+  updateEventHash,
+  updateConnectedPeers,
+  updateTalliedVotes,
+  load,
+}                       from '../../redux/actions';
+// Utils
+import { getStore }     from '../../utils/utils';
 // Styles
-import { }   from '../../styles/styles';
+import { }              from '../../styles/styles';
 // Components
 import  HashLink        from './invite/link.jsx';
 import  Friends         from './invite/friends.jsx';
@@ -18,7 +28,6 @@ import  BottomNav       from './../../views/_global/bottomNav.jsx';
 import { initSocket }   from './../../sockets/sockets';
 
 class Invite extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -29,6 +38,8 @@ class Invite extends Component {
   }
 
   componentWillMount() {
+    // Load cached redux from Session Store
+    if (!this.props.loaded) this.props.load(getStore());
     this.props.updateLiveData(this.props.yelpData);
   }
 
@@ -108,6 +119,9 @@ class Invite extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
+  load: (state) => {
+    dispatch(load(state));
+  },
   updateYelpData: (yelpData) => {
     dispatch(updateYelpData(yelpData));
   },
@@ -129,6 +143,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
+  loaded: state.loaded,
   friends: state.friends,
   yelpData: state.yelpData,
   eventHash: state.eventHash,

@@ -1,30 +1,29 @@
-import React, { Component }       from 'react';
+import React, { Component } from 'react';
+// Axios
+import axios            from 'axios';
 // Redux
 import { connect }      from 'react-redux';
-import { load, updateLiveData, updateInviteFriends, updateYelpData, updateEventHash, updateConnectedPeers, updateTalliedVotes,   }  from '../../redux/actions';
-
-
-// Axios for requests
-import axios            from 'axios';
-
-// Styles
-import { }   from '../../styles/styles';
+import {
+  load,
+  updateLiveData,
+  updateInviteFriends,
+  updateYelpData,
+  updateEventHash,
+  updateConnectedPeers,
+  updateTalliedVotes,
+}                       from '../../redux/actions';
 // Utils
 import { getStore } from '../../utils/utils';
-// Import Sockets
+// Styles
+import { }   from '../../styles/styles';
+// Sockets
 import socket from './../../sockets/sockets';
 
 class Loading extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
+    if (!this.props.loaded) this.props.load(getStore());
     const hash = window.location.pathname.split('/')[2];
-    if (!this.props.loaded) {
-      this.props.load(getStore());
-    }
     axios.get(`/events/${hash}`)
         .then((data) => {
           const eventData = JSON.parse(data.data.data);
@@ -53,6 +52,7 @@ class Loading extends Component {
         });
   }
 
+  // eslint-disable-next-line class-methods-use-this
   render() {
     return (
       <div />
@@ -85,12 +85,12 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
+  loaded: state.loaded,
   yelpData: state.yelpData,
   eventHash: state.eventHash,
   liveData: state.liveData,
   talliedVotes: state.talliedVotes,
   user: state.user,
-  loaded: state.loaded,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Loading);

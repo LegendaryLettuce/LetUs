@@ -25,16 +25,15 @@ const typistProps = {}; // Props that are passed to the react-typist component
 class LoginView extends Component {
 
   componentWillMount() {
+    // Load cached redux from Session Store
+    if (!this.props.loaded) this.props.load(getStore());
     axios.get('/checkEventHash')
       .then((res) => {
         this.props.updateEventHash(res.data);
       });
   }
 
-  // eslint-disable-next-line class-methods-use-this
   componentDidMount() {
-    // Load cached redux from Session Store
-    if (!this.props.loaded) this.props.load(getStore());
     // Load Facebook API if not loaded yet
     if (!this.props.fbLoaded) loadFacebook(this.props.loadFB.bind(this, true));
   }

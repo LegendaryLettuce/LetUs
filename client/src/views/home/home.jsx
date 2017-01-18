@@ -32,9 +32,7 @@ class Home extends Component {
   }
 
   componentWillMount() {
-    if (!this.props.loaded) {
-      this.props.load(getStore());
-    }
+    if (!this.props.loaded) this.props.load(getStore());
   }
 
   componentDidMount() {
@@ -60,8 +58,7 @@ class Home extends Component {
 
   render() {
     return (
-
-      <Page renderToolbar={TopBar.bind(this, ({ title: 'Home', handleBack: this.handleBack }))}>
+      <Page renderToolbar={TopBar.bind(this, { title: 'Home', handleBack: this.handleBack })}>
         <div style={listStyle}>
           <Events events={this.state.upcomingEvents} handleTouch={this.handleTouch}/>
         </div>

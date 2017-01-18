@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { Page, Carousel, CarouselItem, Icon } from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
-import { addLiveData }  from '../../redux/actions';
+import { addLiveData, load } from '../../redux/actions';
 // Utils
-import { getUrl, ratingToArray } from '../../utils/utils';
+import { getUrl, ratingToArray, getStore } from '../../utils/utils';
 // Sockets
 import { emitLiveData } from '../../sockets/sockets';
 
@@ -45,6 +45,10 @@ class Collaborate extends Component {
       widthDiff: 0,
       marginDiff: 0,
     };
+  }
+
+  componentWillMount() {
+    if (!this.props.loaded) this.props.load(getStore());
   }
 
   componentDidMount() {
@@ -429,22 +433,16 @@ class Collaborate extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
+  load: (state) => {
+    dispatch(load(state));
+  },
   addLiveData: (liveData) => {
     dispatch(addLiveData(liveData));
   },
 });
 
 const mapStateToProps = state => ({
-  // yelpData {
-  //   displayTitle: String,
-  //   imageUrl: String,
-  //   rating: Number,
-  //   categories: Array,
-  //   displayAddress: Array,
-  //   displayPhone: String,
-  //   snippetText: String,
-  //   mobileUrl: String,
-  // }
+  loaded: state.loaded,
   yelpData: state.yelpData,
   liveData: state.liveData,
 });

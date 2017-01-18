@@ -1,18 +1,20 @@
-import React, { Component }       from 'react';
+import React, { Component } from 'react';
 // Onsen UI
-// import ons              from 'onsenui';
-import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
+import { Page, Button } from 'react-onsenui';
 // Axios
 import axios            from 'axios';
 // Redux
 import { connect }      from 'react-redux';
-import { updateYelpData, updateEventPage, updateParentPage } from '../../redux/actions';
+import { updateYelpData, updateEventPage, updateParentPage, load } from '../../redux/actions';
+// Utils
+import { getStore }     from '../../utils/utils';
 // Subcomponents
-import GenericList from './../_global/genericList.jsx';
-import VotesProgress from './collaborate/progressBar.jsx';
+import TopBar           from './../_global/topBar.jsx';
+import GenericList      from './../_global/genericList.jsx';
+import VotesProgress    from './collaborate/progressBar.jsx';
 
 // Styles
-import { buttonStyle }   from '../../styles/styles';
+import { buttonStyle }  from '../../styles/styles';
 
 const padStyle = {
   height: '12%',
@@ -25,9 +27,13 @@ class LiveList extends Component {
       topEvent: [],
     };
     this.props.updateParentPage('/live');
-    this.handleBack = this.handleBack.bind(this);
     this.handleTouch = this.handleTouch.bind(this);
     this.goEvent = this.goEvent.bind(this);
+  }
+
+  componentWillMount() {
+    // Load cached redux from Session Store
+    if (!this.props.loaded) this.props.load(getStore());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,10 +55,6 @@ class LiveList extends Component {
       });
   }
 
-  handleBack() {
-    console.log('HANDLING BACK');
-  }
-
   handleTouch(selected) {
     this.props.updateEventPage(selected);
     this.props.router.push('/event');
@@ -63,22 +65,9 @@ class LiveList extends Component {
     this.props.router.push('/event');
   }
 
-  renderToolbar() {
-    return (
-      <Toolbar>
-        <div className="left">
-          <BackButton onClick={this.handleBack}></BackButton>
-        </div>
-        <div className='center' style={{ fontWeight: 'bolder' }}>{'Live List'}</div>
-      </Toolbar>
-    );
-  }
-
   render() {
     return (
-      <Page
-        renderToolbar={() => this.renderToolbar()}
-      >
+      <Page renderToolbar={TopBar.bind(this, { title: 'Location' })}>
         <VotesProgress
           expectedVotes={((this.props.friends.length + 1) * this.props.liveData.length)}
           talliedVotes={this.props.talliedVotes}
@@ -93,13 +82,18 @@ class LiveList extends Component {
           className='center'
           style={buttonStyle}
           onClick={this.goEvent}
-        >Top Event</Button>
+        >
+        Top Event
+        </Button>
       </Page>
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
+  load: (state) => {
+    dispatch(load(state));
+  },
   updateYelpData: (yelpData) => {
     dispatch(updateYelpData(yelpData));
   },
@@ -112,6 +106,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
+  loaded: state.loaded,
   eventHash: state.eventHash,
   liveData: state.liveData,
   friends: state.friends,
