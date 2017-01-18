@@ -45,7 +45,6 @@ class Collaborate extends Component {
       neutral: 'block',
       like: 'none',
       dislike: 'none',
-      cardName: this.props.yelpData[0].displayTitle,
       carouselPosition: 1,
       carouselAnimation: {},
       rgb: RGB,
@@ -117,7 +116,6 @@ class Collaborate extends Component {
         }
         this.setState({
           intensity: 0,
-          cardName: this.props.yelpData[this.index].displayTitle,
           rgb: RGB,
         }, () => {
           setTimeout(this.setState.bind(this, {
@@ -365,77 +363,81 @@ class Collaborate extends Component {
           <CarouselItem/>
         </Carousel>
         <div style={{ height: `${this.marginTop()}px` }}/>
-        <div style={{
-          fontSize: `${this.percentToPixel(5.5)}px`,
-          textAlign: 'center',
-          color: 'rgb(60, 64, 65)', // TODO: get color from OnsenUI
-          position: 'fixed',
-          height: `${this.percentToPixel(SIZE_PERCENT + 3)}px`,
-          width: `${this.percentToPixel(SIZE_PERCENT)}px`,
-          marginLeft: `${this.marginLeft()}px`,
-          zIndex: '2',
-          // boxShadow: '0 0 0 2px rgb(38, 39, 40)', // , 0 0 0 10000em #ccc',
-          // background: '#888',
-        }}>
+        {
+          this.props.loaded ?
           <div style={{
-            height: '100%',
-            width: '100%',
-            borderRadius: `${this.percentToPixel(10)}px`,
-            boxShadow: '0 0 0 2px rgb(38, 39, 40)', // , 0 0 0 10em #ccc',
-            overflow: 'hidden',
-            background: '#888',
+            fontSize: `${this.percentToPixel(5.5)}px`,
+            textAlign: 'center',
+            color: 'rgb(60, 64, 65)', // TODO: get color from OnsenUI
+            position: 'fixed',
+            height: `${this.percentToPixel(SIZE_PERCENT + 3)}px`,
+            width: `${this.percentToPixel(SIZE_PERCENT)}px`,
+            marginLeft: `${this.marginLeft()}px`,
+            zIndex: '2',
+            // boxShadow: '0 0 0 2px rgb(38, 39, 40)', // , 0 0 0 10000em #ccc',
+            // background: '#888',
           }}>
             <div style={{
-              height: `${this.percentToPixel(SIZE_PERCENT - 10)}px`,
-              width: `${this.percentToPixel(SIZE_PERCENT)}px`,
-              backgroundImage: `url("${getUrl(this.props.yelpData[this.index].imageUrl)}")`,
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center center',
-              backgroundSize: 'cover',
+              height: '100%',
+              width: '100%',
+              borderRadius: `${this.percentToPixel(10)}px`,
+              boxShadow: '0 0 0 2px rgb(38, 39, 40)', // , 0 0 0 10em #ccc',
               overflow: 'hidden',
-              boxShadow: '0 0 0 2px rgb(38, 39, 40)',
-            }}/>
-            {
-              this.props.yelpData[this.index].rating ?
-                <div
-                  className="rating"
-                  style={{
-                    fontSize: `${this.percentToPixel(8)}px`,
-                    position: 'absolute',
-                    marginLeft: `${this.percentToPixel(8)}px`,
-                    height: `${this.percentToPixel(10)}px`,
-                    width: `${this.percentToPixel(50)}px`,
-                    top: `${this.percentToPixel(SIZE_PERCENT - 20)}px`,
-                    background: 'rgba(60, 64, 65, 0.71)',
-                    borderTopRightRadius: `${this.percentToPixel(1)}px`,
-                    borderTopLeftRadius: `${this.percentToPixel(1)}px`,
-                    boxShadow: '0 0 0 2px rgb(38, 39, 40)',
-                    color: '#ccc',
-                  }}
-                >
-                  {ratingToArray(this.props.yelpData[this.index].rating).map((e, i) => (
-                    <Icon
-                      icon={`fa-star${e ? '-half' : ''}`}
-                      fixed-width="false"
-                      key={i}
-                      style={{
-                        position: 'relative',
-                        paddingTop: `${this.percentToPixel(1)}px`,
-                        paddingLeft: `${this.percentToPixel(1)}px`,
-                        paddingRight: `${this.percentToPixel(1)}px`,
-                        zIndex: `${e ? 7 : 8}`,
-                        textShadow: '0 0 .2em #333',
-                      }}
-                    />
-                  ))}
-                </div> :
-                <div/>
-            }
-            <div style={{ padding: `${this.percentToPixel(1)}px` }}>
-              {this.state.cardName}
+              background: '#888',
+            }}>
+              <div style={{
+                height: `${this.percentToPixel(SIZE_PERCENT - 10)}px`,
+                width: `${this.percentToPixel(SIZE_PERCENT)}px`,
+                backgroundImage: `url("${getUrl(this.props.yelpData[this.index].imageUrl)}")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center center',
+                backgroundSize: 'cover',
+                overflow: 'hidden',
+                boxShadow: '0 0 0 2px rgb(38, 39, 40)',
+              }}/>
+              {
+                this.props.yelpData[this.index].rating ?
+                  <div
+                    className="rating"
+                    style={{
+                      fontSize: `${this.percentToPixel(8)}px`,
+                      position: 'absolute',
+                      marginLeft: `${this.percentToPixel(8)}px`,
+                      height: `${this.percentToPixel(10)}px`,
+                      width: `${this.percentToPixel(50)}px`,
+                      top: `${this.percentToPixel(SIZE_PERCENT - 20)}px`,
+                      background: 'rgba(60, 64, 65, 0.71)',
+                      borderTopRightRadius: `${this.percentToPixel(1)}px`,
+                      borderTopLeftRadius: `${this.percentToPixel(1)}px`,
+                      boxShadow: '0 0 0 2px rgb(38, 39, 40)',
+                      color: '#ccc',
+                    }}
+                  >
+                    {ratingToArray(this.props.yelpData[this.index].rating).map((e, i) => (
+                      <Icon
+                        icon={`fa-star${e ? '-half' : ''}`}
+                        fixed-width="false"
+                        key={i}
+                        style={{
+                          position: 'relative',
+                          paddingTop: `${this.percentToPixel(1)}px`,
+                          paddingLeft: `${this.percentToPixel(1)}px`,
+                          paddingRight: `${this.percentToPixel(1)}px`,
+                          zIndex: `${e ? 7 : 8}`,
+                          textShadow: '0 0 .2em #333',
+                        }}
+                      />
+                    ))}
+                  </div> :
+                  <div/>
+              }
+              <div style={{ padding: `${this.percentToPixel(1)}px` }}>
+                {this.props.yelpData[this.index].displayTitle}
+              </div>
             </div>
-          </div>
-        </div>
+          </div> :
+          <div/>
+        }
       </Page>
     );
   }
