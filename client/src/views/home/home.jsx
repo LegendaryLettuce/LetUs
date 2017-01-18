@@ -48,7 +48,8 @@ class Home extends Component {
   }
 
   handleBack() {
-    this.props.router.push('/');
+    window.history.back();
+    // this.props.router.push('/');
   }
 
   handleTouch(selected) {

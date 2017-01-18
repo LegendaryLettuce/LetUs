@@ -8,15 +8,23 @@ input {
 }
 
 .pac-item {
-  background-color: rgba(0,0,0,0);
+  background-color: #000000;
+}
+
+.pac-item:hover {
+  background-color: #242424;
 }
 
 .pac-container {
-  background-color: rgba(0,0,0,0);
+  background-color: #000000;
   box-shadow: 0 0 0 1px #d9d9d9;
 }
 
 .pac-item-query {
   color: white;
-  background-color: rgba(0,0,0,0);
+  /*background-color: #000000;*/
+}
+
+.pac-item-query:hover {
+  background-color: #242424;
 }
