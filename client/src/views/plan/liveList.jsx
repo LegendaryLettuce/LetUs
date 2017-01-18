@@ -1,18 +1,20 @@
-import React, { Component }       from 'react';
+import React, { Component } from 'react';
 // Onsen UI
 // import ons              from 'onsenui';
 import { Page, Toolbar, List, ListItem, Button, BackButton } from 'react-onsenui';
 // Axios
-import axios            from 'axios';
+import axios             from 'axios';
 // Redux
-import { connect }      from 'react-redux';
+import { connect }       from 'react-redux';
 import { updateYelpData, updateEventPage, updateParentPage } from '../../redux/actions';
 // Subcomponents
-import GenericList from './../_global/genericList.jsx';
-import VotesProgress from './collaborate/progressBar.jsx';
-
+import GenericList       from './../_global/genericList.jsx';
+import VotesProgress     from './collaborate/progressBar.jsx';
 // Styles
 import { buttonStyle }   from '../../styles/styles';
+// Global Styles
+import  BottomNav        from './../../views/_global/bottomNav.jsx';
+
 
 const padStyle = {
   height: '12%',
@@ -94,6 +96,7 @@ class LiveList extends Component {
           style={buttonStyle}
           onClick={this.goEvent}
         >Top Event</Button>
+        <BottomNav router={this.props.router} />
       </Page>
     );
   }
