@@ -65,7 +65,6 @@ class Link extends Component {
   }
 
   copyFeedback() {
-    console.log('COPY FEEDBACK EXECUTED');
     if (!this.state.copied) {
       this.setState({
         copied: true,
@@ -103,7 +102,6 @@ class Link extends Component {
       <CopyToClipboard
         text={`${hostUrl}c/${this.props.eventHash}`}
         onCopy={() => {
-          console.log('COPIED:', `${hostUrl}c/${this.props.eventHash}`);
           this.copyFeedback();
         }}
       >
