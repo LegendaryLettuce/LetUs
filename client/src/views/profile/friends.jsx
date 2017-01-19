@@ -4,8 +4,9 @@ import { connect }              from 'react-redux';
 import { Page, List, ListItem, Icon, Toolbar, BackButton, ListHeader, Row, Col } from 'react-onsenui';
 // Styles
 import { bodyStyle }            from '../../styles/styles';
-// Pages
+// Global Components
 import  BottomNav        from './../../views/_global/bottomNav.jsx';
+import  TopBar           from './../../views/_global/topBar.jsx';
 
 const image = {
   height: '75px',
@@ -31,10 +32,13 @@ class Friends extends Component {
     );
   }
 
+  handleBack() {
+    window.history.back();
+  }
+
   render() {
     return (
-    <Page renderToolbar={() => this.renderToolbar('User Profile')}
-    style={{ background: 'rgba(51,51,51,1)' }}>
+    <Page renderToolbar={TopBar.bind(this, { title: 'Friends', handleBack: this.handleBack })}>
     <List>
       <ListItem className="timeline-li" modifier="tappable">
         <Row>

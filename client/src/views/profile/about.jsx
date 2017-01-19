@@ -41,6 +41,14 @@ const link = {
 const gitImage = {
   marginRight: '5px',
   borderRadius: '50%',
+  border: '1px solid white',
+};
+
+const letusImage = {
+  width: '40px',
+  height: '40px',
+  borderRadius: '50%',
+  border: '1px solid white',
 };
 
 class About extends Component {
@@ -59,7 +67,7 @@ class About extends Component {
           <ListHeader>About</ListHeader>
           <ListItem>
             <div className='left'>
-              <img src='https://pbs.twimg.com/media/CFWi-dUW8AAbwqo.png' alt='LetUsCat'/>
+              <img src='https://pbs.twimg.com/media/CFWi-dUW8AAbwqo.png' alt='LetUsCat' style={letusImage}/>
             </div>
             <div className='center'>
               <span>Made using React, Redux, OnsenUI, MongoDB, Express, SocketIO.</span>

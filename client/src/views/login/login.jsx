@@ -11,6 +11,7 @@ import { updateUser, load, loadFB, updateEventHash } from '../../redux/actions';
 import { postLogin, getStore, loadFacebook }         from '../../utils/utils';
 // Styles
 import { login, splashText, fbLogin, tint, tagline } from '../../styles/styles';
+import '../../styles/loginMobile.css';
 
 const button = {
   fontSize: 'x-large',
@@ -79,7 +80,7 @@ class LoginView extends Component {
       <Page>
         <div style={login}>
           <div style={tint}>
-            <div style={splashText}>
+            <div className='wordDiv' style={splashText}>
               Let Us
                 <TextCarousel phrases={phrases} interval={interval} typistProps={typistProps} />
               <div style={tagline}>Collaborative event planning with friends.</div>
