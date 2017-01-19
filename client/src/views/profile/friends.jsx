@@ -39,29 +39,33 @@ class Friends extends Component {
   render() {
     return (
     <Page renderToolbar={TopBar.bind(this, { title: 'Friends', handleBack: this.handleBack })}>
-    <List>
-      <ListItem className="timeline-li" modifier="tappable">
-        <Row>
-        <Col>
-          <img src='http://rs387.pbsrc.com/albums/oo311/elianei/avatars/bcat_av1_100.gif~c200' style={image}/>
-        </Col>
-        <Col>
-          <div className="timeline-from">
-            <div className="timeline-name">Autumn</div>
-            <div className="timeline-id">@autumns</div>
-          </div>
-        </Col>
-        </Row>
-      </ListItem>
-    </List>
-    <BottomNav router={this.props.router}/>
+      <List
+        dataSource={this.props.friends}
+          renderRow={
+            (friend, idx) => (
+              <ListItem key={idx} modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
+                <div className="left">
+                  <img className="list__item__image" alt="Top Friend Image" style ={image} src='http://rs387.pbsrc.com/albums/oo311/elianei/avatars/bcat_av1_100.gif~c200' />
+                </div>
+                <div className="center">
+                  <span className="list__item__title">{friend.name}</span>
+                  <span className="list__item__subtitle">
+                    GL HF
+                  </span>
+                </div>
+            </ListItem>
+            )
+          }
+        />
+       <BottomNav router={this.props.router}/>
     </Page>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  data: state.liveData[0],
+  friends: state.user.friends,
 });
 
 export default connect(mapStateToProps)(Friends);
+
