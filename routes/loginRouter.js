@@ -5,7 +5,7 @@ const handleError = require('./handleError');
 
 const router = express.Router();
 
-router.route('/login')
+router.route('/')
   .post((req, res, next) => {
     const user = req.body;
     letUsController.findUser(user.id)

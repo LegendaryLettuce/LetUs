@@ -38,7 +38,7 @@ app.use(serveStatic(path.join(__dirname, 'client/dist'), {
   index: 'index.html',
 }));
 
-app.use(loginRouter);
+app.use('/login', loginRouter);
 
 app.use('*', (req, res, next) => {
   if (req.session && req.session.userId) next();
