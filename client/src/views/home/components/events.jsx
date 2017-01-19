@@ -8,12 +8,17 @@ const circle = {
   textAlign: 'center',
   background: 'gray',
   marginRight: '2px',
+  marginBottom: '3px',
   display: 'inline-block',
 };
 
 const divStyle = {
   display: 'inline-block',
 };
+
+const imageWidth = {
+  minWidth: '105px',
+}
 
 const Events = props => (
       <List
@@ -23,7 +28,7 @@ const Events = props => (
             <ListItem key={idx} modifier={idx === props.events.length - 1 ? 'longdivider' : null} onClick={() => {
               props.handleTouch(event);
             }}>
-              <div className="left">
+              <div className="left" style={imageWidth}>
                 <img className="list__item__image" alt="Top Event Image" src={JSON.parse(event.topEvent)[0].imageUrl} />
               </div>
               <div className="center">
