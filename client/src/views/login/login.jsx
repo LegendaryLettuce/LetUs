@@ -28,9 +28,10 @@ class LoginView extends Component {
   componentWillMount() {
     // Load cached redux from Session Store
     if (!this.props.loaded) this.props.load(getStore());
-    axios.get('/checkEventHash')
+    axios.get('/login/check-event-hash')
       .then((res) => {
-        this.props.updateEventHash(res.data);
+        this.redirectEventHash = res.data;
+        console.log('CHECKING EVENT HASH:', res.data);
       });
   }
 
@@ -58,9 +59,10 @@ class LoginView extends Component {
                     result.friends = fRes.data;
                     postLogin(result)
                       .then(() => {
+                        console.log('CHECKING EVENT HASH AFTER LOGIN:', this.redirectEventHash);
                         this.props.updateUser(result);
-                        if (this.props.eventHash.length === 6) {
-                          this.props.router.push(`/c/${this.props.eventHash}`);
+                        if (this.redirectEventHash && this.redirectEventHash.length === 6) {
+                          this.props.router.push(`/c/${this.redirectEventHash}`);
                         } else {
                           this.props.router.push('/home');
                         }
