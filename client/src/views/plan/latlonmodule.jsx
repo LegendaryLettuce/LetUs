@@ -189,7 +189,7 @@ class LatLonModule extends Component {
                   ]);
                   this.request(this.props.coords[0], this.props.coords[1]);
                 }}
-                types={['geocode']}
+                types={['geocode', 'establishment']}
                 componentRestrictions={{ country: 'us' }}
               />
             </div> :
