@@ -456,6 +456,7 @@ const mapStateToProps = state => ({
   loaded: state.loaded,
   yelpData: state.yelpData,
   liveData: state.liveData,
+  friends: state.friends,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Collaborate);

@@ -41,6 +41,7 @@ class Invite extends Component {
     // Load cached redux from Session Store
     if (!this.props.loaded) this.props.load(getStore());
     this.props.updateLiveData(this.props.yelpData);
+    this.props.updateInviteFriends([]);
   }
 
   routeToCollaborate() {
@@ -70,7 +71,6 @@ class Invite extends Component {
     .catch((error) => {
       console.log('Inviting friends error', error);
     });
-    this.props.updateInviteFriends([]);
   }
 
   // facebookNotification() {

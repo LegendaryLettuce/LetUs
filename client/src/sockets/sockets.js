@@ -46,7 +46,7 @@ const listenerController = (nsp, update, state) => {
   });
 
   nsp.on('update peerlist', (peerList) => {
-    // console.log('CLIENT.SOCKET: updating expected peerlist:', peerList);
+    console.log('CLIENT.SOCKET: updating expected peerlist:', peerList);
     update.inviteFriends(peerList);
   });
 };

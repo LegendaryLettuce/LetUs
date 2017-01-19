@@ -14,24 +14,20 @@ class Friends extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inviteFriends: [],
       checked: [],
     };
-    const checkBoxes = [];
-    this.props.friends.forEach(() => {
-      checkBoxes.push(false);
-    });
+    this.inviteFriendsArray = [];
     this.inviteFriends = this.inviteFriends.bind(this);
   }
 
   inviteFriends(friend, key) {
-    const friendIndex = this.state.inviteFriends.indexOf(friend);
+    const friendIndex = this.inviteFriendsArray.indexOf(friend);
     if (friendIndex === -1) {
-      this.state.inviteFriends.push(friend);
+      this.inviteFriendsArray.push(friend);
     } else if (friendIndex !== -1) {
-      this.state.inviteFriends.splice(friendIndex, 1);
+      this.inviteFriendsArray.splice(friendIndex, 1);
     }
-    this.props.updateInviteFriends(this.state.inviteFriends);
+    this.props.updateInviteFriends(this.inviteFriendsArray);
     const checkState = this.state.checked;
     checkState[key] = !this.state.checked[key];
     this.setState({
