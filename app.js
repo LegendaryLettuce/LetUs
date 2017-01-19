@@ -8,9 +8,10 @@ const cookieParser  = require('cookie-parser');
 const bodyParser    = require('body-parser');
 const db            = require('./db/index');
 const letUsSchema   = require('./db/letUsSchema');
-const letUsRouter   = require('./routes/letUsRouter');
 const fb            = require('./config/facebook-secret');
 
+const letUsRouter   = require('./routes/letUsRouter');
+const loginRouter   = require('./routes/loginRouter');
 // const index =  require('./routes/index');
 // const users = require('./routes/users');
 
@@ -37,6 +38,12 @@ app.use(serveStatic(path.join(__dirname, 'client/dist'), {
   index: 'index.html',
 }));
 
+app.use('/login', loginRouter);
+
+app.use('*', (req, res, next) => {
+  if (req.session && req.session.userId) next();
+  else res.redirect('/');
+});
 
 app.use('/', letUsRouter);
 
@@ -48,10 +55,6 @@ app.use('/c/:eventHash', (req, res, next) => {
   next();
 });
 
-app.use('*', (req, res, next) => {
-  if (req.session && req.session.userId) next();
-  else res.redirect('/');
-});
 
 app.get('*', (req, res) => {
 //   // and drop 'public' in the middle of here
