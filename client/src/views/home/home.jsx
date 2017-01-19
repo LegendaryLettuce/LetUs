@@ -36,11 +36,15 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    getUpcomingEvents(this.props.user.id)
-      .then((res) => {
-        this.setState({ upcomingEvents: res.data });
-        console.log('HOME!-', res.data);
-      });
+    if (this.props.loaded) {
+      getUpcomingEvents(this.props.user.id)
+        .then((res) => {
+          this.setState({ upcomingEvents: res.data });
+          console.log('HOME!-', res.data);
+        });
+    } else {
+      setTimeout(this.componentDidMount.bind(this), 10);
+    }
   }
 
   routeToLatlon() {
