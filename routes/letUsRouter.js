@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const express = require('express');
 
 const letUsRouter = express.Router();
@@ -8,6 +7,7 @@ const handleError = require('./handleError');
 
 const sockets = require('./../sockets');
 
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
 
 // template routes
@@ -93,14 +93,6 @@ letUsRouter.route('/eventdata/:lat/:lng')
         // console.log(data);
         res.send(data);
       });
-  });
-
-letUsRouter.route('/checkEventHash')
-  .get((req, res, next) => {
-    // console.log('RECEIVED REQUEST TO CHECK HASH');
-    const hash = req.session.eventHash;
-    delete req.session.eventHash;
-    res.send(hash);
   });
 
 letUsRouter.route('/lazycat/:body')
