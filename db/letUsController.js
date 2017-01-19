@@ -152,7 +152,7 @@ const handleNewEventAttendees = (user) => {
     .then((doc) => {
       const attendees = JSON.parse(doc.attendees);
       attendees.forEach((item) => {
-        if (item.id === user.id) {
+        if (item.id === user.id || user.id === undefined) {
           isNewUser = false;
         }
       });
