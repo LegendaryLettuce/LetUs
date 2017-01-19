@@ -14,7 +14,7 @@ import TopBar           from './../_global/topBar.jsx';
 import GenericList      from './../_global/genericList.jsx';
 import VotesProgress    from './collaborate/progressBar.jsx';
 // Styles
-import { buttonStyle }  from '../../styles/styles'; 
+import { buttonStyle }  from '../../styles/styles';
 // Global Styles
 import  BottomNav        from './../../views/_global/bottomNav.jsx';
 
@@ -43,7 +43,7 @@ class LiveList extends Component {
       linkHash: this.props.eventHash,
     })
       .then((res) => {
-        console.log('Saved top event', res);
+        // console.log('Saved top event', res);
       })
       .catch((error) => {
         console.log('Saving top events error', error);
