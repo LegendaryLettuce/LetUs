@@ -11,6 +11,8 @@ import {
   updateEDP,
   updateGoogleMaps,
   load,
+  updateSelectedView,
+  updateSelectedViewIndex,
 }                       from '../../redux/actions';
 import { initSocket }   from './../../sockets/sockets';
 // Utils
@@ -138,6 +140,8 @@ class LatLonModule extends Component {
     axios.get(`/eventdata/${lat}/${lng}`)
       .then((response) => {
         if (response) {
+          this.props.updateSelectedView('Create');
+          this.props.updateSelectedViewIndex(0);
           this.props.updateEDP(response.data);
           // push to next page
           this.props.router.push('/create');
@@ -219,6 +223,12 @@ const mapDispatchToProps = dispatch => ({
   },
   updateGoogleMaps: (loadGoogleMaps) => {
     dispatch(updateGoogleMaps(loadGoogleMaps));
+  },
+  updateSelectedView: (loadSelectedView) => {
+    dispatch(updateSelectedView(loadSelectedView));
+  },
+  updateSelectedViewIndex: (loadSelectedViewIndex) => {
+    dispatch(updateSelectedViewIndex(loadSelectedViewIndex));
   },
 });
 
