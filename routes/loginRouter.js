@@ -1,9 +1,11 @@
-/* eslint-disable no-param-reassign */
 const express = require('express');
 const letUsController = require('../db/letUsController');
 const handleError = require('./handleError');
 
 const router = express.Router();
+
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-vars */
 
 router.route('/')
   .post((req, res, next) => {
@@ -27,6 +29,13 @@ router.route('/')
         }
       })
       .catch(handleError.bind(this, next));
+  });
+
+router.route('/check-event-hash')
+  .get((req, res, next) => {
+    const hash = req.session.eventHash;
+    delete req.session.eventHash;
+    res.send(hash);
   });
 
 module.exports = router;
