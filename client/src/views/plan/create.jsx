@@ -29,7 +29,7 @@ const osCheck = !ons.platform.isAndroid();
 
 const iconSize = '50px';
 
-const containerPadding = osCheck ? '9%' : '0';
+const containerPadding = osCheck ? '9%' : '0%';
 
 const icons = color => ({
   paddingTop: '.4em',
@@ -255,7 +255,7 @@ class Create extends Component {
     return (
       <div>
         <Page
-          renderToolbar={TopBar.bind(this, { title: 'Location', handleBack: this.handleBack })}
+          renderToolbar={TopBar.bind(this, { title: this.props.selectedView, handleBack: this.handleBack })}
           style={{ background: 'rgba(51,51,51,1)' }}
         >
           <GenericList

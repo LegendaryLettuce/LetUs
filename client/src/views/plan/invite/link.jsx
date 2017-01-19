@@ -29,17 +29,19 @@ const link = {
   display: 'inline',
 };
 
-const hostUrl = `${window.location.href}c/`;
+const hostUrl = `${window.location.href}`;
+
+const concatHostUrl = hostUrl.split('/')[2];
 
 const Link = props => (
   <div style={linkStyle}>
     <div style={{ float: 'left' }}>
-      <p style={link}>{`${hostUrl}${props.eventHash}`}</p>
+      <p style={link}>{`${concatHostUrl}/c/${props.eventHash}`}</p>
     </div>
     <CopyToClipboard
-      text={`${hostUrl}${props.eventHash}`}
+      text={`${hostUrl}c/${props.eventHash}`}
       onCopy={() => {
-        console.log('COPIED:', `${hostUrl}${props.eventHash}`);
+        console.log('COPIED:', `${hostUrl}c/${props.eventHash}`);
       }}
     >
       <Icon icon='fa-clone' style={copyStyle}/>
