@@ -70,6 +70,7 @@ class Invite extends Component {
     .catch((error) => {
       console.log('Inviting friends error', error);
     });
+    this.props.updateInviteFriends([]);
   }
 
   // facebookNotification() {
