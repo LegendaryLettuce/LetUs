@@ -62,7 +62,7 @@ class LiveList extends Component {
 
   render() {
     return (
-      <Page renderToolbar={TopBar.bind(this, { title: 'Location' })}>
+      <Page renderToolbar={TopBar.bind(this, { title: 'Live List' })}>
         <VotesProgress
           expectedVotes={((this.props.friends.length + 1) * this.props.liveData.length)}
           talliedVotes={this.props.talliedVotes}
