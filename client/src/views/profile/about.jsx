@@ -70,11 +70,11 @@ class About extends Component {
               <img src='https://pbs.twimg.com/media/CFWi-dUW8AAbwqo.png' alt='LetUsCat' style={letusImage}/>
             </div>
             <div className='center'>
-              <span>Made using React, Redux, OnsenUI, MongoDB, Express, SocketIO.</span>
+              <span>Made using React, Redux, Express, MongoDB, SocketIO, OnsenUI</span>
               <span className='list__item__subtitle'>
                 <Icon className='left list__item__icon' icon='fa-github'/>
                   <a href='https://github.com/LegendaryLettuce/LetUs' target='_blank' className='center' style={{ textDecoration: 'none', color: 'white' }}>
-                  Project Repo
+                  https://github.com/LegendaryLettuce/LetUs
                   </a>
               </span>
             </div>
