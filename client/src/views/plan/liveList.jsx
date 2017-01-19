@@ -26,7 +26,6 @@ class LiveList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topEvent: [],
     };
     this.props.updateParentPage('/live');
     this.handleTouch = this.handleTouch.bind(this);
@@ -39,14 +38,8 @@ class LiveList extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log('hELLO RECEIVE PROPS');
-
-    this.setState({
-      topEvent: JSON.stringify([this.props.liveData[0]]),
-    });
-    // console.log(this.state.topEvent);
     axios.put('/home/', {
-      topEvent: this.state.topEvent,
+      topEvent: JSON.stringify([this.props.liveData[0]]),
       linkHash: this.props.eventHash,
     })
       .then((res) => {
