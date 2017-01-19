@@ -92,7 +92,8 @@ letUsRouter.route('/eventdata/:lat/:lng')
       .then((data) => {
         // console.log(data);
         res.send(data);
-      });
+      })
+      .catch(handleError.bind(this, next));
   });
 
 letUsRouter.route('/lazycat/:body')
@@ -107,7 +108,8 @@ letUsRouter.route('/lazycat/:body')
     .then((data) => {
       console.log('SERVER: sending data to client to update cat');
       res.send(data);
-    });
+    })
+    .catch(handleError.bind(this, next));
   });
 
 module.exports = letUsRouter;
