@@ -40,13 +40,6 @@ app.use(serveStatic(path.join(__dirname, 'client/dist'), {
 
 app.use('/login', loginRouter);
 
-app.use('*', (req, res, next) => {
-  if (req.session && req.session.userId) next();
-  else res.redirect('/');
-});
-
-app.use('/', letUsRouter);
-
 app.use('/c/:eventHash', (req, res, next) => {
   if (req.session && !req.session.userId) {
     // eslint-disable-next-line no-param-reassign
@@ -55,6 +48,12 @@ app.use('/c/:eventHash', (req, res, next) => {
   next();
 });
 
+app.use('*', (req, res, next) => {
+  if (req.session && req.session.userId) next();
+  else res.redirect('/');
+});
+
+app.use('/', letUsRouter);
 
 app.get('*', (req, res) => {
 //   // and drop 'public' in the middle of here
