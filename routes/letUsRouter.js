@@ -131,4 +131,19 @@ letUsRouter.route('/checkEventHash')
     res.send(hash);
   });
 
+letUsRouter.route('/lazycat/:body')
+  .get((req, res, next) => {
+    const body = JSON.parse(req.params.body);
+    const lat = body.coords[0];
+    const lng = body.coords[1];
+    const cat = body.category;
+    const volume = 10;
+
+    letUsController.retrieveCatData(lat, lng, cat, volume)
+    .then((data) => {
+      console.log('SERVER: sending data to client to update cat');
+      res.send(data);
+    });
+  });
+
 module.exports = letUsRouter;

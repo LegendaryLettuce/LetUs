@@ -14,6 +14,7 @@ import {
   updateSelectedView,
   updateSelectedViewIndex,
   load,
+  updateEDP,
 }                       from '../../redux/actions';
 // Utils
 import { getStore }     from '../../utils/utils';
@@ -76,6 +77,8 @@ const createData = [{ displayTitle: 'Eat', useIcon: eatIcon, textStyle: textStyl
 
 const categoryLabels = ['Create', 'Food', 'Beverage', 'Entertainment'];
 
+const EDPtitles = ['eat', 'drink', 'play'];
+
 const padStyle = {
   height: '86px',
 };
@@ -95,12 +98,47 @@ class Create extends Component {
     this.parseUniqueCategories = this.parseUniqueCategories.bind(this);
     this.parseBizByCategory = this.parseBizByCategory.bind(this);
     this.createEventHash = this.createEventHash.bind(this);
+    this.lazyLoadCats = this.lazyLoadCats.bind(this);
     this.props.updateParentPage('/create');
   }
 
   componentWillMount() {
     // Load cached redux from Session Store
     if (!this.props.loaded) this.props.load(getStore());
+  }
+
+  lazyLoadCats(itemCat, currentData) {
+    const fillCatReq = {
+      coords: this.props.coords,
+      category: itemCat,
+    };
+
+    const bizNameCurrent = currentData.map(item => item.displayTitle);
+
+    axios.get(`/lazycat/${JSON.stringify(fillCatReq)}`)
+    .then((res) => {
+      const oldEDP = this.props.edp;
+      const newEDP = oldEDP[EDPtitles[this.props.selectedViewIndex - 1]];
+      const businesses = res.data.businesses.filter(biz =>
+        bizNameCurrent.indexOf(biz.name) === -1,
+      );
+      businesses.forEach((business) => {
+        newEDP.businesses.push(business);
+      });
+      this.props.updateEDP(oldEDP);
+      const newData = this.state.data;
+      newData[this.props.selectedViewIndex] = newEDP;
+      this.setState({
+        data: newData,
+      }, () => {
+        this.props.updateYelpData(
+          this.parseBizByCategory(
+            this.state.data[this.props.selectedViewIndex],
+            itemCat,
+          ),
+        );
+      });
+    });
   }
 
   handleTouch(item) {
@@ -113,10 +151,15 @@ class Create extends Component {
         buttonDisplay: 'none',
       });
     } else if (this.props.selectedView.split(' ')[1] === 'Categories') {
-      this.props.updateSelectedView(item.displayTitle);
-      this.props.updateYelpData(
-        this.parseBizByCategory(this.state.data[this.props.selectedViewIndex], item.displayTitle),
+      const newYelpData = this.parseBizByCategory(
+        this.state.data[this.props.selectedViewIndex],
+        item.displayTitle,
       );
+      this.props.updateSelectedView(item.displayTitle);
+      this.props.updateYelpData(newYelpData);
+      if (newYelpData.length < 10) {
+        this.lazyLoadCats(item.displayTitle, newYelpData);
+      }
       this.setState({
         buttonDisplay: 'block',
       });
@@ -258,6 +301,9 @@ const mapDispatchToProps = dispatch => ({
   updateSelectedViewIndex: (selectedViewIndex) => {
     dispatch(updateSelectedViewIndex(selectedViewIndex));
   },
+  updateEDP: (edp) => {
+    dispatch(updateEDP(edp));
+  },
 });
 
 const mapStateToProps = state => ({
@@ -268,6 +314,7 @@ const mapStateToProps = state => ({
   edp: state.edp,
   selectedView: state.selectedView,
   selectedViewIndex: state.selectedViewIndex,
+  coords: state.coords,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);

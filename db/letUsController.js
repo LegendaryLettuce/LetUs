@@ -210,6 +210,27 @@ const retrieveYelpData = (lat, lng) => (
   })
 );
 
+const retrieveCatData = (lat, lng, cat, volume) => (
+  new Promise((resolve, reject) => {
+    const yelp = new Yelp(apikeys);
+    const cll = `${lat},${lng}`;
+    const query = {
+      term: cat,
+      limit: volume,
+      ll: cll,
+    };
+
+    yelp
+      .search(query)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  })
+);
+
 const calculateVoteScore = (data, vote) => {
   // console.log('DATABASE: calculating new vote scores');
   const votes = data.votes;
@@ -300,4 +321,5 @@ module.exports = {
   handleClientVotes,
   getUserEvents,
   handleNewEventAttendees,
+  retrieveCatData,
 };
