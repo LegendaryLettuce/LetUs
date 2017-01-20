@@ -56,8 +56,8 @@ class Invite extends Component {
       topEvent: "[{\"displayTitle\":\"Mission Cliffs Climbing & Fitness\",\"imageUrl\":\"https://s3-media4.fl.yelpcdn.com/bphoto/oE-6GORUuM2rUhgIW-VqTA/ms.jpg\",\"rating\":4,\"categories\":[[\"Gyms\",\"gyms\"],[\"Yoga\",\"yoga\"],[\"Rock Climbing\",\"rock_climbing\"]],\"displayAddress\":[\"2295 Harrison St\",\"Mission\",\"San Francisco, CA 94110\"],\"displayPhone\":\"+1-415-550-0515\",\"snippetText\":\"Found my new gym!  This place is great with a combo of (mostly) climbing, basic gym equipment, weights, yoga classes, and cardio classes.  For $77/mth, it's...\",\"mobileUrl\":\"https://m.yelp.com/biz/mission-cliffs-climbing-and-fitness-san-francisco?adjust_creative=e6iE0U7lMHSSLdMk1-vrXw&utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=e6iE0U7lMHSSLdMk1-vrXw\",\"votes\":1,\"preference\":1,\"intensity\":100}]",
     })
     .then((res) => {
-      console.log('Saved invited friends', res);
-      console.log('CLIENT: init socket connection');
+      // console.log('Saved invited friends', res);
+      // console.log('CLIENT: init socket connection');
       const eventOwnerUpdaters = {
         connectedPeers: this.props.updateConnectedPeers,
         talliedVotes: this.props.updateTalliedVotes,

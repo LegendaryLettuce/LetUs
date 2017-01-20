@@ -241,9 +241,9 @@ class Create extends Component {
       linkHash: '',
     })
       .then((res) => {
-        console.log('Saved invited friends', res);
+        // console.log('Saved invited friends', res);
         this.props.updateEventHash(res.data.linkHash);
-        console.log('EVENT HASH', this.props.eventHash);
+        // console.log('EVENT HASH', this.props.eventHash);
         this.props.router.push('/invite');
       })
       .catch((error) => {

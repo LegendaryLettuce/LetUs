@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React              from 'react';
 // Onsen UI
 import { ListItem, List } from 'react-onsenui';
 

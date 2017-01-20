@@ -37,7 +37,7 @@ class Home extends Component {
       getUpcomingEvents(this.props.user.id)
         .then((res) => {
           this.setState({ upcomingEvents: res.data });
-          console.log('HOME!-', res.data);
+          // console.log('HOME!-', res.data);
         });
     } else {
       setTimeout(this.componentDidMount.bind(this), 10);

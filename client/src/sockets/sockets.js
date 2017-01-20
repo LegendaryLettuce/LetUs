@@ -18,7 +18,7 @@ const emitIsInvited = (userData) => {
 
 const listenerController = (nsp, update, state) => {
   nsp.on('update connection', (numOfConnections) => {
-    console.log('CLIENT: connections to event:', numOfConnections);
+    // console.log('CLIENT: connections to event:', numOfConnections);
     update.connectedPeers(numOfConnections);
   });
 
@@ -55,7 +55,7 @@ const listenerController = (nsp, update, state) => {
 const initSocket = (hash, reduxUpdater, reduxStates) => {
   const path = `/event/${hash}`;
   const socket = io(path);
-  console.log(`CLIENT: Connected to: ${path}`);
+  // console.log(`CLIENT: Connected to: ${path}`);
   client.socket = socket;
   listenerController(socket, reduxUpdater, reduxStates);
 

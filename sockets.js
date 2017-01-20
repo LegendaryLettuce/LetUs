@@ -30,7 +30,7 @@ const checkInvite = (socket, nsp) => {
 
 const updateData = (socket, nsp, liveData) => {
   if (!letUsController) {
-    console.log('Loaded DB Controller');
+    // console.log('Loaded DB Controller');
     letUsController = require('./db/letUsController');
   }
   const hash = socket.nsp.name.split('/')[2];
@@ -55,7 +55,7 @@ const handleLiveData = (socket, nsp) => {
 const add = (hash) => {
   let connectionsCounter = 0;
   if (!server) {
-    console.log('SOCKETS: loaded server dependancies');
+    // console.log('SOCKETS: loaded server dependancies');
     server = require('./app');
   }
   const io = server.io;
