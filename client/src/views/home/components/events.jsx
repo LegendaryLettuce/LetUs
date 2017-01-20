@@ -18,7 +18,8 @@ const divStyle = {
 
 const imageWidth = {
   minWidth: '105px',
-}
+  maxWidth: '105px',
+};
 
 const Events = props => (
       <List
