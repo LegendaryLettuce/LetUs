@@ -4,7 +4,7 @@ import { Page, Icon, List, ListHeader, ListItem } from 'react-onsenui';
 // Redux
 import { connect }          from 'react-redux';
 // Styles
-import { bodyStyle }        from './../../styles/styles';
+import { listContainer, listStyle, listBottom } from './../../styles/styles';
 // Global Styles
 import  TopBar              from './../../views/_global/topBar.jsx';
 import  BottomNav           from './../../views/_global/bottomNav.jsx';
@@ -52,10 +52,6 @@ const letusImage = {
 };
 
 class About extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleBack() {
     window.history.back();
   }
@@ -63,42 +59,52 @@ class About extends Component {
   render() {
     return (
       <Page renderToolbar={TopBar.bind(this, { title: 'About', handleBack: this.handleBack })}>
-        <List>
-          <ListHeader>About</ListHeader>
-          <ListItem>
-            <div className='left'>
-              <img src='https://pbs.twimg.com/media/CFWi-dUW8AAbwqo.png' alt='LetUsCat' style={letusImage}/>
-            </div>
-            <div className='center'>
-              <span>Made using React, Redux, Express, MongoDB, SocketIO, OnsenUI</span>
-              <span className='list__item__subtitle'>
-                <Icon className='left list__item__icon' icon='fa-github'/>
-                  <a href='https://github.com/LegendaryLettuce/LetUs' target='_blank' className='center' style={{ textDecoration: 'none', color: 'white' }}>
-                  https://github.com/LegendaryLettuce/LetUs
-                  </a>
-              </span>
-            </div>
-          </ListItem>
-          <ListHeader>Team Members</ListHeader>
-          { team.map((member, i) => (
-            <ListItem tappable key={i}>
-              <div className='left'>
-                <img style={gitImage} className="list__item__thumbnail" src={member.avatar} alt={`${member.github}`}/>
-              </div>
-              <div className='center'>
-                <span className='list__item__title'>
-                  {member.name}
-                </span>
-                <div className='list__item__subtitle'>
-                  <Icon className='list__item__icon' icon='fa-github'/>
-                    <a href={member.github} target='_blank' style={{ textDecoration: 'none', color: 'white' }}>
-                      @{member.handle}
-                    </a>
+        <div style={listContainer}>
+          <div style={listStyle}>
+            <List>
+              <ListHeader>About</ListHeader>
+              <ListItem>
+                <div className='left'>
+                  <img src='https://pbs.twimg.com/media/CFWi-dUW8AAbwqo.png' alt='LetUsCat' style={letusImage}/>
                 </div>
-            </div>
-            </ListItem>
-          ))}
-        </List>
+                <div className='center'>
+                  <span>Made using React, Redux, Express, MongoDB, SocketIO, OnsenUI</span>
+                  <span className='list__item__subtitle'>
+                    <Icon className='left list__item__icon' icon='fa-github'/>
+                      <a href='https://github.com/LegendaryLettuce/LetUs' target='_blank' className='center' style={{ textDecoration: 'none', color: 'white' }}>
+                        LegendaryLettuce/LetUs
+                      </a>
+                  </span>
+                </div>
+              </ListItem>
+              <ListHeader>Team Members</ListHeader>
+              {
+                team.map((member, i) => (
+                  <ListItem tappable key={i}>
+                    <div className='left'>
+                      <img style={gitImage} className="list__item__thumbnail" src={member.avatar} alt={`${member.github}`}/>
+                    </div>
+                    <div className='center'>
+                      <span className='list__item__title'>
+                        {member.name}
+                      </span>
+                      <div className='list__item__subtitle'>
+                        <Icon className='list__item__icon' icon='fa-github'/>
+                          <a href={member.github} target='_blank' style={{ textDecoration: 'none', color: 'white' }}>
+                            @{member.handle}
+                          </a>
+                      </div>
+                  </div>
+                  </ListItem>
+                ))
+              }
+            </List>
+          </div>
+          <div style={{
+            ...listBottom,
+            minHeight: '44px',
+          }}/>
+        </div>
         <BottomNav router={this.props.router}/>
       </Page>
     );
