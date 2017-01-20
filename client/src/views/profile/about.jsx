@@ -80,8 +80,8 @@ class About extends Component {
             </div>
           </ListItem>
           <ListHeader>Team Members</ListHeader>
-          { team.map(member => (
-            <ListItem tappable>
+          { team.map((member, i) => (
+            <ListItem tappable key={i}>
               <div className='left'>
                 <img style={gitImage} className="list__item__thumbnail" src={member.avatar} alt={`${member.github}`}/>
               </div>
