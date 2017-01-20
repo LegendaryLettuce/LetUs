@@ -3,7 +3,7 @@ const path    = require('path');
 const plugins = require('webpack-load-plugins')({
   rename: {
     'html-webpack-plugin': 'Html',
-    // 'favicons-webpack-plugin': 'Favicons',
+    'favicons-webpack-plugin': 'Favicons',
   },
 });
 
@@ -16,7 +16,7 @@ const standardPlugins = [
     title: 'LetUs',
     template: `${APP_DIR}/index.html`,
   }),
-  // new plugins.Favicons(`${APP_DIR}/favicon.png`),
+  new plugins.Favicons(`${APP_DIR}/favicon.png`),
 ];
 
 
