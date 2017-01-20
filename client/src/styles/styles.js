@@ -21,7 +21,7 @@ export const login = {
   backgroundPosition: 'center center',
   backgroundSize: 'cover',
   width: '100%',
-  height: '100vh',
+  height: '100%',
 };
 styles.login = login;
 
