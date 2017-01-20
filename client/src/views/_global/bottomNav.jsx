@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 // Redux
 import { connect }          from 'react-redux';
 // Onsen UI
-// import ons                  from 'onsenui';
-import { BottomToolbar, Icon, BackButton, ToolbarButton } from 'react-onsenui';
+import { BottomToolbar, Icon, ToolbarButton } from 'react-onsenui';
 // Styles
 import { bottomNavStyle }   from '../../styles/styles';
 
 class BottomNav extends Component {
-
   constructor(props) {
     super(props);
     this.routeToHome = this.routeToHome.bind(this);
@@ -33,7 +31,6 @@ class BottomNav extends Component {
       <BottomToolbar style = { bottomNavStyle } >
         <div className="left">
           <ToolbarButton>
-            {/* Home */}
             <Icon icon="fa-home" onClick={this.routeToHome}/>
           </ToolbarButton>
         </div>
@@ -45,7 +42,6 @@ class BottomNav extends Component {
         <div className="right">
           <ToolbarButton>
             <Icon icon="fa-question" onClick={this.routeToAbout}/>
-            {/* Create */}
           </ToolbarButton>
         </div>
       </BottomToolbar>

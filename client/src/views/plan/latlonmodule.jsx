@@ -14,7 +14,6 @@ import {
   updateSelectedView,
   updateSelectedViewIndex,
 }                       from '../../redux/actions';
-import { initSocket }   from './../../sockets/sockets';
 // Utils
 import { getStore }     from '../../utils/utils';
 // Styles
@@ -25,8 +24,6 @@ import  TopBar          from './../../views/_global/topBar.jsx';
 import  BottomNav       from './../../views/_global/bottomNav.jsx';
 // API Key
 import apikey           from './../../../../config/google-maps-api';
-
-// TODO: Add api key
 
 const inputField = {
   ...bodyStyle,
@@ -41,7 +38,6 @@ const title = {
 };
 
 const searchForm = {
-  // display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
 };
@@ -58,7 +54,6 @@ class LatLonModule extends Component {
     };
     window.googleLoaded = () => {
       this.setState({
-        // this.props.updateGoogleMaps(true);
         loaded: true,
       });
     };
@@ -156,15 +151,10 @@ class LatLonModule extends Component {
     this.props.router.push('/home');
   }
 
-  // handlePosition(userCoords) {
-  //   console.log(userCoords)
-  //   this.setState({ userCoords: true });
-  //   return userCoords;
-  // }
-
   geoLocation() {
-    //eslint-disable-next-line
-    if (navigator.geolocation ) {
+    // eslint-disable-next-line no-undef
+    if (navigator.geolocation) {
+      // eslint-disable-next-line no-undef
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           this.setState({ userCoords: [pos.coords.latitude, pos.coords.longitude] });
@@ -194,7 +184,6 @@ class LatLonModule extends Component {
               />
             </div> :
             <div/>
-            // TODO: add loading bar
         }
         {
           this.state.userCoords !== false ?

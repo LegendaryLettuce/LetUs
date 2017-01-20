@@ -27,16 +27,6 @@ export const updateUser = (user) => {
   return { type: 'UPDATE_USER', user };
 };
 
-export const updateConnectedPeers = connectedPeers => (
-  // TODO: decide whether to store in sessionStorage
-  { type: 'UPDATED_CONNECTED_PEERS', connectedPeers }
-);
-
-export const updateTalliedVotes = talliedVotes => (
-  // TODO: decide whether to store in sessionStorage
-  { type: 'UPDATED_TALLIED_VOTES', talliedVotes }
-);
-
 export const updateCoords = (coords) => {
   sessionStorage.setItem('coords', JSON.stringify(coords));
   return { type: 'UPDATE_COORDS', coords };
@@ -46,6 +36,10 @@ export const updateEDP = (edp) => {
   sessionStorage.setItem('edp', JSON.stringify(edp));
   return { type: 'UPDATE_EDP', edp };
 };
+
+export const updateConnectedPeers = connectedPeers => ({ type: 'UPDATED_CONNECTED_PEERS', connectedPeers });
+
+export const updateTalliedVotes = talliedVotes => ({ type: 'UPDATED_TALLIED_VOTES', talliedVotes });
 
 export const updateHomeEventPage = homeEventPageData => ({ type: 'UPDATE_HOME_EVENT_PAGE', homeEventPageData });
 

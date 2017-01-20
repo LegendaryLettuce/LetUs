@@ -5,16 +5,11 @@ import { ProgressBar } from 'react-onsenui';
 
 
 class VotesProgress extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const talliedPercent = (this.props.talliedVotes / this.props.expectedVotes) * 100;
     const connectedPercent = (this.props.connectedPeers / this.props.expectedVotes) * 100;
-    // console.log('SOCKET.CONNECTIONS: tallied percent', talliedPercent);
-    // console.log('SOCKET.CONNECTIONS: connected percent', connectedPercent);
-    
+
     return (
       <section style={{
         padding: '12px',

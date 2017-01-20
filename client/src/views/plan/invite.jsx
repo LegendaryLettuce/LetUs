@@ -78,10 +78,6 @@ class Invite extends Component {
     });
   }
 
-  // facebookNotification() {
-    // axios.post(`/${user_id}/notifications`)
-  // }
-
   handleBack() {
     this.props.router.push('/create');
   }
@@ -103,14 +99,10 @@ class Invite extends Component {
         <div style={listContainer}>
           <h1 style={header}>Invite Friends</h1>
           <HashLink />
-
           <div style={listStyle}>
-
             <Friends />
-
           </div>
           <div style={listBottom}/>
-
         </div>
         <Collaborate route={this.routeToCollaborate}/>
         <BottomNav />

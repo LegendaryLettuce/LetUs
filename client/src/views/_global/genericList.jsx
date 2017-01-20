@@ -38,28 +38,25 @@ class GenericList extends Component {
 
     const containerStyle = rowData.containerStyle || {};
 
-    // console.log(containerStyle);
-
     const imageUrl = rowData.imageUrl || `http://placekitten.com/g/${x}/${y}`;
 
     const leftTumbnail = rowData.useIcon ?
       this.renderIcon(rowData.useIcon) : this.renderImage(imageUrl);
 
     return (
-      <ListItem key={index} onClick={() => {
-        this.props.handleTouch(rowData);
-      }}
+      <ListItem
+        key={index}
+        onClick={() => {
+          this.props.handleTouch(rowData);
+        }}
         style={containerStyle}
         modifier='longdivider'
         tappable
       >
-      <div className='left'>
+        <div className='left'>
           {leftTumbnail}
         </div>
-        <div
-          className='center'
-          style={textStyle}
-        >
+        <div className='center' style={textStyle}>
           {rowData.displayTitle}
         </div>
       </ListItem>

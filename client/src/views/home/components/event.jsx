@@ -1,11 +1,11 @@
-import React, { Component }     from 'react';
+import React, { Component } from 'react';
 // Redux
-import { connect }              from 'react-redux';
+import { connect }      from 'react-redux';
 import { Page, List, ListItem, Icon, Toolbar, BackButton } from 'react-onsenui';
 // Styles
-import { bodyStyle, listContainer, listStyle, listBottom }            from '../../../styles/styles';
+import { bodyStyle, listContainer, listStyle, listBottom } from '../../../styles/styles';
 // Pages
-import  BottomNav        from '../../../views/_global/bottomNav.jsx';
+import  BottomNav       from '../../../views/_global/bottomNav.jsx';
 
 const iconPadding = {
   marginRight: '10px',

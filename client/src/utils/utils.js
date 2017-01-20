@@ -45,21 +45,16 @@ export const ratingToArray = (rating) => {
   return a;
 };
 
-// TODO: attempt to load data from server if not in session
-// TODO: lazy refresh data in background to keep up to date with server if necessary
 export const getStore = () => ({
   friends: JSON.parse(sessionStorage.getItem('friends')) || [],
   eventHash: JSON.parse(sessionStorage.getItem('eventHash')) || '',
   yelpData: JSON.parse(sessionStorage.getItem('yelpData')) || [],
   liveData: JSON.parse(sessionStorage.getItem('liveData')) || [],
   user: JSON.parse(sessionStorage.getItem('user')) || {},
-  // connectedPeers: JSON.parse(sessionStorage.getItem('connectedPeers')) || 0,
-  // talliedVotes: JSON.parse(sessionStorage.getItem('talliedVotes')) || 0,
   coords: JSON.parse(sessionStorage.getItem('coords')) || {},
   edp: JSON.parse(sessionStorage.getItem('edp')) || {},
   loaded: true,
 });
-
 
 export const loadFacebook = (redux) => {
   window.fbAsyncInit = () => {

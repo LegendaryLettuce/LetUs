@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 // Onsen UI
 import { Page, Icon, List, ListHeader, ListItem } from 'react-onsenui';
-// Redux
-import { connect }          from 'react-redux';
 // Styles
 import { listContainer, listStyle, listBottom } from './../../styles/styles';
-// Global Styles
+// Global Components
 import  TopBar              from './../../views/_global/topBar.jsx';
 import  BottomNav           from './../../views/_global/bottomNav.jsx';
 
@@ -51,14 +49,15 @@ const letusImage = {
   border: '1px solid white',
 };
 
+const handleBack = () => {
+  window.history.back();
+};
+
 class About extends Component {
-  handleBack() {
-    window.history.back();
-  }
 
   render() {
     return (
-      <Page renderToolbar={TopBar.bind(this, { title: 'About', handleBack: this.handleBack })}>
+      <Page renderToolbar={TopBar.bind(this, { title: 'About', handleBack })}>
         <div style={listContainer}>
           <div style={listStyle}>
             <List>
@@ -111,7 +110,4 @@ class About extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-});
-
-export default connect(mapStateToProps)(About);
+export default About;

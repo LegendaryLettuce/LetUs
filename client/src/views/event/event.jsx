@@ -1,15 +1,22 @@
-import React, { Component }     from 'react';
+import React, { Component } from 'react';
 // Onsen UI
-import { Page, List, ListItem, Icon, Toolbar, BackButton } from 'react-onsenui';
+import {
+  Page,
+  List,
+  ListItem,
+  Icon,
+  Toolbar,
+  BackButton,
+}                       from 'react-onsenui';
 // Redux
-import { connect }              from 'react-redux';
-import { load }                 from '../../redux/actions';
+import { connect }      from 'react-redux';
+import { load }         from '../../redux/actions';
 // Utils
-import { getStore }             from '../../utils/utils';
+import { getStore }     from '../../utils/utils';
 // Styles
-import { bodyStyle, listContainer, listStyle, listBottom }            from '../../styles/styles';
+import { bodyStyle, listContainer, listStyle, listBottom } from '../../styles/styles';
 // Pages
-import  BottomNav               from './../../views/_global/bottomNav.jsx';
+import  BottomNav       from './../../views/_global/bottomNav.jsx';
 
 const iconPadding = {
   marginRight: '10px',
@@ -61,10 +68,6 @@ const tags = {
 };
 
 
-// const address = (location) => {
-//   return location.display_address.join(',');
-// }
-
 class Event extends Component {
   constructor(props) {
     super(props);
@@ -101,15 +104,14 @@ class Event extends Component {
     );
   }
 
-  // router
-  // decideCreate() {
-  //   this.props.router.push('/create');
-  // }
-
   render() {
     return (
-        <Page className="scroller" modifier='shop-details' renderToolbar={() => this.renderToolbar('Event Details')}
-        style={{ background: 'rgba(51,51,51,1)' }}>
+        <Page
+          className="scroller"
+          modifier='shop-details'
+          renderToolbar={() => this.renderToolbar('Event Details')}
+          style={{ background: 'rgba(51,51,51,1)' }}
+        >
           <div style={listContainer}>
             <div style={listStyle}>
               <div style={{
@@ -134,25 +136,37 @@ class Event extends Component {
                 ))}
               </div>
               <List>
-                <a href={`http://maps.google.com/?q=${this.props.data.displayAddress.join(', ')}`} target='_blank' style={{ textDecoration: 'none' }}>
+                <a
+                  href={`http://maps.google.com/?q=${this.props.data.displayAddress.join(', ')}`}
+                  target='_blank'
+                  style={{ textDecoration: 'none' }}
+                >
                   <ListItem tappable>
                     <Icon icon='fa-map-marker' style={iconPadding}/>
                     {this.props.data.displayAddress.join(', ')}
                   </ListItem>
                 </a>
-                <a href={`tel:${this.props.data.displayPhone}`} target='_blank' style={{ textDecoration: 'none' }}>
+                <a
+                  href={`tel:${this.props.data.displayPhone}`}
+                  target='_blank'
+                  style={{ textDecoration: 'none' }}
+                >
                   <ListItem tappable><Icon icon='fa-phone' style={iconPadding} />
                     {this.props.data.displayPhone}
                   </ListItem>
                 </a>
-                <a href={this.props.data.mobileUrl} target='_blank' style={{ textDecoration: 'none' }}>
+                <a
+                  href={this.props.data.mobileUrl}
+                  target='_blank'
+                  style={{ textDecoration: 'none' }}
+                >
                   <ListItem tappable>
                     <Icon icon='fa-yelp' style={iconPadding}/>
                     Visit {this.props.data.displayTitle} on Yelp!
                   </ListItem>
                 </a>
               </List>
-          </div>
+            </div>
           <div style={{
             ...listBottom,
             minHeight: '44px',

@@ -1,13 +1,22 @@
-import React, { Component }     from 'react';
+import React, { Component } from 'react';
 // Redux
-import { connect }              from 'react-redux';
-import { Page, List, ListItem, Icon, Toolbar, BackButton, ListHeader, Row, Col } from 'react-onsenui';
+import { connect }      from 'react-redux';
+import {
+  Page,
+  List,
+  ListItem,
+  Toolbar,
+  BackButton,
+}                       from 'react-onsenui';
 // Styles
-import { listContainer, listStyle, listBottom }  from '../../styles/styles';
-
+import {
+  listContainer,
+  listStyle,
+  listBottom,
+}                       from '../../styles/styles';
 // Global Components
-import  BottomNav        from './../../views/_global/bottomNav.jsx';
-import  TopBar           from './../../views/_global/topBar.jsx';
+import  BottomNav       from './../../views/_global/bottomNav.jsx';
+import  TopBar          from './../../views/_global/topBar.jsx';
 
 const image = {
   height: '75px',
@@ -18,6 +27,10 @@ const image = {
   border: '1px solid white',
   boxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 0px 0px',
   WebkitBoxShadow: 'rgba(0, 0, 0, 0.2) 0px 2px 0px 0px',
+};
+
+const handleBack = () => {
+  window.history.back();
 };
 
 class Friends extends Component {
@@ -33,13 +46,9 @@ class Friends extends Component {
     );
   }
 
-  handleBack() {
-    window.history.back();
-  }
-
   render() {
     return (
-    <Page renderToolbar={TopBar.bind(this, { title: 'Friends', handleBack: this.handleBack })}>
+    <Page renderToolbar={TopBar.bind(this, { title: 'Friends', handleBack })}>
       <div style={listContainer}>
         <div style={listStyle}>
         <List
@@ -48,7 +57,7 @@ class Friends extends Component {
               (friend, idx) => (
                 <ListItem key={idx} modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
                   <div className="left">
-                    <img className="list__item__image" alt="Top Friend Image" style ={image} src='http://rs387.pbsrc.com/albums/oo311/elianei/avatars/bcat_av1_100.gif~c200' />
+                    <img className="list__item__image" alt="top friend" style ={image} src='http://rs387.pbsrc.com/albums/oo311/elianei/avatars/bcat_av1_100.gif~c200' />
                   </div>
                   <div className="center">
                     <span className="list__item__title">{friend.name}</span>

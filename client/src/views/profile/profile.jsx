@@ -1,7 +1,7 @@
 import React, { Component }     from 'react';
 // Redux
 import { connect }              from 'react-redux';
-import { Page, List, ListItem, Icon, Toolbar, BackButton, ListHeader } from 'react-onsenui';
+import { Page, List, ListItem, Toolbar, BackButton, ListHeader } from 'react-onsenui';
 // Styles
 import { bodyStyle }            from '../../styles/styles';
 // Pages

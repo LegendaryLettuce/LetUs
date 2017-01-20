@@ -18,11 +18,7 @@ import {
 // Sockets
 import { emitLiveData } from '../../sockets/sockets';
 
-const [RED, GREEN, BLUE] = [0, 1, 2];
 const SIZE_PERCENT = 66;
-const RGB_MIN = 30;
-const RGB_MAX = 200;
-const RGB = [RGB_MAX, RGB_MAX, RGB_MAX];
 
 const backStyle = {
   height: '100%',
@@ -34,7 +30,6 @@ class Collaborate extends Component {
   constructor(props) {
     super(props);
     this.index = 0;
-    this.otherRGB = RGB_MAX;
     this.new = true;
     this.loaded = false;
     this.holding = false;
@@ -47,7 +42,6 @@ class Collaborate extends Component {
       dislike: 'none',
       carouselPosition: 1,
       carouselAnimation: {},
-      rgb: RGB,
       windowWidth: 0,
       windowHeight: 0,
       widthDiff: 0,
@@ -85,7 +79,7 @@ class Collaborate extends Component {
       const liveData = {
         ...this.props.yelpData[this.index],
         preference: (e.activeIndex) ? -1 : 1,
-        intensity: Math.floor(((RGB_MAX - this.otherRGB) / (RGB_MAX - RGB_MIN)) * 100),
+        intensity: Math.floor(this.state.intensity),
       };
 
       const socketVote = {
@@ -96,15 +90,7 @@ class Collaborate extends Component {
 
       emitLiveData(socketVote);
 
-      // this.props.addLiveData(liveData);
-//       console.log(
-// `DATA:
-// type      - ${this.props.yelpData[this.index].displayTitle}
-// direction - ${(e.activeIndex) ? 'Dislike' : 'Like'}
-// intensity - ${Math.floor(((RGB_MAX - this.otherRGB) / (RGB_MAX - RGB_MIN)) * 100)}%`,
-//       );
       this.new = true;
-      this.otherRGB = RGB_MAX;
       this.setState({
         carouselPosition: e.activeIndex,
         carouselAnimation: { duration: 0 },
@@ -116,7 +102,6 @@ class Collaborate extends Component {
         }
         this.setState({
           intensity: 0,
-          rgb: RGB,
         }, () => {
           setTimeout(this.setState.bind(this, {
             carouselPosition: 1,
@@ -127,93 +112,72 @@ class Collaborate extends Component {
     }
   }
 
-  makeRGB(color, thisColor, speed) {
-    // eslint-disable-next-line no-nested-ternary
-    return (color === thisColor) ?
-      ((this.state.rgb[thisColor] + (speed * 2) < RGB_MAX) ?
-        this.state.rgb[thisColor] + (speed * 2) :
-        RGB[thisColor]) :
-      ((this.state.rgb[thisColor] - speed > this.otherRGB) ?
-        this.state.rgb[thisColor] - speed :
-        this.otherRGB);
+  move() {
+    if (this.loaded) {
+      if (this.new) {
+        this.setState({ intensity: 0 });
+        this.setState({
+          neutral: 'block',
+          like: 'none',
+          dislike: 'none',
+        });
+      } else {
+        const pos = this.getPos();
+        const per = this.percentToPixel(SIZE_PERCENT) / 2;
+        if (pos >= per) {
+          this.setState({
+            neutral: 'none',
+            like: 'block',
+            dislike: 'none',
+          });
+        } else if (pos <= -per) {
+          this.setState({
+            neutral: 'none',
+            like: 'none',
+            dislike: 'block',
+          });
+        } else {
+          this.setState({
+            neutral: 'block',
+            like: 'none',
+            dislike: 'none',
+          });
+        }
+      }
+    }
   }
 
-  updateRGB(color, speed = 1) {
-    if (this.loaded && !this.new) {
-      this.setState({
-        rgb: [
-          this.makeRGB(color, RED, speed),
-          this.makeRGB(color, GREEN, speed),
-          this.makeRGB(color, BLUE, speed),
-        ],
-      });
-    } else if (this.loaded) this.setState({ rgb: RGB });
-  }
-
-  // TODO: remove RGB
-
-  move(prevPos = this.getPos()) {
-    const pos = this.getPos();
-    const per = this.percentToPixel(SIZE_PERCENT) / 2;
-    const intendedColor = (new Array(3)).fill(this.otherRGB);
-    if (pos >= per) {
-      this.updateRGB(GREEN, 2);
-      this.setState({
-        neutral: 'none',
-        like: 'block',
-        dislike: 'none',
-      });
-      intendedColor[GREEN] = RGB_MAX;
-    } else if (pos <= -per) {
-      this.updateRGB(RED, 2);
-      this.setState({
-        neutral: 'none',
-        like: 'none',
-        dislike: 'block',
-      });
-      intendedColor[RED] = RGB_MAX;
-    } else {
-      this.updateRGB(BLUE, 2);
+  onHold() {
+    if (this.loaded) {
       this.setState({
         neutral: 'block',
         like: 'none',
         dislike: 'none',
       });
-      intendedColor[BLUE] = RGB_MAX;
-    }
-    if (this.loaded && this.new) this.setState({ rgb: RGB });
-    else if (this.loaded && !this.stationary && prevPos === pos && this.holding &&
-        JSON.stringify(this.state.rgb) !== JSON.stringify(intendedColor)) {
-      setTimeout(this.move.bind(this, pos), 1000 / 60);
-    }
-  }
-
-  onHold() {
-    // this.move();
-    if (this.otherRGB > RGB_MIN + 1) this.otherRGB -= 2;
-    if (this.state.intensity < 100) this.setState({ intensity: this.state.intensity + 1.5 });
-    else if (this.state.intensity > 100) this.setState({ intensity: 100 });
-    this.updateRGB(BLUE, 2);
-    if (this.loaded && this.new) this.setState({ rgb: RGB });
-    else if (this.loaded && this.stationary && this.holding) {
-      setTimeout(this.onHold.bind(this), 1000 / 60);
+      if (this.new) this.setState({ intensity: 0 });
+      else if (this.state.intensity > 100) this.setState({ intensity: 100 });
+      else if (this.state.intensity < 100) {
+        this.setState({ intensity: this.state.intensity + 1.5 });
+        if (this.stationary && this.holding) {
+          setTimeout(this.onHold.bind(this), 1000 / 60);
+        }
+      }
     }
   }
 
   onHoldDone() {
-    if (this.otherRGB < RGB_MAX) this.otherRGB++;
-    if (this.state.intensity > 0) this.setState({ intensity: this.state.intensity - 1 });
-    else if (this.state.intensity < 0) this.setState({ intensity: 0 });
-    this.updateRGB(BLUE);
-    this.setState({
-      neutral: 'block',
-      like: 'none',
-      dislike: 'none',
-    });
-    if (this.loaded && this.new) this.setState({ rgb: RGB });
-    else if (this.loaded && !this.holding &&
-        JSON.stringify(this.state.rgb) !== JSON.stringify(RGB)) {
-      setTimeout(this.onHoldDone.bind(this), 1000 / 60);
+    if (this.loaded) {
+      this.setState({
+        neutral: 'block',
+        like: 'none',
+        dislike: 'none',
+      });
+      if (this.new) this.setState({ intensity: 0 });
+      else if (this.state.intensity < 0) this.setState({ intensity: 0 });
+      else if (this.state.intensity > 0) {
+        this.setState({ intensity: this.state.intensity - 1 });
+        if (!this.holding) setTimeout(this.onHoldDone.bind(this), 1000 / 60);
+      }
     }
   }
 
@@ -348,7 +312,7 @@ class Collaborate extends Component {
               height: `${this.percentToPixel(SIZE_PERCENT + 13)}px`,
               width: `${this.percentToPixel(SIZE_PERCENT + 10) + this.state.widthDiff}px`,
               marginLeft: `${(this.marginLeft() + this.state.marginDiff) - this.percentToPixel(5)}px`,
-              boxShadow: '0 0 0 10000em rgb(60, 64, 65)', // 0 0 0 2px rgb(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]}), // rgba(${this.state.rgb[0]},${this.state.rgb[1]},${this.state.rgb[2]}, 0.4)`, // 60, 64, 65)`,
+              boxShadow: '0 0 0 10000em rgb(60, 64, 65)',
               overflow: 'hidden',
             }}>
               <div style={{
@@ -368,20 +332,18 @@ class Collaborate extends Component {
           <div style={{
             fontSize: `${this.percentToPixel(5.5)}px`,
             textAlign: 'center',
-            color: 'rgb(60, 64, 65)', // TODO: get color from OnsenUI
+            color: 'rgb(60, 64, 65)',
             position: 'fixed',
             height: `${this.percentToPixel(SIZE_PERCENT + 3)}px`,
             width: `${this.percentToPixel(SIZE_PERCENT)}px`,
             marginLeft: `${this.marginLeft()}px`,
             zIndex: '2',
-            // boxShadow: '0 0 0 2px rgb(38, 39, 40)', // , 0 0 0 10000em #ccc',
-            // background: '#888',
           }}>
             <div style={{
               height: '100%',
               width: '100%',
               borderRadius: `${this.percentToPixel(10)}px`,
-              boxShadow: '0 0 0 2px rgb(38, 39, 40)', // , 0 0 0 10em #ccc',
+              boxShadow: '0 0 0 2px rgb(38, 39, 40)',
               overflow: 'hidden',
               background: '#888',
             }}>
