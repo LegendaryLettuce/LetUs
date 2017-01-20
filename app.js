@@ -1,6 +1,5 @@
 const express       = require('express');
 const path          = require('path');
-const favicon       = require('serve-favicon');
 const serveStatic   = require('serve-static');
 const session       = require('express-session');
 const logger        = require('morgan');
@@ -18,7 +17,6 @@ const loginRouter   = require('./routes/loginRouter');
 const app = express();
 
 // uncomment after placing your favicon in /client/src
-// app.use(favicon(path.join(__dirname, 'client/dist', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
