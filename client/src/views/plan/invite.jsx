@@ -18,7 +18,7 @@ import {
 // Utils
 import { getStore }     from '../../utils/utils';
 // Styles
-// import { }              from '../../styles/styles';
+import { listContainer, listStyle, listBottom }  from '../../styles/styles';
 // Components
 import  HashLink        from './invite/link.jsx';
 import  Friends         from './invite/friends.jsx';
@@ -26,6 +26,11 @@ import  Collaborate     from './invite/collaborate.jsx';
 import  BottomNav       from './../../views/_global/bottomNav.jsx';
 // Sockets
 import { initSocket }   from './../../sockets/sockets';
+
+
+const header = {
+  textAlign: 'center',
+};
 
 class Invite extends Component {
   constructor(props) {
@@ -93,28 +98,22 @@ class Invite extends Component {
   }
 
   render() {
-    const listStyle = {
-      height: '50%',
-      overflowY: 'scroll',
-    };
-    const header = {
-      textAlign: 'center',
-    };
     return (
       <Page renderToolbar={() => this.renderToolbar('Invite')}>
+        <div style={listContainer}>
+          <h1 style={header}>Invite Friends</h1>
+          <HashLink />
 
-        <h1 style={header}>Invite Friends</h1>
-        <HashLink />
+          <div style={listStyle}>
 
-        <div style={listStyle}>
+            <Friends />
 
-          <Friends />
+          </div>
+          <div style={listBottom}/>
 
         </div>
-
         <Collaborate route={this.routeToCollaborate}/>
-
-        <BottomNav></BottomNav>
+        <BottomNav />
       </Page>
     );
   }
