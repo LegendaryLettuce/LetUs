@@ -31,7 +31,7 @@ class LoginView extends Component {
     axios.get('/login/check-event-hash')
       .then((res) => {
         this.redirectEventHash = res.data;
-        console.log('CHECKING EVENT HASH:', res.data);
+        // console.log('CHECKING EVENT HASH:', res.data);
       });
   }
 
@@ -59,7 +59,7 @@ class LoginView extends Component {
                     result.friends = fRes.data;
                     postLogin(result)
                       .then(() => {
-                        console.log('CHECKING EVENT HASH AFTER LOGIN:', this.redirectEventHash);
+                        // console.log('CHECKING EVENT HASH AFTER LOGIN:', this.redirectEventHash);
                         this.props.updateUser(result);
                         if (this.redirectEventHash && this.redirectEventHash.length === 6) {
                           this.props.router.push(`/c/${this.redirectEventHash}`);

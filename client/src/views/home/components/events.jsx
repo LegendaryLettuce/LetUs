@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React              from 'react';
 // Onsen UI
 import { ListItem, List } from 'react-onsenui';
 
@@ -18,7 +18,8 @@ const divStyle = {
 
 const imageWidth = {
   minWidth: '105px',
-}
+  maxWidth: '105px',
+};
 
 const Events = props => (
       <List
