@@ -15,7 +15,7 @@ import GenericList      from './../_global/genericList.jsx';
 import VotesProgress    from './collaborate/progressBar.jsx';
 // Styles
 import { buttonStyle }  from '../../styles/styles';
-// Global Styles
+// Global Components
 import  BottomNav        from './../../views/_global/bottomNav.jsx';
 
 const padStyle = {
@@ -62,7 +62,7 @@ class LiveList extends Component {
 
   render() {
     return (
-      <Page renderToolbar={TopBar.bind(this, { title: 'Location' })}>
+      <Page renderToolbar={TopBar.bind(this, { title: 'Live List' })}>
         <VotesProgress
           expectedVotes={((this.props.friends.length + 1) * this.props.liveData.length)}
           talliedVotes={this.props.talliedVotes}

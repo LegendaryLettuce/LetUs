@@ -13,6 +13,7 @@ export const bottomNavStyle = {
   justifyContent: 'space-around',
   position: 'fixed',
 };
+styles.bottomNavStyle = bottomNavStyle;
 
 export const login = {
   backgroundImage: 'url("http://68.media.tumblr.com/b4f33d654b4448794313633770cc8572/tumblr_oh34v07h9w1u9ooogo1_540.gif")',
@@ -22,6 +23,7 @@ export const login = {
   width: '100%',
   height: '100vh',
 };
+styles.login = login;
 
 export const fbLogin = {
   background: 'none',
@@ -30,6 +32,7 @@ export const fbLogin = {
   alignItems: 'center',
   justifyContent: 'space-around',
 };
+styles.fbLogin = fbLogin;
 
 export const splashText = {
   display: 'flex',
@@ -47,6 +50,7 @@ export const splashText = {
   textAlign: 'center',
   textShadow: 'rgb(0, 0, 0) 0px 0px 3px',
 };
+styles.splashText = splashText;
 
 export const tint = {
   content: '""',
@@ -60,6 +64,7 @@ export const tint = {
   backgroundColor: 'rgba(0,0,0,.5)',
   margin: 'auto',
 };
+styles.tint = tint;
 
 export const tagline = {
   paddingTop: '10px',
@@ -69,6 +74,7 @@ export const tagline = {
   fontSize: '24px',
   color: 'white',
 };
+styles.tagline = tagline;
 
 export const buttonStyle = {
   padding: '0px 20px 0px 20px',
@@ -84,9 +90,24 @@ export const buttonStyle = {
   fontWeight: 'bold',
   borderRadius: '0',
 };
-// export const titleStyle = {
-//   ...styles.body,
-// };
-// styles.title = titleStyle;
+styles.buttonStyle = buttonStyle;
+
+export const listContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%',
+};
+styles.listContainer = listContainer;
+
+export const listStyle = {
+  overflowY: 'scroll',
+};
+styles.listStyle = listStyle;
+
+export const listBottom = {
+  minHeight: '84px',
+  width: '100%',
+};
+styles.listBottom = listBottom;
 
 export default styles;
