@@ -5,8 +5,6 @@ import { connect }      from 'react-redux';
 import CopyToClipboard  from 'react-copy-to-clipboard';
 // Onsen UI
 import { Icon }         from 'react-onsenui';
-// Styles
-// import { }   from '../../../styles/styles';
 
 const linkStyle = {
   border: '2px solid white',
@@ -28,6 +26,7 @@ const copyStyle = {
   position: 'relative',
   top: '-16px',
 };
+
 const link = {
   display: 'inline',
   position: 'relative',
@@ -41,9 +40,7 @@ const concatHostUrl = hostUrl.split('/')[2];
 class Link extends Component {
   constructor(props) {
     super(props);
-
     this.animationDur = 1;
-
     this.state = {
       copied: false,
       transparency: 0,
@@ -101,9 +98,7 @@ class Link extends Component {
     return (
       <CopyToClipboard
         text={`${hostUrl}c/${this.props.eventHash}`}
-        onCopy={() => {
-          this.copyFeedback();
-        }}
+        onCopy={() => { this.copyFeedback(); }}
       >
         <div style={this.state.copied ? linkStyleCopied : linkStyle}>
           <div style={copyTextStyle}>Copied</div>

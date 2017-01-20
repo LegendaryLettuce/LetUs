@@ -10,12 +10,10 @@ const { Users, Events, EventGoers } = require('./letUsSchema.js');
 // modular insert function
 const createHash = require('hash-generator');
 
-const socket = require('./../sockets');
-
 const savetoDB = model => model.save()
   .then(data => data)
   .catch((err) => {
-    console.log('Controller error', err);
+    console.error('Controller error', err);
   });
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -42,7 +40,7 @@ const getAllUsers = () => {
     if (!err) {
       return users;
     }
-    return console.log('getAllUsers', err);
+    return err;
   });
 };
 
@@ -57,12 +55,6 @@ const addEvent = (data) => {
 };
 
 // controllers for Invite -> Collaborate view
-
-// use created event ID that is attached to the userID, save invited friends to that row
-
-// collection.findOne({_id: doc_id}, function(err, document) {
-//   console.log(document.name);
-// });
 
 const retrieveEventByHash = hash => (
   Events.findOne({ linkHash: hash })
@@ -79,7 +71,7 @@ const retrieveEvents = (data) => {
   return retrieveEventByHash(hash);
 };
 
-const createNewHash = (data) => {
+const createNewHash = () => {
   const hashLength = 6;
   const hash = createHash(hashLength);
 
@@ -93,10 +85,6 @@ const createNewHash = (data) => {
 };
 
 const createEvent = (data) => {
-  // console.log(data);
-  // console.log('EVENTS BODY FROM CONTROLLER', data.body);
-
-  // db.events.find( { _id: { $in: [ ObjectId("58753486363daf603924c8c0") ] } } )
   const newEvents = new Events({
     creator: data.body.creator,
     yelpId: data.body.yelpId,
@@ -105,7 +93,6 @@ const createEvent = (data) => {
     checkIns: data.body.checkIns,
     linkHash: data.body.hash,
   });
-  // console.log('controller received');
   return savetoDB(newEvents);
 };
 
@@ -118,12 +105,10 @@ const addEventGoer = (user, eventId) => {
 };
 
 const updateTopEvent = (data) => {
-  console.log('CONTROLLER--', data.body);
   const hash = data.body.linkHash;
   return Events.findOne({ linkHash: hash })
     .then((doc) => {
       doc.topEvent = data.body.topEvent;
-      console.log(doc);
       return savetoDB(doc);
     });
 };
@@ -160,8 +145,6 @@ const handleNewEventAttendees = (user) => {
         attendees.push(user);
       }
       doc.attendees = JSON.stringify(attendees);
-      // console.log('DATABASE: doc attendees');
-      // console.log(doc.attendees);
       return savetoDB(doc);
     })
     .then((event) => {
@@ -177,7 +160,6 @@ const retrieveYelpData = (lat, lng) => (
   new Promise((resolve, reject) => {
     const yelp = new Yelp(apikeys);
     const cll = `${lat},${lng}`;
-    // console.log(cll);
     // See http://www.yelp.com/developers/documentation/v2/search_api
     const queries = [{
       term: 'food',
@@ -232,7 +214,6 @@ const retrieveCatData = (lat, lng, cat, volume) => (
 );
 
 const calculateVoteScore = (data, vote) => {
-  // console.log('DATABASE: calculating new vote scores');
   const votes = data.votes;
   const score = data.preference * data.intensity * votes;
   const voteScore = vote.preference * vote.intensity;
@@ -246,8 +227,6 @@ const calculateVoteScore = (data, vote) => {
 };
 
 const handleClientVotes = (hash, vote) => (
-  // console.log('DATABASE: received vote from client');
-  // console.log(vote);
   retrieveEventByHash(hash)
     .then((doc) => {
       const data = JSON.parse(doc.data);
@@ -258,7 +237,6 @@ const handleClientVotes = (hash, vote) => (
         return accum;
       }, -1);
       const selectedData = data[indexVotedItem];
-      // console.log(`DATABASE: index of voted item: ${indexVotedItem}`);
       if (!selectedData.votes) {
         selectedData.preference = vote.preference;
         selectedData.intensity = vote.intensity;
@@ -281,8 +259,7 @@ const handleClientVotes = (hash, vote) => (
 
 const getUserEvents = (user) => {
   const events = [];
-  return new Promise((resolve, reject) => {
-    // console.log(user);
+  return new Promise((resolve) => {
     EventGoers.find({ userId: user })
       .then((data) => {
         let c = 0;
@@ -295,8 +272,6 @@ const getUserEvents = (user) => {
               }
               events.push(event);
               c++;
-              // console.log('event', event);
-              // console.log('events', events);
               if (c >= data.length) {
                 resolve(events);
               }

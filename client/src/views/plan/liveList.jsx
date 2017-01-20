@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 // Onsen UI
 import { Page, Button } from 'react-onsenui';
 // Axios
-import axios             from 'axios';
+import axios            from 'axios';
 // Redux
-
 import { connect }      from 'react-redux';
-import { updateYelpData, updateEventPage, updateParentPage, load } from '../../redux/actions';
+import {
+  updateYelpData,
+  updateEventPage,
+  updateParentPage,
+  load,
+}                       from '../../redux/actions';
 // Utils
 import { getStore }     from '../../utils/utils';
 // Subcomponents
@@ -14,13 +18,14 @@ import TopBar           from './../_global/topBar.jsx';
 import GenericList      from './../_global/genericList.jsx';
 import VotesProgress    from './collaborate/progressBar.jsx';
 // Styles
-import { buttonStyle, listContainer, listStyle, listBottom } from '../../styles/styles';
+import {
+  buttonStyle,
+  listContainer,
+  listStyle,
+  listBottom,
+}                       from '../../styles/styles';
 // Global Components
-import  BottomNav        from './../../views/_global/bottomNav.jsx';
-
-const padStyle = {
-  height: '12%',
-};
+import  BottomNav       from './../../views/_global/bottomNav.jsx';
 
 class LiveList extends Component {
   constructor(props) {
@@ -37,16 +42,13 @@ class LiveList extends Component {
     if (!this.props.loaded) this.props.load(getStore());
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     axios.put('/home/', {
       topEvent: JSON.stringify([this.props.liveData[0]]),
       linkHash: this.props.eventHash,
     })
-      .then((res) => {
-        // console.log('Saved top event', res);
-      })
       .catch((error) => {
-        console.log('Saving top events error', error);
+        console.error('Saving top events error', error);
       });
   }
 

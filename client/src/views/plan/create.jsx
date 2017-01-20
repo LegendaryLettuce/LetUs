@@ -241,13 +241,11 @@ class Create extends Component {
       linkHash: '',
     })
       .then((res) => {
-        // console.log('Saved invited friends', res);
         this.props.updateEventHash(res.data.linkHash);
-        // console.log('EVENT HASH', this.props.eventHash);
         this.props.router.push('/invite');
       })
       .catch((error) => {
-        console.log('Inviting friends error', error);
+        console.error('Inviting friends error', error);
       });
   }
 
@@ -255,7 +253,9 @@ class Create extends Component {
     return (
       <div>
         <Page
-          renderToolbar={TopBar.bind(this, { title: this.props.selectedView, handleBack: this.handleBack })}
+          renderToolbar={
+            TopBar.bind(this, { title: this.props.selectedView, handleBack: this.handleBack })
+          }
           style={{ background: 'rgba(51,51,51,1)' }}
         >
           <GenericList

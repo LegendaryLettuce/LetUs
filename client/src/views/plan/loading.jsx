@@ -14,8 +14,6 @@ import {
 }                       from '../../redux/actions';
 // Utils
 import { getStore }     from '../../utils/utils';
-// Styles
-// import { }              from '../../styles/styles';
 // Sockets
 import socket           from './../../sockets/sockets';
 
@@ -25,31 +23,29 @@ class Loading extends Component {
     if (!this.props.loaded) this.props.load(getStore());
     const hash = window.location.pathname.split('/')[2];
     axios.get(`/events/${hash}`)
-        .then((data) => {
-          const eventData = JSON.parse(data.data.data);
-          this.props.updateEventHash(hash);
-          this.props.updateInviteFriends(JSON.parse(data.data.attendees));
-          this.props.updateYelpData(eventData);
-          this.props.updateLiveData(eventData);
-        })
-        .then(() => {
-          // console.log('After AJAX', this.props.yelpData);
-          const eventPeerUpdaters = {
-            connectedPeers: this.props.updateConnectedPeers,
-            talliedVotes: this.props.updateTalliedVotes,
-            liveData: this.props.updateLiveData,
-            inviteFriends: this.props.updateInviteFriends,
-          };
-          // console.log('liveData when get link:', this.props.liveData);
-          const eventPeerStates = {
-            liveData: this.props.liveData,
-            talliedVotes: this.props.talliedVotes,
-            yelpData: this.props.yelpData,
-            user: this.props.user,
-          };
-          socket.initSocket(hash, eventPeerUpdaters, eventPeerStates);
-          this.props.router.push('/collaborate');
-        });
+      .then((data) => {
+        const eventData = JSON.parse(data.data.data);
+        this.props.updateEventHash(hash);
+        this.props.updateInviteFriends(JSON.parse(data.data.attendees));
+        this.props.updateYelpData(eventData);
+        this.props.updateLiveData(eventData);
+      })
+      .then(() => {
+        const eventPeerUpdaters = {
+          connectedPeers: this.props.updateConnectedPeers,
+          talliedVotes: this.props.updateTalliedVotes,
+          liveData: this.props.updateLiveData,
+          inviteFriends: this.props.updateInviteFriends,
+        };
+        const eventPeerStates = {
+          liveData: this.props.liveData,
+          talliedVotes: this.props.talliedVotes,
+          yelpData: this.props.yelpData,
+          user: this.props.user,
+        };
+        socket.initSocket(hash, eventPeerUpdaters, eventPeerStates);
+        this.props.router.push('/collaborate');
+      });
   }
 
   // eslint-disable-next-line class-methods-use-this

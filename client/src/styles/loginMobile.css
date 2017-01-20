@@ -1,6 +1,6 @@
 @media screen and (min-width: 480px) {
-    .wordDiv {
-      padding-top: 50px;
-      position: static !important;
-    }
+  .wordDiv {
+    padding-top: 50px;
+    position: static !important;
+  }
 }

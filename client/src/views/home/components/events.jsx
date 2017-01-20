@@ -26,14 +26,24 @@ const Events = props => (
         dataSource={props.events}
         renderRow={
           (event, idx) => (
-            <ListItem key={idx} modifier={idx === props.events.length - 1 ? 'longdivider' : null} onClick={() => {
-              props.handleTouch(event);
-            }}>
+            <ListItem
+              key={idx}
+              modifier={idx === props.events.length - 1 ? 'longdivider' : null}
+              onClick={() => {
+                props.handleTouch(event);
+              }}
+            >
               <div className="left" style={imageWidth}>
-                <img className="list__item__image" alt="Top Event Image" src={JSON.parse(event.topEvent)[0].imageUrl} />
+                <img
+                  className="list__item__image"
+                  alt="top event"
+                  src={JSON.parse(event.topEvent)[0].imageUrl}
+                />
               </div>
               <div className="center">
-                <span className="list__item__title">{JSON.parse(event.topEvent)[0].displayTitle}</span>
+                <span className="list__item__title">
+                  {JSON.parse(event.topEvent)[0].displayTitle}
+                </span>
                 <span className="list__item__subtitle">
                   Attendees<br />
                   <span style={circle}>{JSON.parse(event.creator).name}</span>

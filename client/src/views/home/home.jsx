@@ -3,11 +3,19 @@ import React, { Component } from 'react';
 import { Page }         from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
-import { load, updateHomeEventPage, updateParentPage }         from '../../redux/actions';
+import {
+  load,
+  updateHomeEventPage,
+  updateParentPage,
+}                       from '../../redux/actions';
 // Utils
 import { getStore, getUpcomingEvents } from '../../utils/utils';
 // Styles
-import { listContainer, listStyle, listBottom }  from '../../styles/styles';
+import {
+  listContainer,
+  listStyle,
+  listBottom,
+}                       from '../../styles/styles';
 // Global Components
 import  TopBar          from './../../views/_global/topBar.jsx';
 import  BottomNav       from './../../views/_global/bottomNav.jsx';
@@ -15,17 +23,19 @@ import  BottomButton    from './../../views/_global/bottomButton.jsx';
 // Local Components
 import  Events          from './components/events.jsx';
 
+const handleBack = () => {
+  window.history.back();
+};
+
 class Home extends Component {
   constructor(props) {
     super(props);
     this.routeToLatlon = this.routeToLatlon.bind(this);
-    this.handleBack = this.handleBack.bind(this);
     this.state = {
       upcomingEvents: [],
     };
     this.props.updateParentPage('/home');
     this.handleTouch = this.handleTouch.bind(this);
-    this.handleBack = this.handleBack.bind(this);
   }
 
   componentWillMount() {
@@ -37,7 +47,6 @@ class Home extends Component {
       getUpcomingEvents(this.props.user.id)
         .then((res) => {
           this.setState({ upcomingEvents: res.data });
-          // console.log('HOME!-', res.data);
         });
     } else {
       setTimeout(this.componentDidMount.bind(this), 10);
@@ -48,11 +57,6 @@ class Home extends Component {
     this.props.router.push('/search');
   }
 
-  handleBack() {
-    window.history.back();
-    // this.props.router.push('/');
-  }
-
   handleTouch(selected) {
     this.props.updateHomeEventPage(selected);
     this.props.router.push('/homeevent');
@@ -60,7 +64,7 @@ class Home extends Component {
 
   render() {
     return (
-      <Page renderToolbar={TopBar.bind(this, { title: 'Home', handleBack: this.handleBack })}>
+      <Page renderToolbar={TopBar.bind(this, { title: 'Home', handleBack })}>
         <div style={listContainer}>
           <div style={listStyle}>
             <Events events={this.state.upcomingEvents} handleTouch={this.handleTouch}/>

@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-// React Router
-import { browserHistory, Link } from 'react-router';
 // Onsen UI
-import { ListItem, List, Switch, Icon, Input } from 'react-onsenui';
+import { ListItem, List, Icon, Input } from 'react-onsenui';
 // Redux
 import { connect }      from 'react-redux';
 import { updateInviteFriends } from '../../../redux/actions';
-// Styles
-// import { }   from '../../../styles/styles';
 
 class Friends extends Component {
-
   constructor(props) {
     super(props);
     this.state = {

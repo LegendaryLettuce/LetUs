@@ -12,13 +12,13 @@ const Users = new Schema({
   friendRank: Number,
   lettuceLeaves: Number,
   friends: [{ type: String }],
-  favorites: [String], // yelp ids
+  favorites: [String],
 });
 
 const Events = new Schema({
   creator: { type: String, required: true },
   data: { type: String, required: true },
-  attendees: { type: String }, // change String back to ObjectId
+  attendees: { type: String },
   checkIns: [{ type: Boolean }],
   linkHash: { type: String, required: true },
   topEvent: { type: String },
