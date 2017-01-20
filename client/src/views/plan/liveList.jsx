@@ -15,7 +15,7 @@ import GenericList      from './../_global/genericList.jsx';
 import VotesProgress    from './collaborate/progressBar.jsx';
 // Styles
 import { buttonStyle }  from '../../styles/styles';
-// Global Styles
+// Global Components
 import  BottomNav        from './../../views/_global/bottomNav.jsx';
 
 const padStyle = {

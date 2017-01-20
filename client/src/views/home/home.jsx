@@ -6,17 +6,14 @@ import { connect }      from 'react-redux';
 import { load, updateHomeEventPage, updateParentPage }         from '../../redux/actions';
 // Utils
 import { getStore, getUpcomingEvents } from '../../utils/utils';
+// Styles
+import { listContainer, listStyle, listBottom }  from '../../styles/styles';
 // Global Components
 import  TopBar          from './../../views/_global/topBar.jsx';
 import  BottomNav       from './../../views/_global/bottomNav.jsx';
 import  BottomButton    from './../../views/_global/bottomButton.jsx';
 // Local Components
 import  Events          from './components/events.jsx';
-
-const listStyle = {
-  height: '80%',
-  overflowY: 'scroll',
-};
 
 class Home extends Component {
   constructor(props) {
@@ -64,8 +61,11 @@ class Home extends Component {
   render() {
     return (
       <Page renderToolbar={TopBar.bind(this, { title: 'Home', handleBack: this.handleBack })}>
-        <div style={listStyle}>
-          <Events events={this.state.upcomingEvents} handleTouch={this.handleTouch}/>
+        <div style={listContainer}>
+          <div style={listStyle}>
+            <Events events={this.state.upcomingEvents} handleTouch={this.handleTouch}/>
+          </div>
+          <div style={listBottom}/>
         </div>
         <BottomButton title={'Create an Event'} route={this.routeToLatlon}/>
         <BottomNav router={this.props.router}/>
