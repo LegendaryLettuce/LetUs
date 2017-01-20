@@ -3,7 +3,8 @@ import React, { Component }     from 'react';
 import { connect }              from 'react-redux';
 import { Page, List, ListItem, Icon, Toolbar, BackButton, ListHeader, Row, Col } from 'react-onsenui';
 // Styles
-import { bodyStyle }            from '../../styles/styles';
+import { listContainer, listStyle, listBottom }  from '../../styles/styles';
+
 // Global Components
 import  BottomNav        from './../../views/_global/bottomNav.jsx';
 import  TopBar           from './../../views/_global/topBar.jsx';
@@ -39,24 +40,32 @@ class Friends extends Component {
   render() {
     return (
     <Page renderToolbar={TopBar.bind(this, { title: 'Friends', handleBack: this.handleBack })}>
-      <List
-        dataSource={this.props.friends}
-          renderRow={
-            (friend, idx) => (
-              <ListItem key={idx} modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
-                <div className="left">
-                  <img className="list__item__image" alt="Top Friend Image" style ={image} src='http://rs387.pbsrc.com/albums/oo311/elianei/avatars/bcat_av1_100.gif~c200' />
-                </div>
-                <div className="center">
-                  <span className="list__item__title">{friend.name}</span>
-                  <span className="list__item__subtitle">
-                    GL HF
-                  </span>
-                </div>
-            </ListItem>
-            )
-          }
-        />
+      <div style={listContainer}>
+        <div style={listStyle}>
+        <List
+          dataSource={this.props.friends}
+            renderRow={
+              (friend, idx) => (
+                <ListItem key={idx} modifier={idx === this.props.friends.length - 1 ? 'longdivider' : null}>
+                  <div className="left">
+                    <img className="list__item__image" alt="Top Friend Image" style ={image} src='http://rs387.pbsrc.com/albums/oo311/elianei/avatars/bcat_av1_100.gif~c200' />
+                  </div>
+                  <div className="center">
+                    <span className="list__item__title">{friend.name}</span>
+                    <span className="list__item__subtitle">
+                      GL HF
+                    </span>
+                  </div>
+              </ListItem>
+              )
+            }
+          />
+        </div>
+        <div style={{
+          ...listBottom,
+          minHeight: '44px',
+        }}/>
+        </div>
        <BottomNav router={this.props.router}/>
     </Page>
     );
