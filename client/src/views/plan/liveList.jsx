@@ -14,7 +14,7 @@ import TopBar           from './../_global/topBar.jsx';
 import GenericList      from './../_global/genericList.jsx';
 import VotesProgress    from './collaborate/progressBar.jsx';
 // Styles
-import { buttonStyle }  from '../../styles/styles';
+import { buttonStyle, listContainer, listStyle, listBottom } from '../../styles/styles';
 // Global Components
 import  BottomNav        from './../../views/_global/bottomNav.jsx';
 
@@ -63,16 +63,20 @@ class LiveList extends Component {
   render() {
     return (
       <Page renderToolbar={TopBar.bind(this, { title: 'Live List' })}>
+        <div style={listContainer}>
         <VotesProgress
           expectedVotes={((this.props.friends.length + 1) * this.props.liveData.length)}
           talliedVotes={this.props.talliedVotes}
           connectedPeers={(this.props.connectedPeers * this.props.liveData.length)}
         />
-        <GenericList
-            data={this.props.liveData}
-            handleTouch={this.handleTouch}
-          />
-        <div style={padStyle}/>
+          <div style={listStyle}>
+            <GenericList
+              data={this.props.liveData}
+              handleTouch={this.handleTouch}
+            />
+          </div>
+          <div style={listBottom}/>
+        </div>
         <Button
           className='center'
           style={buttonStyle}
