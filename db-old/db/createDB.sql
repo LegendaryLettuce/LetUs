@@ -1,4 +1,0 @@
-DROP DATABASE IF EXISTS letus;
-CREATE DATABASE letus;
-
-\c letus;
