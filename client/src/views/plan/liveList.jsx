@@ -42,14 +42,11 @@ class LiveList extends Component {
     if (!this.props.loaded) this.props.load(getStore());
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     axios.put('/home/', {
       topEvent: JSON.stringify([this.props.liveData[0]]),
       linkHash: this.props.eventHash,
     })
-      .then((res) => {
-        // console.log('Saved top event', res);
-      })
       .catch((error) => {
         console.error('Saving top events error', error);
       });
