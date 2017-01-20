@@ -16,7 +16,6 @@ const loginRouter   = require('./routes/loginRouter');
 
 const app = express();
 
-// uncomment after placing your favicon in /client/src
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
