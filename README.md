@@ -67,7 +67,7 @@ $ use docker
 
 View the project roadmap [here](https://github.com/LegendaryLettuce/LetUs/issues)
 
-![Flow Diagram](http://i.imgur.com/OmpPNjC.png?1)
+![Flow Diagram](http://i.imgur.com/BtAZDQG.png)
 
 ## Contributing
 
